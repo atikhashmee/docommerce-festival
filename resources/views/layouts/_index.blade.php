@@ -28,51 +28,15 @@
         </div>
 
         <div class="row justify-content-center py-4">
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
-            <div class="col-md-2">
-                <a href="store.html">
-                    <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="store name" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
-                </a>
-            </div>
+            @if (count($stores) > 0)
+                @foreach ($stores as $store)
+                    <div class="col-md-2">
+                        <a href="store.html">
+                            <img src="{{$store->store_logo_url}}" alt="{{$store->name}}" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
+                        </a>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

@@ -30,7 +30,8 @@
     </div>
     @if (in_array(Route::currentRouteName(), ['index_page', 'login', 'register']))
         @include('layouts._top_banner')
-    @elseif(in_array(Route::currentRouteName(), ['index_page']))
+    @endif
+    @if(Route::currentRouteName() =='index_page'))
         @include('layouts._index')
     @endif
     @include('layouts._menu')
