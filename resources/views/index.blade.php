@@ -22,10 +22,8 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
                 <h3 class="product-section-heading mb-5">
                     Hot Deals
-
                     <a href="#" class="float-right">
                         See more <i class="fas fa-angle-right"></i>
                     </a>
@@ -33,110 +31,15 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html"  title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/1.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch active">
-                            <i class="fas fa-heart"></i>
-                        </a>
+            @if (count($hot_deals) > 0)
+                @foreach ($hot_deals as $product)
+                    <div class="col-md-3">
+                        @component('web-components._product', compact('product'))
+                            
+                        @endcomponent
                     </div>
-
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/2.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/3.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/4.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
 
         <div class="row py-5">
@@ -158,109 +61,15 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/1.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
+            @if (count($exclusives) > 0)
+                @foreach ($exclusives as $product)
+                    <div class="col-md-3">
+                        @component('web-components._product', compact('product'))
+                            
+                        @endcomponent
                     </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/2.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/3.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="productsDiv p-3 shadow-sm rounded">
-                    <a href="product-details.html" title="American Garden Original BBQ Sauce">
-                        <img src="{{asset('web_assets/images/products/4.png')}}" alt="product 1" class="img-fluid d-block mx-auto rounded">
-
-                        <h6 class="product-name mb-2">American Garden Original BBQ Sauce</h6>
-                    </a>
-
-                    <h6>
-                        <span class="text-danger font-weight-bold">৳170.00</span> <small style="text-decoration: line-through;">৳190.00</small>
-                    </h6>
-
-                    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-
-                    <div class="wish-zoom">
-                        <a href="javascript:void(0)" class="p-d-switch">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-
-                        <a href="javascript:void(0)" class="add-wishlist-switch">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

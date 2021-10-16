@@ -9,12 +9,11 @@
                             Browse Categories
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">PHONES & ELECTRONICS</a>
-                            <a class="dropdown-item" href="#">HOME APPLIANCES</a>
-                            <a class="dropdown-item" href="#">FASHION</a>
-                            <a class="dropdown-item" href="#">HEALTH & BEAUTY</a>
-                            <a class="dropdown-item" href="#">LIFESTYLE</a>
-                            <a class="dropdown-item" href="#">GROCERIES & KIDS</a>
+                            @if (count($categories) > 0)
+                                @foreach ($categories as $category)
+                                    <a class="dropdown-item" href="#">{{$category->name}}</a>
+                                @endforeach
+                            @endif
                         </div>
                         </li>
                     </ul>
