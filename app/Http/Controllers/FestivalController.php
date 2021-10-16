@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Festival;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+
+use App\Http\Controllers\Crud;
 
 class FestivalController extends Controller
 {
+
+    use Crud;
     protected $model = '\App\Models\Festival';
 
     protected $view_index = 'festivals.index';

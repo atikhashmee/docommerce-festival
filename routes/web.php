@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('index_page');
 
 Route::resource('stores', \App\Http\Controllers\StoreController::class);
 Route::resource('festivals', \App\Http\Controllers\FestivalController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,0 +1,25 @@
+@media (min-width: 1370px) {
+    .container-fluid {
+        width: 80%;
+    }
+}
+
+@media (min-width: 768px) {
+    
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 812px) {
+    .productsDiv {
+        margin-bottom: 25px;
+    }
+    
+    .w-150 {
+        width: 120px !important;
+    }
+
+    .shop_cart_table .table .btn-danger {
+        font-size: 12px;
+        width: 85px;
+    }
+
+}
