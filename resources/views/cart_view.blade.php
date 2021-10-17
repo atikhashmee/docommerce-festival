@@ -32,78 +32,8 @@
                                     <th>Remove</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="assets/images/products/1.png" alt="products" class="cart-product-img">
-                                    </td>
-                                    <td>
-                                        <p class="product_name">American Garden Original BBQ Sauce</p>
-                                    </td>
-                                    <td>
-                                        <p class="product_price">৳135.00</p>
-                                    </td>
-                                    <td>
-                                        <div class="input-group plus-minus-input w-150">
-                                            <div class="input-group-button">
-                                                <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-                                                    <i class="fa fa-minus" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input class="input-group-field" type="number" name="quantity" value="1">
-                                            <div class="input-group-button">
-                                                <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-        
-                                        </div> 
-                                    </td>
-                                    <td>
-                                        <p class="product_price">৳135.00</p>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-times"></i> Remove
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img src="assets/images/products/2.png" alt="products" class="cart-product-img">
-                                    </td>
-                                    <td>
-                                        <p class="product_name">American Garden Original BBQ Sauce</p>
-                                    </td>
-                                    <td>
-                                        <p class="product_price">৳135.00</p>
-                                    </td>
-                                    <td>
-                                        <div class="input-group plus-minus-input">
-                                            <div class="input-group-button">
-                                                <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-                                                    <i class="fa fa-minus" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input class="input-group-field" type="number" name="quantity" value="5">
-                                            <div class="input-group-button">
-                                                <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-        
-                                        </div> 
-                                    </td>
-                                    <td>
-                                        <p class="product_price">৳135.00</p>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-times"></i> Remove
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="cart_list_page">
+                                
                             </tbody>
                         </table>
                     </div>
@@ -127,7 +57,7 @@
                                         <p>Cart Subtotal</p>
                                     </td>
                                     <td>
-                                        <p>৳270.00</p>
+                                        <p>৳<span id="cart_sub_total_page">0.00</span> </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -135,12 +65,12 @@
                                         <p class="font-weight-bold">Total</p>
                                     </td>
                                     <td>
-                                        <p class="font-weight-bold">৳270.00</p>
+                                        <p class="font-weight-bold">৳<span id="cart_total_page">0.00</span></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="right">
-                                        <a href="#" class="btn btn-success">Proceed to checkout</a>
+                                        <a href="{{route('checkout_page')}}" class="btn btn-success">Proceed to checkout</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -148,9 +78,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
-    
     @include('web-components._faq')
 @endsection
