@@ -24,14 +24,23 @@
                 <div class="login-wrapper shadow-sm p-4 rounded bg-white">
                     <h3 class="mb-3">Login</h3>
 
-                    <form method="post" action="#">
-                        <input type="hidden" name="_token" value="xa1hApHQIYFlBwuiXYhOnE1IvQXDulQCdF2XuKKQ">
-                        
+                    <form method="POST" action="{{ route('login') }}">
+                      @csrf
                         <div class="form-group">
-                            <input type="text" required="" class="form-control" name="email_or_phone" placeholder="Email/Phone Number">
+                            <input id="email_or_phone" type="email_or_phone" class="form-control @error('email_or_phone') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="Email/Phone Number" autofocus>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <input class="form-control" required="" type="password" name="password" placeholder="Password">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                         </div>
                         <div class="login_footer form-group">
                             <div class="chek-form">

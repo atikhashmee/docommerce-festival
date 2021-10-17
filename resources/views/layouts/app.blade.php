@@ -28,7 +28,7 @@
             Successfully added in the <span class="textChange">cart</span>.
         </p>
     </div>
-    @if (in_array(Route::currentRouteName(), ['index_page', 'login', 'register']))
+    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'login', 'register']))
         @include('layouts._top_banner')
     @endif
     @if(Route::currentRouteName() == 'index_page')
@@ -51,5 +51,6 @@
     <script src="{{asset('web_assets/js/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script src="{{asset('web_assets/js/custom.js')}}"></script>
+    <script src="{{asset('web_assets/js/scripts.js')}}"></script>
 </body>
 </html>

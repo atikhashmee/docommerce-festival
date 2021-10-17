@@ -36,4 +36,12 @@ class IndexController extends Controller
         ->where('category_festivals.festival_id', 1)->get();
         return view('products', $data);
     }
+
+    public function cartView() {
+        return view('cart_view');
+    }
+
+    public function checkout() {
+        return view('checkout');
+    }
 }

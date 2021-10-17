@@ -9,7 +9,7 @@
         <span class="text-danger font-weight-bold">৳{{$product->price}}</span> <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
     </h6>
 
-    <a href="javascript:void(0)" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
+    <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
 
     <div class="wish-zoom">
         <a href="javascript:void(0)" class="p-d-switch">

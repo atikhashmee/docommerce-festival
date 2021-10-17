@@ -24,13 +24,24 @@
                 <div class="login-wrapper shadow-sm p-4 rounded bg-white">
                     <h3 class="mb-3">Create an Account</h3>
 
-                    <form method="POST" action="" novalidate="">
-                        <input type="hidden" name="_token" value="dfToBNZ5W0f67H0RRZfaZk0WiZyLC4xHZhktl4aF">                                    
+                    <form method="POST" action="{{ route('register') }}">
+                      @csrf                                
                         <div class="form-group">
-                            <input type="text" required="" value="" class="form-control" name="name" placeholder="Enter Your Name">
+                          <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter your name" required autocomplete="name" autofocus>
+                          @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
                         </div>
                         <div class="form-group">
-                            <input type="email" required="" value="" class="form-control" name="email" placeholder="Enter Your Email">
+                          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your Email" required autocomplete="email">
+
+                          @error('email')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
                         </div>
 
                         <div class="form-group">
@@ -38,10 +49,16 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control" required="" type="password" name="password" placeholder="Password">
+                          <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="new-password">
+
+                          @error('password')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
                         </div>
                         <div class="form-group">
-                            <input class="form-control" required="" type="password" name="password_confirmation" placeholder="Confirm Password">
+                          <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
                         </div>
                         <div class="login_footer form-group">
                             <div class="chek-form">

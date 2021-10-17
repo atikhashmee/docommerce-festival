@@ -44,43 +44,20 @@
                         <li class="nav-item mx-1 cart-li">
                             <a href="javascript:void(0)" class="top-notification-icons p-2">
                                 <i class="fas fa-shopping-basket"></i>
-                                <span class="notification-numbers shadow-sm">15</span>
+                                <span class="notification-numbers shadow-sm" id="cart_quantity">0</span>
                             </a>
                             <div class="cart-dropdown-wrap text-left">
-                                <ul class="m-0 p-0">
-                                    <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="product" src="assets/images/products/1.png"></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="shop-product-right.html">American Garden Original BBQ Sauce</a></h4>
-                                            <h4><span>1 × </span>৳800.00</h4>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="shop-product-right.html"><img alt="Nest" src="assets/images/products/2.png"></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="shop-product-right.html">American Garden Original BBQ Sauce</a></h4>
-                                            <h4><span>1 × </span>৳3200.00</h4>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </li>
+                                <ul class="m-0 p-0" id="cart_items_short">
+                                   
                                 </ul>
 
                                 <div class="shopping-cart-footer">
                                     <div class="shopping-cart-total">
-                                        <h4>Total <span>৳1000.00</span></h4>
+                                        <h4>Total <span>৳<span id="total_price_top">00.00</span></span></h4>
                                     </div>
                                     <div class="shopping-cart-button">
-                                        <a href="cart.html" class="btn btn-outline-success">View cart</a>
-                                        <a href="#" class="btn btn-success">Checkout</a>
+                                        <a href="{{route('cart_view_page')}}" class="btn btn-outline-success">View cart</a>
+                                        <a href="{{route('checkout_page')}}" class="btn btn-success">Checkout</a>
                                     </div>
                                 </div>
 
