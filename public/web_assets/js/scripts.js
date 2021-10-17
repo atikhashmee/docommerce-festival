@@ -67,19 +67,20 @@ function renderCartItem() {
     let txt = '';
     let totalPrice = cartArr.length > 0 ? cartArr.reduce((t, c)=> t+(Number(c.price) * Number(c.quantity)), 0) : 0;
     let cartListPage = '';
+    let checkoutPage = '';
     if (cartArr.length > 0) {
         cartArr.forEach(element => {
-            txt += ` <li>
-            <div class="shopping-cart-img">
-                <a href="#"><img alt="product" src="${element.image}"></a>
-            </div>
-            <div class="shopping-cart-title">
-                <h4><a href="shop-product-right.html">${element.name}</a></h4>
-                <h4><span>${element.quantity} × </span>৳${element.price}</h4>
-            </div>
-            <div class="shopping-cart-delete">
-                <a href="javascript:void(0)" data-id="${element.id}" onclick="removeCartItem(this)"><i class="fa fa-times"></i></a>
-            </div>
+        txt += `<li>
+                <div class="shopping-cart-img">
+                    <a href="#"><img alt="product" src="${element.image}"></a>
+                </div>
+                <div class="shopping-cart-title">
+                    <h4><a href="shop-product-right.html">${element.name}</a></h4>
+                    <h4><span>${element.quantity} × </span>৳${element.price}</h4>
+                </div>
+                <div class="shopping-cart-delete">
+                    <a href="javascript:void(0)" data-id="${element.id}" onclick="removeCartItem(this)"><i class="fa fa-times"></i></a>
+                </div>
         </li>`;
 
         cartListPage += `<tr>
@@ -116,7 +117,33 @@ function renderCartItem() {
                         <i class="fa fa-times"></i> Remove
                     </button>
                 </td>
-            </tr>`;
+        </tr>`;
+
+        checkoutPage += `<tr>
+                <td>
+                    <img src="${element.image}" alt="${element.name}" class="checkout-product-img">
+                </td>
+                <td>
+                    <p class="product_name">${element.name}</p>
+                </td>
+                <td>
+                    <p class="product_price">৳${element.price}</p>
+                </td>
+                <td>
+                    <p>
+                        <span>${element.quantity}</span>
+                    </p> 
+                </td>
+                <td>
+                    <p>
+                        ---
+                    </p> 
+                </td>
+                <td>
+                    <p class="product_price">৳${Number(element.price) *  Number(element.quantity)}</p>
+                </td>
+                
+        </tr>`;
         });
     }
     document.querySelector('#total_price_top').innerHTML = totalPrice;
@@ -125,6 +152,10 @@ function renderCartItem() {
     let cartPageView = document.querySelector('#cart_list_page');
     let cart_sub_total_page = document.querySelector('#cart_sub_total_page');
     let cart_total_page = document.querySelector('#cart_total_page');
+    let checkout_page_lists = document.querySelector('#checkout_page_lists');
+    if (checkout_page_lists) {
+        checkout_page_lists.innerHTML = checkoutPage;
+    }
     if (cartPageView) {
         cartPageView.innerHTML = cartListPage;
     }
@@ -178,6 +209,67 @@ function decreaseQuantity(elem) {
     }
     storage.putData(cartArr);
     renderCartItem();
+}
+
+function getDistrict(dists) {
+    let districts = dists;
+    let state_id = document.querySelector('#state_id').value;
+    let state_districts = districts.filter(item=>Number(item.global_state_id) === Number(state_id))
+    let districtDom = document.querySelector('#district_id');
+    let txt = `<option value="">Select a District</option>`;
+    if (districtDom) {
+        if (state_districts.length > 0) {
+            state_districts.forEach(item => {
+                txt += `<option value="${item.id}">${item.name}</option>`
+            })
+        }
+        districtDom.innerHTML = txt;
+    }
+}
+
+function createTag(tagN, msg) {
+    let tag = document.createElement(tagN);
+    tag.className="text-danger generated_error_tag";
+    tag.innerHTML = msg;
+    return tag;
+}
+
+function validationErrors(errors) { 
+    //remove all element
+    let elems = document.querySelectorAll('.generated_error_tag')
+    if (elems.length > 0) {
+        for (let index = 0; index < elems.length; index++) {
+            const element = elems[index];
+            element.remove();
+        } 
+    }
+    
+    for (const key in errors) {
+        let domEl = document.querySelector(`input[name="${key}"]`) || document.querySelector(`select[name="${key}"]`);
+        if (domEl) {
+            let upperDom = domEl.closest('div');
+            if (upperDom) {
+                upperDom.append(createTag('span', errors[key][0]))
+            }
+        }
+    }
+}
+
+
+function placeOrder() {
+    let formD = new FormData(document.querySelector('#checkout_form'))
+    formD.append('items', JSON.stringify(storage.getData()))
+    fetch(baseUrl+'/place_order', {
+        method: 'POST',
+        headers: {
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formD
+    }).then(res=>res.json())
+    .then(res=>{
+        validationErrors(res.errors)
+        console.log(res, 'asdf');
+    })
 }
 
 renderCartItem();

@@ -6,6 +6,7 @@ use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class IndexController extends Controller
 {
@@ -42,6 +43,39 @@ class IndexController extends Controller
     }
 
     public function checkout() {
-        return view('checkout');
+        $data = [];
+        $data['states'] = \DB::table('global_states')->where('country_id', 19)->get();
+        $data['districts'] = \DB::table('global_districts')->whereIn('global_state_id', $data['states']->map(function($item){return $item->id;})->toArray())->get();
+        return view('checkout', $data);
+    }
+
+    public function placeOrder(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'state_id' => 'required',
+            'district_id' => 'required',
+            'address_line_1' => 'required',
+            'zip_code' => 'required',
+            'phone' => 'required',
+            'payment_option' => 'required|in:cash_on',
+        ]);
+        $cartItems = json_decode($request->items, true);
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'errors' => $validator->errors()]);
+        }
+
+        if (count($cartItems) == 0) {
+            return response()->json(['status' => false, 'error' => 'Cart is empty']);
+        }
+
+        try {
+            \DB::beginTransaction();
+            dd($request->all());
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return response()->json(['status' => false, 'error' => $e->getMessage()]);
+        }
+
     }
 }
