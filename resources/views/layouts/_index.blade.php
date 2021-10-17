@@ -31,7 +31,7 @@
             @if (count($stores) > 0)
                 @foreach ($stores as $store)
                     <div class="col-md-2">
-                        <a href="store.html">
+                        <a href="{{route('store_page', ['store_id' => $store->id])}}">
                             <img src="{{$store->store_logo_url}}" alt="{{$store->name}}" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5">
                         </a>
                     </div>

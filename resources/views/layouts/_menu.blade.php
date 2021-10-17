@@ -11,7 +11,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             @if (count($categories) > 0)
                                 @foreach ($categories as $category)
-                                    <a class="dropdown-item" href="#">{{$category->name}}</a>
+                                    <a class="dropdown-item" href="{{route('category_page', ['category_id' => $category->id])}}">{{$category->name}}</a>
                                 @endforeach
                             @endif
                         </div>

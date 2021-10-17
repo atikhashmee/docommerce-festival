@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index_page');
+Route::get('/store/{store_id}', [App\Http\Controllers\IndexController::class, 'storeData'])->name('store_page');
+Route::get('/category/{category_id}', [App\Http\Controllers\IndexController::class, 'categoryData'])->name('category_page');
 
 Route::resource('stores', \App\Http\Controllers\StoreController::class);
 Route::resource('festivals', \App\Http\Controllers\FestivalController::class);

@@ -31,8 +31,13 @@
     @if (in_array(Route::currentRouteName(), ['index_page', 'login', 'register']))
         @include('layouts._top_banner')
     @endif
-    @if(Route::currentRouteName() =='index_page'))
+    @if(Route::currentRouteName() == 'index_page')
         @include('layouts._index')
+    @elseif(in_array(Route::currentRouteName(), ['store_page', 'category_page'])) 
+        <section class="w-100 header text-center">
+            <div id="particles-js"></div>
+            <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="Store name | DoCommerce Festival" class="img-fluid mx-auto d-block festive-logo store-banner-logo">
+        </section>
     @endif
     @include('layouts._menu')
     @yield('content')
