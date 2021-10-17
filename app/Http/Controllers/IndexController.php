@@ -70,7 +70,7 @@ class IndexController extends Controller
 
         try {
             \DB::beginTransaction();
-            dd($request->all());
+            
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();
