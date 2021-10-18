@@ -167,7 +167,13 @@
                             </table>
                         </div>
                     </div>
-                    <button type="button" onclick="placeOrder()" class="btn btn-success mt-4 float-right">Place Order</button>
+                    @guest
+                        <a href="{{route('login')}}" class="btn btn-success mt-4 float-right">Place Order</a>
+                    @else
+                        <button type="button" onclick="placeOrder()" class="btn btn-success mt-4 float-right">Place Order</button>
+                    @endguest
+                    <div id="error_msg" class="text-danger d-none"></div>
+                    <div id="success_msg" class="text-success d-none"></div>
                 </div>
             </div>
         </div>

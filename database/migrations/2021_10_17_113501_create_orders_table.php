@@ -16,8 +16,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number', 200);
-            $table->unsignedBigInteger('original_store_id');
-            $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('sub_total', 10, 2)->comment('sum of order_details total');
             $table->decimal('discount_amount', 10, 2)->default(0.00);
@@ -34,7 +32,6 @@ class CreateOrdersTable extends Migration
             $table->string('feedback_number', 200)->nullable();
             $table->timestamp('feedback_at')->nullable();
             $table->timestamp('delivered_at')->nullable();
-            $table->foreign('store_id')->on('stores')->references('id')->onDelete('cascade');
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

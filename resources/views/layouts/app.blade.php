@@ -31,7 +31,7 @@
             Successfully added in the <span class="textChange">cart</span>.
         </p>
     </div>
-    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register']))
+    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'home']))
         @include('layouts._top_banner')
     @endif
     @if(Route::currentRouteName() == 'index_page')

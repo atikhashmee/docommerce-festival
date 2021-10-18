@@ -16,7 +16,10 @@ class CreateOrderDetailsTable extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('original_store_id');
+            $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('original_product_id');
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('product_variant_id')->nullable();
             $table->unsignedBigInteger('free_delivery')->nullable();
@@ -39,6 +42,7 @@ class CreateOrderDetailsTable extends Migration
             $table->timestamp('delivered_at')->nullable();
             $table->enum('status', ['Pending', 'In Progress', 'Ready to Ship', 'Shipped', 'Canceled & Refund', 'Delivered'])->default('Pending');
             $table->foreign('order_id')->on('orders')->references('id')->onDelete('cascade');
+            $table->foreign('store_id')->on('stores')->references('id')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

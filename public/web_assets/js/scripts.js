@@ -23,6 +23,8 @@ function CartItem(product) {
     this.price = product.price || 0;
     this.quantity = 1;
     this.image = product.original_product_img || null;
+    this.store_id =  product.store_id || null;
+    this.admin_id =  product.admin_id || null;
     this.original_store_id =  product.original_store_id || null;
     this.original_product_id = product.original_product_id || null;
 }
@@ -267,8 +269,26 @@ function placeOrder() {
         body: formD
     }).then(res=>res.json())
     .then(res=>{
-        validationErrors(res.errors)
-        console.log(res, 'asdf');
+        if (res.status) {
+            let successDom = document.querySelector('#success_msg');
+            successDom.classList.remove('d-none');
+            successDom.innerHTML = res.success
+            setTimeout(() => {
+                storage.putData([]);
+                updateQuantity();
+                renderCartItem();
+                window.location.href = baseUrl+'/order-completed/'+res.data;
+            }, 1000);
+            
+        } else {
+            if ('errors' in res) {
+                validationErrors(res.errors)
+            } else {
+                let errorDom = document.querySelector('#error_msg');
+                errorDom.classList.remove('d-none');
+                errorDom.innerHTML = res.error
+            }
+        }
     })
 }
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\OrderDetail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -13,7 +15,6 @@ class Order extends Model
 
     protected $fillable = [
         'order_number',
-        'store_id',
         'user_id',
         'discount_code',
         'sub_total',
@@ -31,4 +32,12 @@ class Order extends Model
         'feedback_number',
         'feedback_at'
     ];
+
+    public function user () {
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
+    }
+
+    public function orderDetails () {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'id');
+    }
 }

@@ -17,7 +17,7 @@ class CreateOrderAddressesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->enum('address_type', ['primary', 'billing', 'shipping'])->default('primary');
+            $table->enum('address_type', ['primary', 'billing', 'shipping'])->nullable();
             $table->string('address_line_1')->nullable();
             $table->string('address_line_2')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
@@ -26,9 +26,8 @@ class CreateOrderAddressesTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->on('orders')->references('id')->onDelete('cascade');
             $table->unsignedBigInteger('state_id')->nullable();
-            $table->foreign('state_id')->on('states')->references('id')->onDelete('cascade');
+            $table->foreign('state_id')->on('global_states')->references('id')->onDelete('cascade');
             $table->unsignedBigInteger('country_id')->nullable();
-            $table->foreign('country_id')->on('countries')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }
