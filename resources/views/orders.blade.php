@@ -48,7 +48,7 @@
                                     <td>Cash On</td>
                                     <td>{{$order->total_final_amount}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success">Detail</button>
+                                        <a href="{{route('order_detail_page', ['order_id' => $order->id])}}" class="btn-link">Detail</a>
                                     </td>
                                 </tr>
                                 @endforeach

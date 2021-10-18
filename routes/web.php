@@ -17,11 +17,14 @@ Route::get('/store/{store_id}', [App\Http\Controllers\IndexController::class, 's
 Route::get('/category/{category_id}', [App\Http\Controllers\IndexController::class, 'categoryData'])->name('category_page');
 Route::get('/cart', [App\Http\Controllers\IndexController::class, 'cartView'])->name('cart_view_page');
 Route::get('/checkout', [App\Http\Controllers\IndexController::class, 'checkout'])->name('checkout_page');
-Route::post('/place_order', [App\Http\Controllers\IndexController::class, 'placeOrder'])->name('place_order');
-Route::get('/order-completed/{id}', [App\Http\Controllers\IndexController::class, 'orderCompleted'])->name('order_completed');
-Route::get('/orders', [App\Http\Controllers\IndexController::class, 'orders'])->name('orders_page');
-Route::get('/profile', [App\Http\Controllers\IndexController::class, 'profile'])->name('profile_page');
-Route::put('/profile', [App\Http\Controllers\IndexController::class, 'profileUpdate'])->name('profile_update_page');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/place_order', [App\Http\Controllers\IndexController::class, 'placeOrder'])->name('place_order');
+    Route::get('/order-completed/{id}', [App\Http\Controllers\IndexController::class, 'orderCompleted'])->name('order_completed');
+    Route::get('/orders', [App\Http\Controllers\IndexController::class, 'orders'])->name('orders_page');
+    Route::get('/order/{order_id}', [App\Http\Controllers\IndexController::class, 'orderDetail'])->name('order_detail_page');
+    Route::get('/profile', [App\Http\Controllers\IndexController::class, 'profile'])->name('profile_page');
+    Route::put('/profile', [App\Http\Controllers\IndexController::class, 'profileUpdate'])->name('profile_update_page');
+});
 
 Route::resource('stores', \App\Http\Controllers\StoreController::class);
 Route::resource('festivals', \App\Http\Controllers\FestivalController::class);

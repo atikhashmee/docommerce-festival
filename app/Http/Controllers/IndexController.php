@@ -159,6 +159,20 @@ class IndexController extends Controller
         $data['orders'] = Order::with('orderDetails')->where('user_id', auth()->user()->id)->paginate(10);
         return view('orders', $data);
     }
+
+    public function orderDetail($order_id)
+    {
+        $data['order'] = Order::with(['orderDetails', 'address' => function($q){
+            $q->select('order_addresses.*', 'global_states.name as state_name', 'global_districts.name as district_name');
+            $q->leftJoin('global_states', 'global_states.id', '=', 'order_addresses.state_id');
+            $q->leftJoin('global_districts', 'global_districts.id', '=', 'order_addresses.district_id');
+        }])
+        ->where('id', $order_id)
+        ->where('user_id', auth()->user()->id)
+        ->first();
+        return view('order_detail', $data);
+    }
+
     public function profile()
     {
         return view('profile');

@@ -32,7 +32,7 @@
                           <h3>Your order is completed!</h3>
                         </div>
                         <a href="{{ route('index_page') }}" class="btn primary-button">Continue Shopping</a>
-                        <a href="#" class="btn primary-button">View Detail</a>
+                        <a href="{{ route('order_detail_page', ['order_id' => Request::segment(2)]) }}" class="btn primary-button">View Detail</a>
                     </div>
                 </div>
             </div>

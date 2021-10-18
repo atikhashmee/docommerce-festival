@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\OrderDetail;
+use App\Models\OrderAddress;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -39,5 +40,15 @@ class Order extends Model
 
     public function orderDetails () {
         return $this->hasMany(OrderDetail::class, 'order_id', 'id');
+    }
+
+    /**
+     * Get the address associated with the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function address()
+    {
+        return $this->hasOne(OrderAddress::class, 'order_id', 'id');
     }
 }
