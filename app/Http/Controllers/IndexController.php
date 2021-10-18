@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\OrderDetail;
 use App\Models\OrderAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class IndexController extends Controller
@@ -45,14 +46,20 @@ class IndexController extends Controller
         $data = [];
         $data['total_order'] = Order::where('user_id', auth()->user()->id)->count();
         $data['total_order_amount'] = Order::where('user_id', auth()->user()->id)->sum('total_final_amount');
-        $data['last_five_orders_product'] = Product::select('products.*', 'order_details.product_id')
-        ->join('order_details', 'order_details.product_id', '=', 'products.id')
-        ->leftJoin('orders', 'orders.id', '=', 'order_details.order_id')
-        ->where('orders.user_id', auth()->user()->id)
+
+        $data['last_five_orders_product'] = OrderDetail::select('products.*')
+        ->join('products', function($q) {
+            $q->on('order_details.product_id', '=', 'products.id');
+        })
+        ->join('orders', function($q) {
+            $q->on('order_details.order_id', '=', 'orders.id');
+            $q->where('orders.user_id', '=', auth()->user()->id);
+        })
         ->groupBy('order_details.product_id')
-        //->orderBy('order_details.id', 'DESC')
+        ->orderBy(DB::raw('MAX(order_details.id)'), 'DESC')
         ->limit(5)
         ->get();
+
         return view('home', $data);
     }
 
