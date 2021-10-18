@@ -17,6 +17,8 @@ Route::get('/store/{store_id}', [App\Http\Controllers\IndexController::class, 's
 Route::get('/category/{category_id}', [App\Http\Controllers\IndexController::class, 'categoryData'])->name('category_page');
 Route::get('/cart', [App\Http\Controllers\IndexController::class, 'cartView'])->name('cart_view_page');
 Route::get('/checkout', [App\Http\Controllers\IndexController::class, 'checkout'])->name('checkout_page');
+Route::get('/quick-view/{id}', [App\Http\Controllers\IndexController::class, 'quickView'])->name('quick_view');
+Route::get('/product/{slug}', [App\Http\Controllers\IndexController::class, 'detail'])->name('detail_page');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\IndexController::class, 'dashboard'])->name('home');
     Route::post('/place_order', [App\Http\Controllers\IndexController::class, 'placeOrder'])->name('place_order');

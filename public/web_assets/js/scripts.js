@@ -34,6 +34,7 @@ CartItem.prototype.totalPrice = function() {
 }
 
 let storage = new StorageData();
+
 function addToCart(product) {
     let cartArr = storage.getData();
     let item  = new CartItem(product);
@@ -292,6 +293,26 @@ function placeOrder() {
     })
 }
 
+function changeVariant(variantObj, dom) {
+    let rowVar = dom.closest('.each-variant-row');
+    let varItems = rowVar.querySelectorAll('button');
+    if (varItems.length > 0) {
+        for (let index = 0; index < varItems.length; index++) {
+            const element = varItems[index];
+            element.classList.remove('active');
+        }
+    }
+    dom.classList.add('active');
+    let price = document.querySelector('#product_price');
+    let oldprice = document.querySelector('#product_old_price');
+    if (price) {
+        price.innerHTML = variantObj.price;
+    }
+
+    if (oldprice) {
+        oldprice.innerHTML = variantObj.old_price;
+    }
+}
 renderCartItem();
 updateQuantity();
 

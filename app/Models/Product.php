@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -40,6 +41,21 @@ class Product extends Model
         'meta_description',
         'visit_count',
     ];
+
+    public function variants()
+    {
+        return $this->hasMany('App\Models\ProductVariant');
+    }
+
+    /**
+     * Get the category that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 
     
 }

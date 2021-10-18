@@ -32,7 +32,7 @@
                             <tr>
                                 <th>#SL</th>
                                 <th>Order Number</th>
-                                <th>Product Count</th>
+                                <th>Order Items</th>
                                 <th>Payment</th>
                                 <th>Total</th>
                                 <th>Action</th>
@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{strtotime($order->order_number)}}</td>
-                                    <td>2</td>
+                                    <td>{{$order->order_details_count}}</td>
                                     <td>Cash On</td>
                                     <td>{{$order->total_final_amount}}</td>
                                     <td>
@@ -55,6 +55,7 @@
                             @endif
                         </tbody>
                     </table>
+                    {{$orders->links()}}
                 </div>
             </div>
         </div>

@@ -31,7 +31,12 @@ $(document).ready(function () {
   });
 
   $('.p-d-switch').click(function () {
-    $('#productDetailsModal').modal('show');
+    fetch(baseUrl+'/quick-view/'+$(this).data('product_id'))
+    .then(res=>res.text())
+    .then(res=>{
+      $("#productDetailsModal .modal-body").html(res);
+      $('#productDetailsModal').modal('show');
+    })
   });
 
   //  product details zoom
@@ -69,12 +74,12 @@ $('[data-quantity="minus"]').click(function(e) {
     // Get its current value
     var currentVal = parseInt($('input[name='+fieldName+']').val());
     // If it isn't undefined or its greater than 0
-    if (!isNaN(currentVal) && currentVal > 0) {
+    if (!isNaN(currentVal) && currentVal > 1) {
         // Decrement one
         $('input[name='+fieldName+']').val(currentVal - 1);
     } else {
         // Otherwise put a 0 there
-        $('input[name='+fieldName+']').val(0);
+        $('input[name='+fieldName+']').val(1);
     }
 });
   

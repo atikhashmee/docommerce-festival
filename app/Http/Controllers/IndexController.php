@@ -18,9 +18,26 @@ class IndexController extends Controller
         $data = [];
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', 1)->get();
-        $data['hot_deals']  = Product::take(10)->limit(10)->get();
-        $data['exclusives'] = Product::take(1)->limit(10)->get();
+        $data['hot_deals']  = Product::withCount('variants')->take(10)->limit(10)->get();
+        $data['exclusives'] = Product::withCount('variants')->take(1)->limit(10)->get();
         return view('index', $data);
+    }
+
+    public function detail($slug)
+    {
+        $data = [];
+        $product  = Product::with('variants', 'category')->where('slug', $slug)->first();
+        $data['product'] =  $this->processedProductDetails($product);
+        //dd($data['product']);
+        return view('product_detail', $data);
+    }
+
+    public function quickView($id)
+    {
+        $data = [];
+        $product  = Product::with('variants', 'category')->where('id', $id)->first();
+        $data['product'] =  $this->processedProductDetails($product);
+        return view('web-components._detail', $data);
     }
 
     public function dashboard(Request $request)
@@ -172,7 +189,7 @@ class IndexController extends Controller
 
     public function orders() {
         $data = [];
-        $data['orders'] = Order::with('orderDetails')->where('user_id', auth()->user()->id)->paginate(10);
+        $data['orders'] = Order::withCount('orderDetails')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(10);
         return view('orders', $data);
     }
 
@@ -207,5 +224,60 @@ class IndexController extends Controller
         } else {
             return redirect()->back()->withError('Error');
         }
+    }
+
+    public function processedProductDetails($item)
+    {
+        $item->variants = $item->variants != null ? json_decode($item->variants) : [];
+        $item->quantity = 1;
+        $show_variants = [];
+        $smallest_variant = null;
+        $min_variant_price = 0;
+        if (!empty($item->variants)) {
+            foreach ($item->variants as $variant) {
+                if ($variant->opt1_name != null && $variant->opt1_value != null) {
+                    $show_variants[$variant->opt1_name][$variant->opt1_value] = (object) [
+                        'id' => $variant->id,
+                        'value' => $variant->opt1_value,
+                        'price' => $variant->price,
+                        'old_price' => $variant->old_price,
+                    ];
+                }
+
+                if ($variant->opt2_name != null && $variant->opt2_value != null) {
+                    $show_variants[$variant->opt2_name][$variant->opt2_value] = (object) [
+                        'id' => $variant->id,
+                        'value' => $variant->opt2_value,
+                        'price' => $variant->price,
+                        'old_price' => $variant->old_price,
+                    ];
+                }
+
+                if ($variant->opt3_name != null && $variant->opt3_value != null) {
+                    $show_variants[$variant->opt3_name][$variant->opt3_value] = (object) [
+                        'id' => $variant->id,
+                        'value' => $variant->opt3_value,
+                        'price' => $variant->price,
+                        'old_price' => $variant->old_price,
+                    ];
+                }
+
+                if (isset($variant->price)) {
+                    if ($variant->price < $min_variant_price || $min_variant_price == 0) {
+                        $min_variant_price = $variant->price;
+                        $smallest_variant = $variant;
+                    }
+                }
+            }
+
+
+            if ($smallest_variant != null) {
+                $item->price = $smallest_variant->price;
+                $item->old_price = $smallest_variant->old_price;
+            }
+        }
+        $item->show_variants = $show_variants;
+        $item->smallest_variant = $smallest_variant;
+        return $item;
     }
 }
