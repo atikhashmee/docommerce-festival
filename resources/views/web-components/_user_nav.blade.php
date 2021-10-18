@@ -7,5 +7,5 @@
     </li>
     <li class="list-group-item @if(Route::currentRouteName() == 'profile_page') active @endif">
         <a href="{{route('profile_page')}}" class="btn-link">Profile</a>
-    </li> 
+    </li>
 </ul>

@@ -18,6 +18,7 @@ Route::get('/category/{category_id}', [App\Http\Controllers\IndexController::cla
 Route::get('/cart', [App\Http\Controllers\IndexController::class, 'cartView'])->name('cart_view_page');
 Route::get('/checkout', [App\Http\Controllers\IndexController::class, 'checkout'])->name('checkout_page');
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\IndexController::class, 'dashboard'])->name('home');
     Route::post('/place_order', [App\Http\Controllers\IndexController::class, 'placeOrder'])->name('place_order');
     Route::get('/order-completed/{id}', [App\Http\Controllers\IndexController::class, 'orderCompleted'])->name('order_completed');
     Route::get('/orders', [App\Http\Controllers\IndexController::class, 'orders'])->name('orders_page');
@@ -30,4 +31,3 @@ Route::resource('stores', \App\Http\Controllers\StoreController::class);
 Route::resource('festivals', \App\Http\Controllers\FestivalController::class);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

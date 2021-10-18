@@ -23,6 +23,22 @@ class IndexController extends Controller
         return view('index', $data);
     }
 
+    public function dashboard(Request $request)
+    {
+        $data = [];
+        $data['total_order'] = Order::where('user_id', auth()->user()->id)->count();
+        $data['total_order_amount'] = Order::where('user_id', auth()->user()->id)->sum('total_final_amount');
+        $data['last_five_orders_product'] = Product::select('products.*', 'order_details.product_id')
+        ->join('order_details', 'order_details.product_id', '=', 'products.id')
+        ->leftJoin('orders', 'orders.id', '=', 'order_details.order_id')
+        ->where('orders.user_id', auth()->user()->id)
+        ->groupBy('order_details.product_id')
+        //->orderBy('order_details.id', 'DESC')
+        ->limit(5)
+        ->get();
+        return view('home', $data);
+    }
+
     public function storeData($store_id)
     {
         $data = [];

@@ -27,20 +27,23 @@
                 <div class="card text-white bg-primary mb-3" style="flex-basis: 48%">
                     <div class="card-body">
                       <h5 class="card-title">Total Order</h5>
-                      <p class="card-text">20</p>
+                      <p class="card-text">{{$total_order}}</p>
                     </div>
                   </div>
                   <div class="card text-white bg-success mb-3" style="flex-basis: 48%">
                     <div class="card-body">
                       <h5 class="card-title">Total Order Amount</h5>
-                      <p class="card-text">$14522</p>
+                      <p class="card-text">${{$total_order_amount}}</p>
                     </div>
                   </div>
                   <div class="card text-white bg-danger mb-3" style="flex-basis: 48%">
                     <div class="card-body">
                       <h5 class="card-title">Last Ordered Products</h5>
-                      <p class="card-text">-- Product 1</p>
-                      <p class="card-text">-- Product 2</p>
+                      <ul>
+                        @foreach ($last_five_orders_product as $product)
+                            <li>{{$product->name}}</li>
+                        @endforeach
+                      </ul>
                     </div>
                   </div>
             </div>
