@@ -8,10 +8,10 @@
                     <img id="img_01" src="{{asset('web_assets/images/products/1.png')}}"/>
                 </a>
                 <a href="javascript:void(0)" data-image="{{asset('web_assets/images/products/2.png')}}" data-zoom-image="{{asset('web_assets/images/products/2.png')}}">
-                    <img id="img_01" src="{{asset('web_assets/images/products/2.png')}}"/>
+                    <img id="img_02" src="{{asset('web_assets/images/products/2.png')}}"/>
                 </a>
                 <a href="javascript:void(0)" data-image="{{asset('web_assets/images/products/3.png')}}" data-zoom-image="{{asset('web_assets/images/products/3.png')}}">
-                    <img id="img_01" src="{{asset('web_assets/images/products/3.png')}}"/>
+                    <img id="img_03" src="{{asset('web_assets/images/products/3.png')}}"/>
                 </a>
             </div>
         </div>
