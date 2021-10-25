@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +33,6 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('stores', \App\Http\Controllers\StoreController::class);
 Route::resource('festivals', \App\Http\Controllers\FestivalController::class);
 Auth::routes();
+
+
 
