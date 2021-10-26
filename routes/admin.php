@@ -11,6 +11,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     
     Route::group(['middleware' => 'auth:admin'], function() {
         Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::resource('stores', StoreController::class);
+        Route::resource('festivals', FestivalController::class);
     });
 });
 

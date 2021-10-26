@@ -133,7 +133,7 @@ trait Crud {
         }
 
         try {
-            $modelCreated = $this->model::where('id', $id)->update($request->all());
+            $modelCreated = $this->model::where('id', $id)->update($request->except('_method', '_token'));
             if ($modelCreated) {
                 if ($request->ajax()) {
                     return response()->json(['status' => true, 'data'=> $modelCreated]);

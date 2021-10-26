@@ -29,9 +29,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\IndexController::class, 'profile'])->name('profile_page');
     Route::put('/profile', [App\Http\Controllers\IndexController::class, 'profileUpdate'])->name('profile_update_page');
 });
-
-Route::resource('stores', \App\Http\Controllers\StoreController::class);
-Route::resource('festivals', \App\Http\Controllers\FestivalController::class);
 Auth::routes();
 
 
