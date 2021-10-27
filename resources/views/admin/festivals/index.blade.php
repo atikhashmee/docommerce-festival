@@ -5,15 +5,17 @@
 @endsection
 
 @section('content')
-    <section class="container-fluid">
+    <section class="container-fluid" id="festivalTableContainer">
+        <form action="{{route('admin.festivals.index')}}" method="GET" id="filter_form"></form>
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <a class="btn btn-primary" href="{{route('admin.festivals.create')}}">Create</a>
-                <form action="{{route('admin.festivals.index')}}" method="GET" class="d-flex">
-                    <input  placeholder="Festival Names" name="keyword" type="search" class="form-control">
-                    <button class="btn btn-success"><i aria-hidden="true" class="fa fa-search"></i></button>
-                </form>
+                    <div class="search-form d-flex">
+                        <input placeholder="Festival Names" name="search[name]" type="search" class="form-control">
+                        <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
+                    </div>
             </div>
+        
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
@@ -55,21 +57,33 @@
                                     </div>
                                 </div> --}}
                             </th>
-                            <th @click="filterParam('sort', 'id')" :class="{ 'sorting' : params.sort_by !== 'id', 'sorting_asc' : params.sort_by === 'id' && params.order_by === 'asc', 'sorting_desc' : params.sort_by === 'id' && params.order_by === 'desc' }">
+                            <th data-sort="id">
                                 #SL
-                                <span class="sort"><i class="fa fa-caret-up" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                <span class="sort">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
                             </th>
-                            <th @click="filterParam('sort', 'action_text')" :class="{ 'sorting' : params.sort_by !== 'action_text', 'sorting_asc' : params.sort_by === 'action_text' && params.order_by === 'asc', 'sorting_desc' : params.sort_by === 'action_text' && params.order_by === 'desc' }">
+                            <th data-sort="name">
                                 Name
-                                <span class="sort"><i class="fa fa-caret-up" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                <span class="sort">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
                             </th>
-                            <th width="10%" @click="filterParam('sort', 'created_at')" :class="{ 'sorting' : params.sort_by !== 'created_at', 'sorting_asc' : params.sort_by === 'created_at' && params.order_by === 'asc', 'sorting_desc' : params.sort_by === 'created_at' && params.order_by === 'desc' }">
+                            <th width="10%" data-sort="start_at">
                                 Start At
-                                <span class="sort"><i class="fa fa-caret-up" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                <span class="sort">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
                             </th>
-                            <th width="10%" @click="filterParam('sort', 'created_at')" :class="{ 'sorting' : params.sort_by !== 'created_at', 'sorting_asc' : params.sort_by === 'created_at' && params.order_by === 'asc', 'sorting_desc' : params.sort_by === 'created_at' && params.order_by === 'desc' }">
+                            <th width="10%" data-sort="end_at">
                                 End At
-                                <span class="sort"><i class="fa fa-caret-up" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                <span class="sort">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
                             </th>
                             <th></th>
                         </tr>
@@ -123,7 +137,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        {{$items->links()}}
+                        {{ $items->withQueryString()->links() }}
                     </div>
                 </div>
             </div>
@@ -135,6 +149,34 @@
             <input type="hidden" name="type">
         </form>
     </section>
+@endsection
+@section('styles')
+    <style>
+        th > .sort {
+            float: right;
+            cursor: pointer;
+        }
+        .sort i {
+            font-size: 16px;
+            color: #d3d3d3;
+        }
+        .sort i.active {
+            color: #000;
+        }
+    </style>
+@endsection
+@section('scripts')
+    <script>
+
+        $(document).ready(function () {
+            
+        });
+        $("#festivalTableContainer").DataSorting({    
+            formId : "filter_form",
+            initSort : `<?=json_encode(request('sort'))?>`,
+            initSearch : `<?=json_encode(request('search'))?>`
+        });
+    </script>
 @endsection
 
 

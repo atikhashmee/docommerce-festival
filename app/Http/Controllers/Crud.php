@@ -12,11 +12,18 @@ trait Crud {
      */
     public function index(Request $request)
     {
-        if (!empty($this->pagination)) {
-            $data['items'] = $this->model::paginate(intval($this->pagination));
-        } else {
-            $data['items'] = $this->model::get();
+        $itemSql = $this->model::select('*');
+        if ($request->search) {
+            foreach ($request->search as $field => $val)
+            $itemSql->where($field, "LIKE", "%".$val."%");
         }
+
+        if ($request->sort) {
+            foreach ($request->sort as $orderOf => $orderBy)
+            $itemSql->orderBy($orderOf, $orderBy);
+        }
+        
+        $data['items'] = !empty($this->pagination) ? $itemSql->paginate(intval($this->pagination)) : $itemSql->get();
         if ($request->ajax()) {
             return response(['status'=> true, 'data' => $data]);
         }
