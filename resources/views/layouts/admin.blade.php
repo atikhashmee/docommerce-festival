@@ -52,6 +52,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a href="{{route('admin.categories.index')}}" class="nav-link">Categories</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.festivals.index')}}" class="nav-link">Festivals</a>
                             </li>
                             <li class="nav-item dropdown">
