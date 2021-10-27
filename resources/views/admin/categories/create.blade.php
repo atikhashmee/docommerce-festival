@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="container-fluid">
+    <section class="container">
         <div class="card">
             <div class="card-header">
                 <a class="btn btn-secondary float-right" href="{{route('admin.categories.index')}}">Back</a>

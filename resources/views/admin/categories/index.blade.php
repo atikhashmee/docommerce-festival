@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="container-fluid" id="festivalTableContainer">
+    <section class="container" id="festivalTableContainer">
         <form action="{{route('admin.categories.index')}}" method="GET" id="filter_form"></form>
         <div class="card">
             <div class="card-header d-flex justify-content-between">

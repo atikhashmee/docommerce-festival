@@ -14,7 +14,7 @@ $.fn.DataSorting = function(options) {
         for (let index = 0; index < searchFormChilds.length; index++) {
             const element = searchFormChilds[index];
             if (element.tagName === "INPUT") {
-                appendItem(element, form)
+                this.appendItem(element, form)
             }
         }
         this.submitForm();

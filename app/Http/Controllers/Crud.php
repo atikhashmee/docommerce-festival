@@ -48,13 +48,14 @@ trait Crud {
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->model::$rules);
-
-        if ($validator->fails()) {
-            if ($request->ajax()) {
-                return response()->json(['status' => false, 'data'=> $validator->errors()]);
+        if (property_exists($this->model, 'rules')) {
+            $validator = Validator::make($request->all(), $this->model::$rules);
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => false, 'data'=> $validator->errors()]);
+                }
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
@@ -130,13 +131,14 @@ trait Crud {
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->model::$rules);
-
-        if ($validator->fails()) {
-            if ($request->ajax()) {
-                return response()->json(['status' => false, 'data'=> $validator->errors()]);
+        if (property_exists($this->model, 'rules')) {
+            $validator = Validator::make($request->all(), $this->model::$rules);
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['status' => false, 'data'=> $validator->errors()]);
+                }
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
