@@ -52,6 +52,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a href="{{route('admin.stores.index')}}" class="nav-link">Stores</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.categories.index')}}" class="nav-link">Categories</a>
                             </li>
                             <li class="nav-item">
@@ -83,6 +86,7 @@
         <main class="py-4">
             @yield('content')
         </main>
+        @yield('modals')
     </div>
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>

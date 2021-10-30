@@ -16,11 +16,11 @@ class CreateStoresTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('original_store_id');
-            $table->string('name', 100);
-            $table->string('store_url', 100)->nullable();
-            $table->string('store_logo_url', 100)->nullable();
-            $table->string('store_slogan', 100)->nullable();
-            $table->string('store_domain', 100)->nullable();
+            $table->string('name');
+            $table->string('store_url')->nullable();
+            $table->string('store_logo_url')->nullable();
+            $table->string('store_slogan')->nullable();
+            $table->string('store_domain')->nullable();
             $table->timestamps();
         });
     }

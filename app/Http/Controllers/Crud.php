@@ -12,6 +12,7 @@ trait Crud {
      */
     public function index(Request $request)
     {
+        $data = [];
         $itemSql = $this->model::select('*');
         if ($request->search) {
             foreach ($request->search as $field => $val)
@@ -22,11 +23,22 @@ trait Crud {
             foreach ($request->sort as $orderOf => $orderBy)
             $itemSql->orderBy($orderOf, $orderBy);
         }
-        
-        $data['items'] = !empty($this->pagination) ? $itemSql->paginate(intval($this->pagination)) : $itemSql->get();
+
+        if ($request->showing) {
+            $this->pagination = $request->showing;
+        }
+
         if ($request->ajax()) {
+            if ($request->hasHeader('no-pagination')) {
+                $data['items'] = $itemSql->get();
+            } else {
+                $data['items'] = $itemSql->paginate(10);
+            }
             return response(['status'=> true, 'data' => $data]);
         }
+
+        $data['items'] = !empty($this->pagination) ? $itemSql->paginate(intval($this->pagination)) : $itemSql->get();
+        
         return view($this->view_index, $data);
     }
 
