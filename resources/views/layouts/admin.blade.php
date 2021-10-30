@@ -52,6 +52,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a href="{{route('admin.products.index')}}" class="nav-link">Products</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.stores.index')}}" class="nav-link">Stores</a>
                             </li>
                             <li class="nav-item">

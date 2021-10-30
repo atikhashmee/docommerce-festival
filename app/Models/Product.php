@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Store;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +46,16 @@ class Product extends Model
     public function variants()
     {
         return $this->hasMany('App\Models\ProductVariant');
+    }
+
+    /**
+     * Get the store that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
     }
 
     /**

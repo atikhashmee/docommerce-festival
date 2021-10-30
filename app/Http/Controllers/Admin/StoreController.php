@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Festival;
 use Illuminate\Http\Request;
+use App\Models\StoreFestival;
 use App\Http\Controllers\Crud;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
@@ -47,6 +48,13 @@ class StoreController extends Controller
         } catch (\Exception $e) {       
             return response()->json(['status' => false, 'data'=> $e->getMessage()]);
         }
+    }
+
+    public function festivalStore($festival_id) {
+        return  $this->model::select('stores.*')
+        ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.original_store_id')
+        ->where("store_festivals.festival_id", $festival_id)
+        ->get();
     }
    
 }

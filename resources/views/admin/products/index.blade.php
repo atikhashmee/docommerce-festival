@@ -6,15 +6,33 @@
 
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
-        <form action="{{route('admin.stores.index')}}" method="GET" id="filter_form"></form>
+        <div class="d-flex flex-row flex-row-reverse">
+            <a href="{{route('admin.product.import')}}" class="btn btn-success">Import</a>
+        </div>
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <a href="{{route('admin.sync.store.data')}}" class="btn btn-primary">Update Sync <i class="fas fa-sync"></i></a>
+            <form action="{{route('admin.products.index')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
+                <div class="d-flex"></div>
                 <div class="search-form d-flex">
-                    <input placeholder="Store Names" name="search[name]" type="search" class="form-control">
+                    <select name="store_id" id="store_id" class="form-control">
+                        <option value="">Select Store</option>
+                        @if (count($stores) > 0)
+                            @foreach ($stores as $store)
+                                <option value="{{$store->id}}">{{$store->name ?? 'No Name'}} ({{$store->store_domain}}) </option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <select name="category_id" id="category_id" class="form-control">
+                        <option value="">Select Category</option>
+                        @if (count($categories) > 0)
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name ?? 'No Name'}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <input placeholder="Product Names" name="search" type="search" class="form-control">
                     <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
                 </div>
-            </div>
+            </form>
         
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -37,50 +55,25 @@
                                     </div>
                                 </div>
                             </th>
-                            <th data-sort="id">
-                                #SL
-                                <span class="sort">
-                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                </span>
-                            </th>
-                            <th>Logo</th>
-                            <th data-sort="name">
-                                Name
-                                <span class="sort">
-                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                </span>
-                            </th>
-                            <th data-sort="store_domain">
-                                Domain
-                                <span class="sort">
-                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                </span>
-                            </th>
+                            <th>#SL</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Store</th>
                             <th></th>
                         </tr>
                         </thead>
-                        @if (count($items) > 0)
+                        @if (count($products) > 0)
                             <tbody>
-                                @foreach ($items as $item)
+                                @foreach ($products as $item)
                                     <tr>
-                                        <td>
-                                            <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$item->id}}">
-                                        </td>
-                                        <td>
-                                            {{ $item->id }}
-                                        </td>
+                                        <td><input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$item->id}}"></td>
+                                        <td>{{ $item->id }}</td>
                                         <td>  
-                                            <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="100" width="100">
-                                            
-                                        </td>
-                                        <td>  
+                                            <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50">
                                             <h5>{{ $item->name }}</h5>
-                                            <small> {{ $item->store_slogan }}</small>
                                         </td>
-                                        <td>  {{ $item->store_domain }}</td>
+                                        <td>  {{ $item->category->name }}</td>
+                                        <td>  {{ $item->store->name }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,25 +104,6 @@
                             </tbody>
                         @endif
                     </table>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ $items->withQueryString()->links() }}
-                    </div>
-                    <div class="col-md-6">
-                        <form action="{{route('admin.stores.index')}}" id="showing_form" class="ml-auto w-25">
-                            <div class="form-group">
-                                <label for="">Showing</label>
-                                <select name="showing" class="form-control" id="showing" onchange="document.querySelector('#showing_form').submit()">
-                                    <option @if(request('showing') == 25) selected @endif >25</option>
-                                    <option @if(request('showing') == 50) selected @endif>50</option>
-                                    <option @if(request('showing') == 100) selected @endif>100</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
