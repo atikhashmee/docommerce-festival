@@ -17,6 +17,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::resource('stores', StoreController::class)->only('index', 'destroy');
         Route::resource('festivals', FestivalController::class);
         Route::resource('categories', CategoryController::class);
+        Route::get('products/get-store-products/{store_id}', [App\Http\Controllers\Admin\ProductController::class, 'storeProduct'])->name('product.get.store.products');
+        Route::post('products/import', [App\Http\Controllers\Admin\ProductController::class, 'importStore'])->name('product.import.store');
         Route::get('products/import', [App\Http\Controllers\Admin\ProductController::class, 'import'])->name('product.import');
         Route::resource('products', ProductController::class)->only('index');
     });
