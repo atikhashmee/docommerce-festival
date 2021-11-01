@@ -161,4 +161,38 @@ class ProductController extends Controller
             return response()->json(['status' => false, 'data'=> $e->getMessage()]);
         }
     }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $item  = Product::find($id);
+        if ($item) {
+            if (count($item->variants) > 0) {
+                $item->variants()->delete();
+            }
+            $item->delete();
+            if (request()->ajax()) {
+                return response(['status'=> true, 'data' => 'Data is deleted']);
+            }
+            return redirect()->back()->withSuccess('Data is deleted');
+        } else {
+            if (request()->ajax()) {
+                return response(['status'=> false, 'data' => 'Data not found']);
+            } else {
+                return redirect()->back()->withError('Data not found');
+            } 
+        }
+    }
+
+    public function bulkDelete(Request $request) {
+        $ids = json_decode($request->product_ids, true);
+        $ids = collect($ids)->filter(function($item) {return $item != null;})->toArray();
+        Product::whereIn('id', $ids)->delete();
+        return response(['status'=> true, 'data' => 'Data is deleted']);
+    }
 }

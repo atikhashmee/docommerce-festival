@@ -385,7 +385,9 @@
                     })
                     .then(res=>res.json())
                     .then(res=>{
-                        console.log(res, 'asdf');
+                        if (res.status) {
+                            window.location.reload()
+                        }
                     })
                 },
                 openModal(product) {

@@ -52,6 +52,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
                                     </div>
                                 </div>
                             </th>
@@ -72,8 +73,8 @@
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
                                             <h5>{{ $item->name }}</h5>
                                         </td>
-                                        <td>  {{ $item->category->name }}</td>
-                                        <td>  {{ $item->store->name }}</td>
+                                        <td>  {{ $item->category->name ?? 'N/A' }}</td>
+                                        <td>  {{ $item->store->name ?? 'N/A' }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,7 +83,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="#">Detail</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
-                                                    <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.stores.destroy', ['store' => $item])}}">
+                                                    <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.products.destroy', ['product' => $item])}}">
                                                         @csrf
                                                         @method('delete')
                                                     </form>
@@ -249,6 +250,25 @@
             .then( res => {
                 if (res.status) {
                     $("#attachFestivalModal").modal('hide')
+                }
+            })
+        }
+
+        function deleteAll() {
+            let formD = new FormData();
+            formD.append('product_ids', JSON.stringify(selectedIds));
+            fetch(`{{route("admin.products.deteletAll")}}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'no-pagination' : 'no-pagination'
+                },
+                body: formD
+            }).then(res=>res.json())
+            .then( res => {
+                if (res.status) {
+                    window.location.reload()
                 }
             })
         }
