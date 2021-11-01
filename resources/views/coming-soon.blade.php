@@ -166,6 +166,16 @@
                                         <input type="text" value="" class="form-control" name="business_address" placeholder="Enter Business Address">
                                     </div>
                                     <input type="hidden" value="2" name="store_id">
+                                    @if (env('RECAPTCHA_ENABLE'))
+                                        <div class="form-group has-feedback">
+                                            @if(config('services.recaptcha.sitekey'))
+                                                <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.sitekey')}}"></div>
+                                            @endif
+                                            @error('g-recaptcha-response')
+                                                <span class="invalid-feedback d-block">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    @endif
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary addcart-btn btn-block" name="apply">Apply to Participate</button>
                                     </div>
@@ -190,7 +200,16 @@
             $('#participate-modal').modal('show');
         @endif
     </script>
-    
+    <script src="{{ asset('web_assets/iCheck/icheck.min.js') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        </script>
 </body>
 
 </html>

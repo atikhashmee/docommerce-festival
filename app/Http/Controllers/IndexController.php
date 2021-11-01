@@ -299,6 +299,7 @@ class IndexController extends Controller
             'email' => 'email',
             'phone_number' => 'required|unique:perticipants,phone_number',
             'business_name' => 'required',
+            'g-recaptcha-response' => 'required|recaptcha'
         ]);
 
         if ($validator->fails()) {
