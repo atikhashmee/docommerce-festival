@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::post('products/delete-all', [App\Http\Controllers\Admin\ProductController::class, 'bulkDelete'])->name('products.deteletAll');
         Route::resource('products', ProductController::class)->only('index', 'destroy');
         Route::resource('users', UserController::class);
+        Route::resource('orders', OrderController::class);
     });
 });
 

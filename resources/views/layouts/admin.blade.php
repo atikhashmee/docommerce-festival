@@ -55,6 +55,9 @@
                                 <a href="{{route('admin.users.index')}}" class="nav-link">Users</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('admin.orders.index')}}" class="nav-link">Orders</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.products.index')}}" class="nav-link">Products</a>
                             </li>
                             <li class="nav-item">
