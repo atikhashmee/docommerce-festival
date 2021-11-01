@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index_page');
+Route::get('/coming-soon', [App\Http\Controllers\IndexController::class, 'showComingSoon'])->name('coming_soon_page');
 Route::get('/store/{store_id}', [App\Http\Controllers\IndexController::class, 'storeData'])->name('store_page');
 Route::get('/category/{category_id}', [App\Http\Controllers\IndexController::class, 'categoryData'])->name('category_page');
 Route::get('/cart', [App\Http\Controllers\IndexController::class, 'cartView'])->name('cart_view_page');

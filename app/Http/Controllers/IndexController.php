@@ -287,4 +287,8 @@ class IndexController extends Controller
         $item->smallest_variant = $smallest_variant;
         return $item;
     }
+
+    public function showComingSoon() {
+        return view('coming-soon');
+    }
 }
