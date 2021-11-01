@@ -15,6 +15,8 @@ class ProductVariant extends Model
         'product_id',
         'festival_id',
         'store_id',
+        'discount_type',
+        'discount_amount',
         'name',
         'opt1_name',
         'opt2_name',

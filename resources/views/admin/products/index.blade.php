@@ -69,7 +69,7 @@
                                         <td><input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$item->id}}"></td>
                                         <td>{{ $item->id }}</td>
                                         <td>  
-                                            <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50">
+                                            {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
                                             <h5>{{ $item->name }}</h5>
                                         </td>
                                         <td>  {{ $item->category->name }}</td>

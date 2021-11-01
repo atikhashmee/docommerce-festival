@@ -19,6 +19,8 @@ class CreateProductVariantsTable extends Migration
             $table->unsignedBigInteger('festival_id');
             $table->unsignedBigInteger('store_id');
             $table->string('name');
+            $table->enum('discount_type', ['percentage', 'fixed']);
+            $table->decimal('discount_amount', 10, 2);
             $table->string('opt1_name');
             $table->string('opt2_name')->nullable();
             $table->string('opt3_name')->nullable();

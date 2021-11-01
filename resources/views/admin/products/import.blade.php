@@ -13,13 +13,13 @@
             <form action="{{route('admin.product.import')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
                 <div class="d-flex">
                     <div class="d-flex" v-if="products.length > 0">
-                        <div class="form-group">
+                        <div class="form-group custom-price-group">
                             <label for="">Fixed(1.00)</label>
-                            <input type="number" @keyup="changePriceAll($event, 'fixed')">
+                            <input type="number" value="0" @keyup="changePriceAll($event, 'fixed')">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group custom-price-group">
                             <label for="">Percentage(%)</label>
-                            <input type="number" @keyup="changePriceAll($event, 'percen')">
+                            <input type="number" value="0" @keyup="changePriceAll($event, 'percen')">
                         </div>
                         <div class="form-group">
                             <label for="">Category</label>
@@ -86,13 +86,13 @@
                                     </td>
                                     <td> 
                                         <span v-if="product.variants.length > 0">
-                                            <a href="#">Change Product Price</a>
+                                            <a href="javascript:void(0)" @click="openModal(product)">Change Product Price</a>
                                         </span>
                                         <span v-else>@{{ product.price }}</span>
                                     </td>
                                     <td>  
                                         <div v-if="product.variants.length > 0">
-                                            <a href="#">Change Product Price</a>
+                                            <a href="javascript:void(0)" @click="openModal(product)">Change Product Price</a>
                                         </div> 
                                         <div v-else>
                                             <table>
@@ -142,11 +142,105 @@
                 </div>
             </div>
         </div>
+          <!-- Modal -->
+  <div class="modal fade" id="variantmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Change Variants Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex">
+                <div class="form-group custom-price-group">
+                    <label for="">Fixed(1.00)</label>
+                    <input type="number" value="0" @keyup="changePriceAll($event, 'fixed', true)">
+                </div>
+                <div class="form-group custom-price-group">
+                    <label for="">Percentage(%)</label>
+                    <input type="number" value="0" @keyup="changePriceAll($event, 'percen', true)">
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Update Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="vr_p in variants_products">
+                        <td>@{{vr_p.product_name}}</td>
+                        <td>@{{vr_p.product_price}}</td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>Percentage (%)</td>
+                                    <td>
+                                        <input type="number" v-model="vr_p.percentage"  @keyup="changePrice(vr_p, 'percen', true)" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fixed</td>
+                                    <td>
+                                        <input type="number" v-model="vr_p.fixed"  @keyup="changePrice(vr_p, 'fixed', true)" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>New Price</td>
+                                    <td>
+                                        <input type="number" v-model="vr_p.new_price" placeholder="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="updateVariantPrice()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
     </section>
+@endsection
+@section('modals')
+   
 @endsection
 @section('styles')
     <style>
-      
+        /* For Firefox */
+        input[type='number'] {
+            -moz-appearance:textfield;
+        }
+        /* Webkit browsers like Safari and Chrome */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .custom-price-group {
+            border: 1px solid #0f0f0f;
+            border-radius: 14px;
+            background: #fff;
+            padding: 0px 10px;
+            margin-right: 10px;
+        }
+        .custom-price-group label{
+            margin: 0 auto;
+            width: 100%;
+        }
+        .custom-price-group input{
+            outline: none;
+            border: none;
+            width: 100%;
+        }
     </style>
 @endsection
 @section('scripts')
@@ -156,7 +250,8 @@
             el: "#festivalTableContainer", 
             data: {
                 selectedStore: [],
-                products: []
+                products: [],
+                variants_products: [],
             }, 
             methods: {
                 changeFestival(dom) {
@@ -182,46 +277,89 @@
                 checkSpecific() {
 
                 },
-                changePrice(prod, type) {
-                    if (this.products.length > 0) {
-                        this.products.forEach(element => {
-                            if (Number(prod.original_product_id) === Number(element.original_product_id)) {
+                changePrice(prod, type, isVariant=false) {
+                    if (isVariant) {
+                        if (this.variants_products.length > 0) {
+                            this.variants_products.forEach( item => {
+                                if (Number(item.id) === Number(prod.id)) {
+                                    if (type === 'percen') {
+                                        item.fixed = 0;
+                                        let dataPrice = Number(item.product_price) - Number((item.percentage / 100 )  * Number(item.product_price))
+                                        if (dataPrice > 0) {
+                                            item.new_price = Number(dataPrice).toFixed(2)
+                                        }
+                                    } else if (type === 'fixed') {
+                                        item.percentage = 0
+                                        let dataPrice =  Number(item.product_price) - Number(item.fixed)
+                                        if (dataPrice > 0) {
+                                            item.new_price =  Number(dataPrice).toFixed(2)
+                                        }
+                                    }
+                                }
+                            }) 
+                        }
+                    } else {
+                        if (this.products.length > 0) {
+                            this.products.forEach(element => {
+                                if (Number(prod.original_product_id) === Number(element.original_product_id)) {
+                                    if (type === 'percen') {
+                                        element.fixed = 0;
+                                        let dataPrice = Number(element.price) - Number((element.percentage / 100 )  * Number(element.price))
+                                        if (dataPrice > 0) {
+                                            element.new_price = Number(dataPrice).toFixed(2)
+                                        }
+                                    } else if (type === 'fixed') {
+                                        element.percentage = 0
+                                        let dataPrice =  Number(element.price) - Number(element.fixed)
+                                        if (dataPrice > 0) {
+                                            element.new_price =  Number(dataPrice).toFixed(2)
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                },
+                changePriceAll(evt, type, isVariant=false) {
+                    let rateValue = Number(evt.currentTarget.value)
+                    if (isVariant) {
+                        if (this.variants_products.length > 0) {
+                            this.variants_products.forEach( item => {
                                 if (type === 'percen') {
-                                    element.fixed = 0;
-                                    let dataPrice = Number(element.price) - Number((element.percentage / 100 )  * Number(element.price))
+                                    item.fixed = 0; item.percentage = rateValue
+                                    let dataPrice = Number(item.product_price) - Number((rateValue / 100 )  * Number(item.product_price))
+                                    if (dataPrice > 0) {
+                                        item.new_price = Number(dataPrice).toFixed(2)
+                                    }
+                                } else if (type === 'fixed') {
+                                    item.percentage = 0 
+                                    item.fixed = rateValue
+                                    let dataPrice =  Number(item.product_price) - Number(rateValue)
+                                    if (dataPrice > 0) {
+                                        item.new_price =  Number(dataPrice).toFixed(2)
+                                    }
+                                }
+                            }) 
+                        }
+                    } else {
+                        if (this.products.length > 0) {
+                            this.products.forEach(element => {
+                                if (type === 'percen') {
+                                    element.fixed = 0; element.percentage = rateValue
+                                    let dataPrice = Number(element.price) - Number((rateValue / 100 )  * Number(element.price))
                                     if (dataPrice > 0) {
                                         element.new_price = Number(dataPrice).toFixed(2)
                                     }
                                 } else if (type === 'fixed') {
-                                    element.percentage = 0
-                                    let dataPrice =  Number(element.price) - Number(element.fixed)
+                                    element.percentage = 0 
+                                    element.fixed = rateValue
+                                    let dataPrice =  Number(element.price) - Number(rateValue)
                                     if (dataPrice > 0) {
                                         element.new_price =  Number(dataPrice).toFixed(2)
                                     }
                                 }
-                            }
-                        });
-                    }
-                },
-                changePriceAll(evt, type) {
-                    let rateValue = Number(evt.currentTarget.value)
-                    if (this.products.length > 0) {
-                        this.products.forEach(element => {
-                            if (type === 'percen') {
-                                element.fixed = 0; element.percentage = rateValue
-                                let dataPrice = Number(element.price) - Number((rateValue / 100 )  * Number(element.price))
-                                if (dataPrice > 0) {
-                                    element.new_price = Number(dataPrice).toFixed(2)
-                                }
-                            } else if (type === 'fixed') {
-                                element.percentage = 0 
-                                element.fixed = rateValue
-                                let dataPrice =  Number(element.price) - Number(rateValue)
-                                if (dataPrice > 0) {
-                                    element.new_price =  Number(dataPrice).toFixed(2)
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 },
                 changeCategoryAll(evt) {
@@ -249,6 +387,72 @@
                     .then(res=>{
                         console.log(res, 'asdf');
                     })
+                },
+                openModal(product) {
+                    this.variants_products  =[]
+                    var allVarinats = [];
+                    let variantData = [...product.variants]
+                    variantData.forEach(item=>{
+                        let names = item.name.split('/');
+                        let obj = {}
+                        obj.opt1_value = typeof names[0] !== 'undefined' ? item.opt1_value: null 
+                        obj.opt2_value = typeof names[1] !== 'undefined' ? item.opt2_value: null 
+                        obj.opt3_value = typeof names[2] !== 'undefined' ? item.opt3_value: null 
+                        obj.old_price = item.old_price
+                        obj.price = item.price
+                        obj.percentage = item.percentage
+                        obj.fixed = item.fixed
+                        obj.new_price = item.new_price
+                        obj.id = item.id
+                        allVarinats.push(obj)
+                    })
+                    if (allVarinats.length > 0) {
+                        allVarinats.forEach(item=>{
+                            let var_product = {
+                                id: item.id,
+                                original_product_id: product.original_product_id,
+                                product_name: product.name,
+                                product_price: item.price,
+                                percentage: item.percentage,
+                                new_price : item.new_price,
+                                fixed : item.fixed,
+                            }
+                            if (item.opt1_value !== null) {
+                                var_product.product_name += '('+item.opt1_value+')'
+                            }
+                            if (item.opt2_value !== null) {
+                                var_product.product_name += '('+item.opt2_value+')'
+                            }
+                            if (item.opt3_value !== null) {
+                                var_product.product_name += '('+item.opt3_value+')'
+                            }
+                            this.variants_products.push(var_product)
+                        })
+                    }
+                   $("#variantmodal").modal('show') 
+                },
+                updateVariantPrice() {
+                    if (this.variants_products.length > 0) {
+                        this.variants_products.forEach(element => {
+                            if (this.products.length > 0) {
+                                this.products.forEach(product => {
+                                    if (Number(product.original_product_id) === Number(element.original_product_id)) {
+                                        if (product.variants.length > 0) {
+                                            product.variants.forEach( variant => {
+                                                if (Number(variant.id) === Number(element.id)) {
+                                                    variant.fixed = element.fixed;
+                                                    variant.percentage = element.percentage;
+                                                    variant.new_price = element.new_price;
+                                                }
+                                            })
+                                        }
+                                    }
+                                }) 
+                            }
+                        })
+                    }
+                    
+                   $("#variantmodal").modal('hide') 
                 }
             },
             watch: {

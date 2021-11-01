@@ -64,6 +64,13 @@ class ProductController extends Controller
                         $item['fixed'] = 0;
                         $item['new_price'] = 0;
                         $item['category_id'] = "";
+                        if (count($item['variants']) > 0) {
+                            foreach ($item['variants'] as &$variant) {
+                                $variant['percentage'] = 0;
+                                $variant['fixed'] = 0;
+                                $variant['new_price'] = 0;
+                            }
+                        }
                         array_push($productCollect, $item);
                     }
                 }
@@ -118,7 +125,6 @@ class ProductController extends Controller
                             'meta_description' => $item['meta_description'],
                             'visit_count' => $item['visit_count'],
                         ]);
-    
                         if (count($item['variants']) > 0) {
                             foreach ($item['variants'] as $variant) {
                                 ProductVariant::updateOrCreate([
@@ -130,6 +136,8 @@ class ProductController extends Controller
                                     'festival_id' => $request->festival_id,
                                     'store_id' => $request->store_id,
                                     'name' => $variant['name'],
+                                    'discount_type' => $variant['percentage'] == 0 ? 'fixed' : 'percentage',
+                                    'discount_amount' => $variant['percentage'] == 0 ?  $variant['fixed'] : $variant['percentage'],
                                     'opt1_name' => $variant['opt1_name'],
                                     'opt2_name' => $variant['opt2_name'],
                                     'opt3_name' => $variant['opt3_name'],
