@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\OrderDetail;
+use App\Models\Perticipant;
 use App\Models\OrderAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -290,5 +291,20 @@ class IndexController extends Controller
 
     public function showComingSoon() {
         return view('coming-soon');
+    }
+
+    public function storePerticipant(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'email',
+            'phone_number' => 'required|unique:perticipants,phone_number',
+            'business_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        Perticipant::create($request->all());
+        return redirect()->back()->withSuccess('Success');
     }
 }

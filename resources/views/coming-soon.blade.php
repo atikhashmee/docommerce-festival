@@ -133,33 +133,37 @@
                         <div class="col-md-12">
                             <div class="login-wrapper shadow-sm p-4 rounded bg-white">
                                 <h3 class="mb-3">Participate on DoCommerce 11-11 Festival</h3>
-                                <form method="POST" action="" novalidate="">                                   
+                                <form method="POST" action="{{ route('store.perticipant') }}">
+                                    @csrf                                   
                                     <div class="form-group">
-                                        <input type="text" required="" value="" class="form-control" name="name" placeholder="Enter Your Name">
+                                        <input type="text"  value="{{old('name')}}" class="form-control" name="name" placeholder="Enter Your Name">
+                                        @error('name')
+                                            <span class="text-danger">{{$message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" required="" value="" class="form-control" name="email" placeholder="Enter Your Email">
+                                        <input type="email"  value="{{old('email')}}" class="form-control" name="email" placeholder="Enter Your Email">
+                                        @error ('email')
+                                            <span class="text-danger">{{$message }}</span>
+                                        @enderror
                                     </div>
         
                                     <div class="form-group">
-                                        <input type="text" required="" value="" class="form-control" name="phone_number" placeholder="Enter Phone Number">
+                                        <input type="text"  value="{{old('phone_number')}}" class="form-control" name="phone_number" placeholder="Enter Phone Number">
+                                        @error('phone_number')
+                                            <span class="text-danger">{{$message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" required="" value="" class="form-control" name="business_name" placeholder="Enter Business Name">
+                                        <input type="text"  value="{{old('business_name')}}" class="form-control" name="business_name" placeholder="Enter Business Name">
+                                        @error ('business_name')
+                                            <span class="text-danger">{{$message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" required="" value="" class="form-control" name="business_address" placeholder="Enter Business Address">
-                                    </div>
-                                
-                                    <div class="login_footer form-group">
-                                        <div class="chek-form">
-                                            <div class="custome-checkbox">
-                                                <input class="form-check-input" required="" type="checkbox" id="exampleCheckbox2" name="agree_terms_and_policy" value="1">
-                                                <label class="form-check-label" for="exampleCheckbox2"><a href="#">I agree to terms &amp; Policy.</a></label>
-                                            </div>
-                                        </div>
+                                        <input type="text" value="" class="form-control" name="business_address" placeholder="Enter Business Address">
                                     </div>
                                     <input type="hidden" value="2" name="store_id">
                                     <div class="form-group">
@@ -182,6 +186,9 @@
         $('.participate-btn').click(function () {
             $('#participate-modal').modal('show');
         });
+        @if($errors->any())
+            $('#participate-modal').modal('show');
+        @endif
     </script>
     
 </body>
