@@ -54,6 +54,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a href="{{ url('admin') }}" class="nav-link">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.users.index')}}" class="nav-link">Users</a>
                             </li>
                             <li class="nav-item">
