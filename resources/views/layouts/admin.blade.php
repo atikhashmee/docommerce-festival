@@ -7,15 +7,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'DoCommerce 11-11 Festival') }}</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,400;1,700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->    
     <link rel="stylesheet" href="{{asset('web_assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('web_assets/css/adminStyle.css')}}">
     @yield('styles')
 </head>
 <body>
