@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Validator;
 class IndexController extends Controller
 {
     public function index() {
+        $festival = request()->festival; 
         $data = [];
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
-        ->where('store_festivals.festival_id', 1)->get();
+        ->where('store_festivals.festival_id', $festival->id)->get();
         $data['hot_deals']  = Product::withCount('variants')->take(10)->limit(10)->get();
         $data['exclusives'] = Product::withCount('variants')->take(1)->limit(10)->get();
         return view('index', $data);
@@ -66,20 +67,22 @@ class IndexController extends Controller
 
     public function storeData($store_id)
     {
+        $festival = request()->festival; 
         $data = [];
-        $data['exclusives'] = Product::where('store_id', $store_id)->where('festival_id', 1)->take(1)->limit(10)->get();        
+        $data['exclusives'] = Product::where('store_id', $store_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
-        ->where('category_festivals.festival_id', 1)->get();
+        ->where('category_festivals.festival_id', $festival->id)->get();
         return view('products', $data);
     }
 
     public function categoryData($category_id) {
+        $festival = request()->festival; 
         $data = [];
-        $data['exclusives'] = Product::where('category_id', $category_id)->where('festival_id', 1)->take(1)->limit(10)->get();        
+        $data['exclusives'] = Product::where('category_id', $category_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
-        ->where('category_festivals.festival_id', 1)->get();
+        ->where('category_festivals.festival_id', $festival->id)->get();
         return view('products', $data);
     }
 
