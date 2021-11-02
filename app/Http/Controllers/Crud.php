@@ -27,6 +27,9 @@ trait Crud {
         if ($request->showing) {
             $this->pagination = $request->showing;
         }
+        if (method_exists($this, 'indexQuery')) {
+            $itemSql = $this->indexQuery($request, $itemSql);
+        }
 
         if ($request->ajax()) {
             if ($request->hasHeader('no-pagination')) {

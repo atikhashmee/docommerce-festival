@@ -35,5 +35,10 @@ class StoreController extends Controller
         }
         return redirect()->back()->withSuccess('Data has been synced');
     }
+
+    public function indexQuery(Request $request, $query) {
+        return $query->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
+        ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id);
+    }
    
 }
