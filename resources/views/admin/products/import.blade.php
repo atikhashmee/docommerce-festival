@@ -37,17 +37,11 @@
                     </div>
                 </div>
                 <div class="search-form d-flex">
-                    <select name="festival_id" id="festival_id" class="form-control mr-2" @change="changeFestival($event)">
-                        <option value="">Select Festival</option>
-                        @if (count($festivals) > 0)
-                            @foreach ($festivals as $festival)
-                                <option value="{{$festival->id}}">{{$festival->name ?? 'No Name'}} </option>
-                            @endforeach
-                        @endif
-                    </select>
                     <select name="store_id" id="store_id" class="form-control" @change="changeStore($event)">
                         <option value="">Select Store</option>
-                        <option v-for="str in selectedStore" :value="str.id">@{{str.name}}</option>
+                        @foreach ($stores as $store)
+                            <option  value="{{$store->id}}">{{$store->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </form>
@@ -249,21 +243,10 @@
         let app = new Vue({
             el: "#festivalTableContainer", 
             data: {
-                selectedStore: [],
                 products: [],
                 variants_products: [],
             }, 
             methods: {
-                changeFestival(dom) {
-                    let url = `{{url("admin/stores/festival/")}}/${$("#festival_id").val()}`;
-                    fetch(url)
-                    .then(res=>res.json())
-                    .then(res => {
-                        if (res.length > 0) {
-                            this.selectedStore = [...res]
-                        }
-                    })
-                },
                 changeStore(dom) {
                     let url = `{{url("admin/products/get-store-products/")}}/${$("#store_id").val()}`;
                     fetch(url)
@@ -374,7 +357,6 @@
                     let formD = new FormData();
                     formD.append('products', JSON.stringify(this.products))
                     formD.append('store_id', $("#store_id").val())
-                    formD.append('festival_id', $("#festival_id").val())
                     fetch(`{{route("admin.product.import.store")}}`, {
                         method: 'POST',
                         headers: {

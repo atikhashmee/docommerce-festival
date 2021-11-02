@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Store;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -47,5 +48,10 @@ class Festival extends Model
     public function stores()
     {
         return $this->belongsToMany(Store::class, 'store_festivals', 'festival_id', 'store_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_festivals', 'festival_id', 'category_id');
     }
 }

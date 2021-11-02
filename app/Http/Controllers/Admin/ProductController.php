@@ -48,6 +48,10 @@ class ProductController extends Controller
         $data  = [];
         $data['festivals'] = Festival::get(); 
         $data['categories'] = Category::get(); 
+        $data['stores'] = Store::select('*')
+        ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
+        ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
+        ->get(); 
         $data['products'] = []; 
        
         return view('admin.products.import', $data);
@@ -84,7 +88,9 @@ class ProductController extends Controller
     }
 
     public function importStore(Request $request) {
-        $validator = Validator::make($request->all(), [
+        $data = $request->all();
+        $data['festival_id'] = auth()->guard('admin')->user()->festival_id;
+        $validator = Validator::make($data, [
             'store_id' => 'required',
             'festival_id' => 'required',
         ]);
@@ -101,10 +107,10 @@ class ProductController extends Controller
                         $product = Product::updateOrCreate([
                             'original_store_id' => $item['original_store_id'],
                             'original_product_id' => $item['original_product_id'],
-                            'festival_id' => $request->festival_id
+                            'festival_id' => $data['festival_id']
                         ], [
                             'category_id' => $item['category_id'],
-                            'store_id' => $request->store_id,
+                            'store_id' => $data['store_id'],
                             'original_store_id' => $item['original_store_id'],
                             'original_product_id' => $item['original_product_id'],
                             'name' => $item['name'],
@@ -130,11 +136,11 @@ class ProductController extends Controller
                                 ProductVariant::updateOrCreate([
                                     'store_id' => $item['original_store_id'],
                                     'product_id' => $product->id,
-                                    'festival_id' => $request->festival_id
+                                    'festival_id' => $data['festival_id']
                                 ], [
                                     'product_id' => $product->id,
-                                    'festival_id' => $request->festival_id,
-                                    'store_id' => $request->store_id,
+                                    'festival_id' => $data['festival_id'],
+                                    'store_id' => $data['store_id'],
                                     'name' => $variant['name'],
                                     'discount_type' => $variant['percentage'] == 0 ? 'fixed' : 'percentage',
                                     'discount_amount' => $variant['percentage'] == 0 ?  $variant['fixed'] : $variant['percentage'],
