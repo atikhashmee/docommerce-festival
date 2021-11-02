@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function index(Request $request) {
         $data = [];
-        $orders = Order::with('orderDetails')->select('orders.*')
+        $orders = Order::select('orders.*')->with(['orderDetails', 'orderDetails.store'])
         ->paginate(50);
         $data['orders'] = $orders;
         return view('admin.orders.index', $data);
