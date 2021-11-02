@@ -6,8 +6,8 @@
 
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
-        <div class="d-flex flex-row flex-row-reverse">
-            <a href="{{route('admin.products.index')}}" class="btn btn-success">Back</a>
+        <div class="d-flex flex-row flex-row-reverse mb-4">
+            <a href="{{route('admin.products.index')}}" class="btn btn-primary btn-sec"><i class="fas fa-angle-double-left"></i> Back</a>
         </div>
         <div class="card">
             <form action="{{route('admin.product.import')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="search-form d-flex">
-                    <select name="festival_id" id="festival_id" class="form-control" @change="changeFestival($event)">
+                    <select name="festival_id" id="festival_id" class="form-control mr-2" @change="changeFestival($event)">
                         <option value="">Select Festival</option>
                         @if (count($festivals) > 0)
                             @foreach ($festivals as $festival)

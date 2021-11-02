@@ -8,7 +8,7 @@
     <section class="container">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-secondary float-right" href="{{route('admin.categories.index')}}">Back</a>
+                <a class="btn btn-secondary float-right" href="{{route('admin.categories.index')}}"><i class="fas fa-angle-double-left"></i> Back</a>
             </div>
             <div class="card-body">
                 @if ($errors->any())

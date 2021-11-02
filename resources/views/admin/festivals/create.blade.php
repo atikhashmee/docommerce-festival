@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    <section class="container-fluid">
+    <section class="container">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-secondary float-right" href="{{route('admin.festivals.index')}}">Back</a>
+                <a class="btn btn-secondary float-right" href="{{route('admin.festivals.index')}}"><i class="fas fa-angle-double-left"></i> Back</a>
             </div>
             <div class="card-body">
                 @if ($errors->any())

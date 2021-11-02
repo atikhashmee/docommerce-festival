@@ -6,14 +6,14 @@
 
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
-        <div class="d-flex flex-row flex-row-reverse">
-            <a href="{{route('admin.product.import')}}" class="btn btn-success">Import</a>
+        <div class="d-flex flex-row flex-row-reverse mb-4">
+            <a href="{{route('admin.product.import')}}" class="btn btn-secondary"><i class="fas fa-upload"></i> Import</a>
         </div>
         <div class="card">
             <form action="{{route('admin.products.index')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
                 <div class="d-flex"></div>
                 <div class="search-form d-flex">
-                    <select name="store_id" id="store_id" class="form-control">
+                    <select name="store_id" id="store_id" class="form-control mr-2">
                         <option value="">Select Store</option>
                         @if (count($stores) > 0)
                             @foreach ($stores as $store)
@@ -21,7 +21,7 @@
                             @endforeach
                         @endif
                     </select>
-                    <select name="category_id" id="category_id" class="form-control">
+                    <select name="category_id" id="category_id" class="form-control mr-2">
                         <option value="">Select Category</option>
                         @if (count($categories) > 0)
                             @foreach ($categories as $category)
@@ -40,7 +40,7 @@
                         <thead>
                         <tr>
                             <th class="massActionWrapper">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle"
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
                                         onclick="checkAll()">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
@@ -187,7 +187,7 @@
                     }
                 });
 
-                $(".massActionWrapper").attr('colspan', '5')
+                $(".massActionWrapper").attr('colspan', '6')
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
                 })

@@ -22,7 +22,7 @@
                         <thead>
                         <tr>
                             <th class="massActionWrapper">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle"
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
                                         onclick="checkAll()">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
@@ -212,7 +212,7 @@
                     }
                 });
 
-                $(".massActionWrapper").attr('colspan', '5')
+                $(".massActionWrapper").attr('colspan', '6')
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
                 })

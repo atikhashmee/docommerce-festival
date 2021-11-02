@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-    <section class="container" id="festivalTableContainer">
+    <section class="container-fluid" id="festivalTableContainer">
         <form action="{{route('admin.orders.index')}}" method="GET" id="filter_form"></form>
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <a class="btn btn-primary" href="{{route('admin.users.create')}}">Create</a>
+                <a class="btn btn-primary" href="{{route('admin.users.create')}}"><i class="fas fa-plus-square"></i> Create</a>
                     <div class="search-form d-flex">
                         <input placeholder="Names" name="search[name]" type="search" class="form-control">
                         <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
@@ -22,7 +22,7 @@
                         <thead>
                         <tr>
                             <th class="massActionWrapper">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle"
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
                                         @click="checkAll">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
