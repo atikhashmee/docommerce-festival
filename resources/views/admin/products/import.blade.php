@@ -11,19 +11,19 @@
         </div>
         <div class="card">
             <form action="{{route('admin.product.import')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
-                <div class="d-flex">
-                    <div class="d-flex" v-if="products.length > 0">
-                        <div class="form-group custom-price-group">
+                <div class="">
+                    <div class="d-flex align-items-start" v-if="products.length > 0">
+                        <div class="form-group custom-price-group d-inline-block">
                             <label for="">Fixed(1.00)</label>
                             <input type="number" value="0" @keyup="changePriceAll($event, 'fixed')">
                         </div>
-                        <div class="form-group custom-price-group">
+                        <div class="form-group custom-price-group d-inline-block">
                             <label for="">Percentage(%)</label>
                             <input type="number" value="0" @keyup="changePriceAll($event, 'percen')">
                         </div>
-                        <div class="form-group">
-                            <label for="">Category</label>
-                            <select name="category_id" @change="changeCategoryAll($event)">
+                        <div class="form-group d-inline-block mr-2">
+                            <!-- <label for="">Category</label> -->
+                            <select name="category_id" class="form-control" @change="changeCategoryAll($event)">
                                 <option value="">Select Category</option>
                                 @if (count($categories) > 0)
                                     @foreach ($categories as $category)
@@ -33,7 +33,7 @@
                             </select>
                         </div>
                         
-                        <button class="btn btn-success" @click="importStoredData()" type="button">Update</button>
+                        <button class="btn btn-primary" @click="importStoredData()" type="button">Update</button>
                     </div>
                 </div>
                 <div class="search-form d-flex">
@@ -50,8 +50,8 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th class="massActionWrapper">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle" onclick="checkAll()">
+                            <th class="massActionWrapper" width="66px">
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0" onclick="checkAll()">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
                                        data-placement="top" title="Select All"></i>
@@ -93,19 +93,19 @@
                                                 <tr>
                                                     <td>Percentage (%)</td>
                                                     <td>
-                                                        <input type="number" v-model="product.percentage"  @keyup="changePrice(product, 'percen')" placeholder="">
+                                                        <input type="number" class="form-control" v-model="product.percentage"  @keyup="changePrice(product, 'percen')" placeholder="">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Fixed</td>
                                                     <td>
-                                                        <input type="number" v-model="product.fixed"  @keyup="changePrice(product, 'fixed')" placeholder="">
+                                                        <input type="number" class="form-control" v-model="product.fixed"  @keyup="changePrice(product, 'fixed')" placeholder="">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>New Price</td>
                                                     <td>
-                                                        <input type="number" v-model="product.new_price" placeholder="">
+                                                        <input type="number" class="form-control" v-model="product.new_price" placeholder="">
                                                     </td>
                                                 </tr>
                                             </table>
@@ -174,19 +174,19 @@
                                 <tr>
                                     <td>Percentage (%)</td>
                                     <td>
-                                        <input type="number" v-model="vr_p.percentage"  @keyup="changePrice(vr_p, 'percen', true)" placeholder="">
+                                        <input type="number" class="form-control" v-model="vr_p.percentage"  @keyup="changePrice(vr_p, 'percen', true)" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Fixed</td>
                                     <td>
-                                        <input type="number" v-model="vr_p.fixed"  @keyup="changePrice(vr_p, 'fixed', true)" placeholder="">
+                                        <input type="number" class="form-control" v-model="vr_p.fixed"  @keyup="changePrice(vr_p, 'fixed', true)" placeholder="">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>New Price</td>
                                     <td>
-                                        <input type="number" v-model="vr_p.new_price" placeholder="">
+                                        <input type="number" class="form-control" v-model="vr_p.new_price" placeholder="">
                                     </td>
                                 </tr>
                             </table>
@@ -220,15 +220,18 @@
             margin: 0;
         }
         .custom-price-group {
-            border: 1px solid #0f0f0f;
-            border-radius: 14px;
+            border: 1px solid #d4a9df;
+            border-radius: 4px;
             background: #fff;
             padding: 0px 10px;
             margin-right: 10px;
+            width: 120px;
         }
         .custom-price-group label{
             margin: 0 auto;
             width: 100%;
+            color: rgba(0,0,0,0.5);
+            font-size: 80%;
         }
         .custom-price-group input{
             outline: none;
