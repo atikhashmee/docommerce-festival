@@ -115,33 +115,7 @@
         </form>
     </section>
 @endsection
-@section('modals')
-  <!-- Modal -->
-  <div class="modal fade" id="attachFestivalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Attach to Festival</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="">Festival Lists</label>
-                <select name="festival_id" id="festival_id" class="form-control">
-                    <option value="">Select option</option>
-                </select>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="submitAttachToFestival()">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-@endsection
+
 @section('styles')
     <style>
         th > .sort {
@@ -235,24 +209,7 @@
             })
         }
 
-        function submitAttachToFestival() {
-            let formD = new FormData();
-            formD.append('festival_id', document.querySelector('#festival_id').value);
-            formD.append('store_ids', JSON.stringify(selectedIds));
-            fetch(`{{route("admin.attach.festival.store.data")}}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formD
-            }).then(res=>res.json())
-            .then( res => {
-                if (res.status) {
-                    $("#attachFestivalModal").modal('hide')
-                }
-            })
-        }
+      
 
         function deleteAll() {
             let formD = new FormData();

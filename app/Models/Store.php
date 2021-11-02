@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Product;
 use App\Models\Festival;
+use App\Models\StoreFestival;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -47,6 +48,13 @@ class Store extends Model
     public function festivals()
     {
         return $this->belongsToMany(Festival::class, 'store_festivals', 'festival_id', 'store_id');
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($store) {
+            StoreFestival::create(['store_id' => $store->id, 'festival_id' => auth()->guard('admin')->user()->festival_id]);
+        });
     }
 
     /**

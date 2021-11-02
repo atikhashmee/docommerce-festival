@@ -46,7 +46,9 @@
             </div>
 
         </div>
+
     </section>
+<<<<<<< HEAD
 
     <div class="container">
         <div class="row py-5">
@@ -153,3 +155,6 @@
         </div>
     </div>
 @endsection
+=======
+@endsection
+>>>>>>> 9dc88e31a008380085a2cf1c7d4c7ddfef1a16f7
