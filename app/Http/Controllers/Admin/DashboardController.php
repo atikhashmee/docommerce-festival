@@ -29,9 +29,7 @@ class DashboardController extends Controller
     }
 
     public function postFestival(Request $request) {
-        $admin = Admin::find(auth()->guard('admin')->user()->id);
-        $admin->festival_id = $request->festival_id;
-        $admin->save();
+        Admin::whereNotNull('id')->update(['festival_id' => $request->festival_id]);
         return redirect()->back()->withSuccess('Festival has been set');
     }
 }
