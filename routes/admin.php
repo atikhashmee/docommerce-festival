@@ -18,7 +18,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::post('orders-status-update', [App\Http\Controllers\Admin\OrderController::class, 'updateOrderStatus'])->name('order.update.status');
         Route::get('orders/{order_id}', [App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('order.change.status');
         Route::resource('orders', OrderController::class);
-        Route::middleware(['configFestival'])->group(function () {
+        Route::middleware(['configFestival', 'getFestival'])->group(function () {
             Route::get('sync-store-data', [App\Http\Controllers\Admin\StoreController::class, 'syncStoreData'])->name('sync.store.data');
             Route::resource('stores', StoreController::class)->only('index', 'destroy');
             Route::resource('categories', CategoryController::class);

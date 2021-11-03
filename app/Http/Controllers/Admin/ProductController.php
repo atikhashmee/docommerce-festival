@@ -24,8 +24,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $data  = [];
-        $data['stores'] = Store::get();
-        $data['categories'] = Category::get(); 
+        $festival = $request->festival;
+        $data['stores'] = Store::select('*')
+        ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
+        ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
+        ->get();
+        $data['categories'] = Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        ->where('category_festivals.festival_id', $festival->id)->get(); 
         $productSql = Product::select('*');
         $productSql->where(function($q) use($request) {
             if ($request->category_id) {
@@ -46,8 +51,10 @@ class ProductController extends Controller
 
     public function import(Request $request) {
         $data  = [];
+        $festival = $request->festival;
         $data['festivals'] = Festival::get(); 
-        $data['categories'] = Category::get(); 
+        $data['categories'] = Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        ->where('category_festivals.festival_id', $festival->id)->get(); 
         $data['stores'] = Store::select('*')
         ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)

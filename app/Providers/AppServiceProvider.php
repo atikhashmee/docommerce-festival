@@ -25,9 +25,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        view()->composer('layouts._menu', function ($view) {
+        view()->composer('layouts._menu', function ($view)  {
+            $festival = getFestival();
             $view->with('categories', \App\Models\Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
-            ->where('category_festivals.festival_id', 7)->get());
+            ->where('category_festivals.festival_id', $festival->id)->get());
         });
     }
 }
