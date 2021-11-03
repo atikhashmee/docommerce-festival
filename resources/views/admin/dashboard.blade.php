@@ -170,7 +170,6 @@
         </div>
     </div>
 @endsection
-<<<<<<< HEAD
 
 @section('scripts')
     <script>
@@ -261,5 +260,3 @@
         });
     </script>
 @endsection
-=======
->>>>>>> 2ed5c5550bc7aacf117a7e9320d16fa397b5548c
