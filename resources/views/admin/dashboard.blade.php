@@ -13,35 +13,35 @@
             <div class="col-md-2">
                 <div class="dashboard-glance dg1 rounded shadow p-4 mb-3">
                     <p class="mb-1">Total Orders</p>
-                    <h3 class="font-weight-bold m-0">500</h3>
+                    <h3 class="font-weight-bold m-0">{{$total_orders}}</h3>
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="dashboard-glance dg2 rounded shadow p-4 mb-3">
                     <p class="mb-1">Today's Orders</p>
-                    <h3 class="font-weight-bold m-0">30</h3>
+                    <h3 class="font-weight-bold m-0">{{$today_total_orders}}</h3>
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="dashboard-glance dg3 rounded shadow p-4 mb-3">
                     <p class="mb-1">Total Sales</p>
-                    <h3 class="font-weight-bold m-0">৳150000</h3>
+                    <h3 class="font-weight-bold m-0">৳{{$total_sales}}</h3>
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="dashboard-glance dg4 rounded shadow p-4 mb-3">
                     <p class="mb-1">Today's Sales</p>
-                    <h3 class="font-weight-bold m-0">৳2000</h3>
+                    <h3 class="font-weight-bold m-0">৳{{$today_total_sales}}</h3>
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="dashboard-glance dg5 rounded shadow p-4 mb-3">
                     <p class="mb-1">Pending Orders</p>
-                    <h3 class="font-weight-bold m-0">14</h3>
+                    <h3 class="font-weight-bold m-0">{{$pending_orders}}</h3>
                 </div>
             </div>
 
@@ -64,36 +64,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Abc</td>
-                                <td>40</td>
-                                <td>৳7000</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Def</td>
-                                <td>35</td>
-                                <td>৳6000</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Ghi</td>
-                                <td>32</td>
-                                <td>৳5800</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Jkl</td>
-                                <td>28</td>
-                                <td>৳5500</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Mno</td>
-                                <td>25</td>
-                                <td>৳4000</td>
-                            </tr>
+                            @if (count($top_five_stores) > 0)
+                                @foreach ($top_five_stores as $key1 => $stor)
+                                    <tr>
+                                        <td>{{++$key1}}</td>
+                                        <td>{{$stor->name}}</td>
+                                        <td>{{$stor->total_orders}}</td>
+                                        <td>৳7000</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                           
                         </tbody>
                     </table>
                 </div>
@@ -112,36 +93,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Figaro Pitted Green Olives</td>
-                                <td>Abc</td>
-                                <td>100</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Foodex Sriracha Chili Sauce</td>
-                                <td>Xyz</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Hershey Caramel Syrup</td>
-                                <td>Ghi</td>
-                                <td>19</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Hosen sweet Corn</td>
-                                <td>Abc</td>
-                                <td>18</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Cadbury Cocoa Powder</td>
-                                <td>Def</td>
-                                <td>15</td>
-                            </tr>
+                            @if (count($top_five_products) > 0)
+                                @foreach ($top_five_products as $key => $pro)
+                                    <tr>
+                                        <td>{{++$key}}</td>
+                                        <td>{{$pro->name}}</td>
+                                        <td>{{$pro->store->name ?? 'N/A'}}</td>
+                                        <td>{{$pro->total_freq}}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            
                         </tbody>
                     </table>
                 </div>
