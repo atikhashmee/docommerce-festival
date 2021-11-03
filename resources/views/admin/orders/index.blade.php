@@ -8,13 +8,13 @@
     <section class="container-fluid" id="festivalTableContainer">
         <form action="{{route('admin.orders.index')}}" method="GET" id="filter_form"></form>
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
+            {{-- <div class="card-header d-flex justify-content-between">
                 <a class="btn btn-primary" href="{{route('admin.users.create')}}"><i class="fas fa-plus-square"></i> Create</a>
                     <div class="search-form d-flex">
                         <input placeholder="Names" name="search[name]" type="search" class="form-control">
                         <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
                     </div>
-            </div>
+            </div> --}}
         
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -58,9 +58,12 @@
                                 </div> --}}
                             </th>
                             <th>#Order&nbsp;ID</th>
-                            <th>User</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Payment Method</th>
+                            <th>Product Source</th>
+                            <th>Status</th>
                             <th>Amount</th>
-                            <th>Store</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -71,27 +74,24 @@
                                         <td>
                                             <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}">
                                         </td>
+                                        <td>  {{ $order->id }} </td>
+                                        <td>  {{ $order->created_at }} </td>
+                                        <td>  {{ $order->user->name }} </td>
+                                        <td>  Cash-on                  </td>
+                                        <td> {{ $order->orderDetails[0]->store->name ?? 'N/A'  }}</td>
+                                        <td>  {{ $order->status  }}</td>
+                                        <td>  {{ $order->total_final_amount  }}</td>
                                         <td>
-                                            {{ $order->id }}
-                                        </td>
-                                        <td>  {{ $order->user->name }}</td>
-                                        <td>  {{ $order->email ?? 'N/A' }}</td>
-                                        <td>  {{ $order->phone_number ?? 'N/A' }}</td>
-                                        <td>
-                                            {{-- <div class="dropdown">
+                                            <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="#">Detail</a>
-                                                    <a class="dropdown-item" href="{{route('admin.users.edit', ['user' => $item->id])}}">Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
-                                                    <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.users.destroy', ['user' => $item])}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                    </form>
+                                                    <a class="dropdown-item" href="">Change Status</a>
+                                                    <a class="dropdown-item" href="">Cancel & Refund</a>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
