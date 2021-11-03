@@ -6,69 +6,33 @@
 
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
-        <form action="{{route('admin.orders.index')}}" method="GET" id="filter_form"></form>
+        <form action="{{route('admin.orders.index')}}" method="GET" id="filter_form">
+            <input type="hidden" name="from" id="filter_date_from">
+            <input type="hidden" name="to" id="filter_date_to">
+            <input type="hidden" name="status" id="statusFilter">
+            <input type="hidden" name="search_key" id="searchTxt">
+        </form>
       
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 second-child-menu">
-                        <a href="javascript:void(0)"
-                           class="btn btn-primary">All
-                            <span class="sr-only">(current)</span>
-                        </a>
-        
-                        <a href="javascript:void(0)"
-                           class="btn btn-primary">Pending
-                            <span class="sr-only" >(current)</span>
-                        </a>
-        
-                        <a href="javascript:void(0)"
-                           class="btn btn-primary">In Progress
-                            <span class="sr-only">(current)</span>
-                        </a>
-        
-                        <a href="javascript:void(0)"
-                           class="btn btn-primary">Delivered
-                            <span class="sr-only">(current)</span>
-                        </a>
-        
-                        <a href="javascript:void(0)"
-                           class="btn btn-primary">Failed
-                            <span class="sr-only">(current)</span>
-                        </a>
+                    <div class="col-md-6">
+                        <a href="javascript:void(0)" onclick="changeFilter('all', 'filter')" class="btn btn-primary">All<span class="sr-only">(current)</span></a>
+                        <a href="javascript:void(0)" onclick="changeFilter('Pending', 'filter')" class="btn btn-primary">Pending<span class="sr-only" >(current)</span></a>
+                        <a href="javascript:void(0)" onclick="changeFilter('In Progress', 'filter')" class="btn btn-primary">In Progress<span class="sr-only">(current)</span></a>
+                        <a href="javascript:void(0)" onclick="changeFilter('Delivered', 'filter')" class="btn btn-primary">Delivered<span class="sr-only">(current)</span></a>
+                        <a href="javascript:void(0)" onclick="changeFilter('Failed', 'filter')" class="btn btn-primary">Failed<span class="sr-only">(current)</span></a>
                     </div>
-                    <div class="col-md-6 second-child-menu form-inline text-right">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-inline">
-                                        <a href="javascript:void(0)" class="btn btn-primary"
-                                           data-toggle="modal"
-                                           data-target="#export"><i class="fa fa-cloud-download" aria-hidden="true"></i>
-                                            &nbsp;&nbsp;Export</a>
-        
-                                    <div class="input-group">
-                                        <div class="form-group">
-                                            <input type="text" id="datepicker-from" name="from"
-                                                   placeholder="From"
-                                                   class="form-control w-150">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" id="datepicker-to" name="to"
-                                                   placeholder="To"
-                                                   class="form-control w-150">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control w-150"
-                                                   placeholder="{{ __('order.order_id') . ", " . __('order.customer') }}"
-                                                   name="keyword" v-model="params.keyword" type="search"
-                                                   @keyup.enter="updateCurrentPage">
-                                        </div>
-                                        <div class="btn btn-primary"><i
-                                                class="fa fa-search" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="form-inline justify-content-end">
+                            <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#export"><i class="fa fa-cloud-download" aria-hidden="true"></i>Export</a>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="daterangepicker" placeholder="Start - End Date" autocomplete="off">
                             </div>
+                            <div class="form-group">
+                                <input class="form-control" onblur="searchData(this)" placeholder="Order Id, Customer" name="keyword" type="search">
+                            </div>
+                            <div class="btn btn-primary" onclick="submitForm()"><i class="fa fa-search" aria-hidden="true"></i></div>
                         </div>
                     </div>
                 </div>
@@ -176,15 +140,10 @@
                 </div>
             </div>
         </div>
-
-        <form method="POST" id="bulk-trash-or-destroy" action="#" accept-charset="UTF-8" class="data-form non-validate">
-            @csrf
-            @method('delete')
-            <input type="hidden" name="type">
-        </form>
     </section>
 @endsection
 @section('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style>
         th > .sort {
             float: right;
@@ -201,65 +160,95 @@
 @endsection
 @section('scripts')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script>
-        $("#festivalTableContainer").DataSorting({    
-            formId : "filter_form",
-            initSort : `<?=json_encode(request('sort'))?>`,
-            initSearch : `<?=json_encode(request('search'))?>`
+
+        $('#daterangepicker').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('#daterangepicker').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            $("#filter_date_from").val(picker.startDate.format('YYYY-MM-DD'))
+            $("#filter_date_to").val(picker.endDate.format('YYYY-MM-DD'))
+        });
+
+        $('#daterangepicker').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            $("#filter_date_from").val('')
+            $("#filter_date_to").val('')
         });
 
         function changeStatus(status, order_id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `Yes, change it!`
-        }).then((result) => {
-            if (result.value) {
-                updateStatus(status, order_id);
-            }
-        });
-    }
-
-    function updateStatus(status, order_id) {
-        let formD = new FormData();
-        formD.append("status", status);
-        formD.append("order_id", order_id);
-        fetch(`{{route("admin.order.update.change")}}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: formD
-        }).then(res=>res.json())
-        .then(res=>{
-            if (!res.status) {
-                let messages = '';
-                if (typeof(res.data) === 'object') {
-                    for (const [key, value] of Object.entries(res.data)) {
-                        messages += '<li>' + value[0] + '</li>';
-                    }
-                } else {
-                    messages = res.data;
+            Swal.fire({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Yes, change it!`
+            }).then((result) => {
+                if (result.value) {
+                    updateStatus(status, order_id);
                 }
+            });
+        }
 
-                Swal.fire({
-                    type: 'error',
-                    title: 'Whoops! Something went wrong!',
-                    html: '    <div class="alert alert-danger">\n' +
-                        '        <ul>\n' +
-                        messages +
-                        '        </ul>\n' +
-                        '    </div>\n'
-                });
-            } else {
-                window.location.reload()
+        function updateStatus(status, order_id) {
+            let formD = new FormData();
+            formD.append("status", status);
+            formD.append("order_id", order_id);
+            fetch(`{{route("admin.order.update.change")}}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formD
+            }).then(res=>res.json())
+            .then(res=>{
+                if (!res.status) {
+                    let messages = '';
+                    if (typeof(res.data) === 'object') {
+                        for (const [key, value] of Object.entries(res.data)) {
+                            messages += '<li>' + value[0] + '</li>';
+                        }
+                    } else {
+                        messages = res.data;
+                    }
+
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Whoops! Something went wrong!',
+                        html: '    <div class="alert alert-danger">\n' +
+                            '        <ul>\n' +
+                            messages +
+                            '        </ul>\n' +
+                            '    </div>\n'
+                    });
+                } else {
+                    window.location.reload()
+                }
+            })
+        }
+
+        function changeFilter(status, type) {
+            if (type==='filter') {
+                $("#statusFilter").val(status)
+                submitForm();
             }
-        })
-    }
+        }
+
+        function searchData(evt) {
+            document.querySelector("#searchTxt").value = evt.value
+        }
+        function submitForm() {
+            $("#filter_form").submit()
+        }
     </script>
 @endsection
 

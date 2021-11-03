@@ -12,9 +12,23 @@ class OrderController extends Controller
 {
     public function index(Request $request) {
         $data = [];
-        $orders = Order::select('orders.*')->with(['orderDetails', 'orderDetails.store'])
-        ->paginate(50);
-        $data['orders'] = $orders;
+        $sql = Order::select('orders.*')->with(['orderDetails', 'orderDetails.store']);
+
+        if (isset($request->search_key)) {
+            $sql->where('orders.id', 'LIKE', '%' . $request->search_key . '%');
+            // $sql->orWhere('products.id', 'LIKE', '%' . $request->search_key . '%');
+        }
+        if (isset($request->status) && $request->status != 'all') {
+            $sql->where('orders.status', 'LIKE', $request->status);
+        }
+        if (isset($request->from)) {
+            $sql->whereDate('orders.created_at', '>=', $request->from);
+        }
+        if (isset($request->to)) {
+            $sql->whereDate('orders.created_at', '<=', $request->to);
+        }
+       
+        $data['orders'] = $sql->paginate(50);
         return view('admin.orders.index', $data);
     }
 
