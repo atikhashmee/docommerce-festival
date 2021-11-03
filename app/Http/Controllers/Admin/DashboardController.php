@@ -31,8 +31,9 @@ class DashboardController extends Controller
                                         ->whereNotNull('P.total_freq')
                                         ->limit(5)
                                         ->get(); 
-        $data['top_five_stores'] = Store::select('stores.*', 'O.total_orders')
+        $data['top_five_stores']    = Store::select('stores.*', 'O.total_orders', 'OD.total_sales')
                                         ->leftJoin(\DB::raw("(SELECT count(DISTINCT order_details.order_id) as total_orders, original_store_id FROM order_details GROUP BY original_store_id) AS O"), 'O.original_store_id', '=', 'stores.original_store_id')
+                                        ->leftJoin(\DB::raw("(SELECT SUM(orders.total_final_amount) as total_sales, order_details.original_store_id FROM orders INNER JOIN order_details ON order_details.order_id = orders.id GROUP BY order_details.original_store_id) as OD"), 'OD.original_store_id', '=', 'stores.original_store_id')
                                         ->orderBy('O.total_orders', 'DESC')
                                         ->whereNotNull('O.total_orders')
                                         ->limit(5)

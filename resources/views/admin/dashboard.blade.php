@@ -70,7 +70,7 @@
                                         <td>{{++$key1}}</td>
                                         <td>{{$stor->name}}</td>
                                         <td>{{$stor->total_orders}}</td>
-                                        <td>৳7000</td>
+                                        <td>৳{{$stor->total_sales}}</td>
                                     </tr>
                                 @endforeach
                             @endif
