@@ -16,6 +16,7 @@
     <!-- Styles -->    
     <link rel="stylesheet" href="{{asset('web_assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/chart.js/Chart.min.css')}}">
     <link rel="stylesheet" href="{{asset('web_assets/css/adminStyle.css')}}">
     @yield('styles')
 </head>
@@ -104,6 +105,7 @@
     </div>
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('admin_assets/plugins/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/script.js')}}"></script>
     @yield('scripts')
 </body>

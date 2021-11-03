@@ -152,5 +152,114 @@
                 
             </div>
         </div>
+
+        <div class="row py-5">
+            <div class="col-md-6">
+                <h3 class="mb-3 font-weight-bold">Orders Volume</h3>
+                <div class="graphsDiv">
+                    <canvas id="tOrders" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h3 class="mb-3 font-weight-bold">Sales Volume (in thousands)</h3>
+                <div class="graphsDiv">
+                    <canvas id="tSales" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+<<<<<<< HEAD
+
+@section('scripts')
+    <script>
+        const ctx = document.getElementById('tOrders');
+        const ctx2 = document.getElementById('tSales');
+
+        const tOrders = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Nov 11","Nov 12","Nov 13","Nov 14","Nov 15","Nov 16","Nov 17","Nov 18"],
+                datasets: [{
+                    label: 'Orders Volume',
+                    data: ["11","25","30","20","35","55","80","215"],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+        const tSales = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ["Nov 11","Nov 12","Nov 13","Nov 14","Nov 15","Nov 16","Nov 17","Nov 18"],
+                datasets: [{
+                    label: 'Sales Volume (in thousands)',
+                    data: ["5","15","35","45","25","40","75","125"],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+@endsection
+=======
+>>>>>>> 2ed5c5550bc7aacf117a7e9320d16fa397b5548c
