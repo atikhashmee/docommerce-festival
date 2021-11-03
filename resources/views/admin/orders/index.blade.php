@@ -7,14 +7,72 @@
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
         <form action="{{route('admin.orders.index')}}" method="GET" id="filter_form"></form>
+      
         <div class="card">
-            {{-- <div class="card-header d-flex justify-content-between">
-                <a class="btn btn-primary" href="{{route('admin.users.create')}}"><i class="fas fa-plus-square"></i> Create</a>
-                    <div class="search-form d-flex">
-                        <input placeholder="Names" name="search[name]" type="search" class="form-control">
-                        <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 second-child-menu">
+                        <a href="javascript:void(0)"
+                           class="btn btn-primary">All
+                            <span class="sr-only">(current)</span>
+                        </a>
+        
+                        <a href="javascript:void(0)"
+                           class="btn btn-primary">Pending
+                            <span class="sr-only" >(current)</span>
+                        </a>
+        
+                        <a href="javascript:void(0)"
+                           class="btn btn-primary">In Progress
+                            <span class="sr-only">(current)</span>
+                        </a>
+        
+                        <a href="javascript:void(0)"
+                           class="btn btn-primary">Delivered
+                            <span class="sr-only">(current)</span>
+                        </a>
+        
+                        <a href="javascript:void(0)"
+                           class="btn btn-primary">Failed
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </div>
-            </div> --}}
+                    <div class="col-md-6 second-child-menu form-inline text-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-inline">
+                                        <a href="javascript:void(0)" class="btn btn-primary"
+                                           data-toggle="modal"
+                                           data-target="#export"><i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Export</a>
+        
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <input type="text" id="datepicker-from" name="from"
+                                                   placeholder="From"
+                                                   class="form-control w-150">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="datepicker-to" name="to"
+                                                   placeholder="To"
+                                                   class="form-control w-150">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control w-150"
+                                                   placeholder="{{ __('order.order_id') . ", " . __('order.customer') }}"
+                                                   name="keyword" v-model="params.keyword" type="search"
+                                                   @keyup.enter="updateCurrentPage">
+                                        </div>
+                                        <div class="btn btn-primary"><i
+                                                class="fa fa-search" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -87,9 +145,9 @@
                                                     Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Detail</a>
-                                                    <a class="dropdown-item" href="">Change Status</a>
-                                                    <a class="dropdown-item" href="">Cancel & Refund</a>
+                                                    <a class="dropdown-item" href="{{route("admin.orders.show", ['order' => $order->id])}}">Detail</a>
+                                                    <a class="dropdown-item" href="{{route("admin.order.change.status", ["order_id" => $order->id])}}">Change Status</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Canceled', {{ $order->id }})">Cancel & Refund</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -142,12 +200,66 @@
     </style>
 @endsection
 @section('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $("#festivalTableContainer").DataSorting({    
             formId : "filter_form",
             initSort : `<?=json_encode(request('sort'))?>`,
             initSearch : `<?=json_encode(request('search'))?>`
         });
+
+        function changeStatus(status, order_id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, change it!`
+        }).then((result) => {
+            if (result.value) {
+                updateStatus(status, order_id);
+            }
+        });
+    }
+
+    function updateStatus(status, order_id) {
+        let formD = new FormData();
+        formD.append("status", status);
+        formD.append("order_id", order_id);
+        fetch(`{{route("admin.order.update.change")}}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formD
+        }).then(res=>res.json())
+        .then(res=>{
+            if (!res.status) {
+                let messages = '';
+                if (typeof(res.data) === 'object') {
+                    for (const [key, value] of Object.entries(res.data)) {
+                        messages += '<li>' + value[0] + '</li>';
+                    }
+                } else {
+                    messages = res.data;
+                }
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Whoops! Something went wrong!',
+                    html: '    <div class="alert alert-danger">\n' +
+                        '        <ul>\n' +
+                        messages +
+                        '        </ul>\n' +
+                        '    </div>\n'
+                });
+            } else {
+                window.location.reload()
+            }
+        })
+    }
     </script>
 @endsection
 

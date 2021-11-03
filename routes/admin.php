@@ -14,6 +14,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::get('/set-festival', [App\Http\Controllers\Admin\DashboardController::class, 'setFestival'])->name('dashboard.setFestival');
         Route::resource('users', UserController::class);
         Route::resource('festivals', FestivalController::class);
+        Route::post('orders-status-change', [App\Http\Controllers\Admin\OrderController::class, 'updateOrderChange'])->name('order.update.change');
+        Route::post('orders-status-update', [App\Http\Controllers\Admin\OrderController::class, 'updateOrderStatus'])->name('order.update.status');
+        Route::get('orders/{order_id}', [App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('order.change.status');
         Route::resource('orders', OrderController::class);
         Route::middleware(['configFestival'])->group(function () {
             Route::get('sync-store-data', [App\Http\Controllers\Admin\StoreController::class, 'syncStoreData'])->name('sync.store.data');
