@@ -51,7 +51,6 @@
                                         <span id="count"></span> Items Selected
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
                                     </div>
                                 </div>
@@ -181,35 +180,6 @@
                 $(".all-check").addClass('d-none');
             }
         }
-
-        function attachToFestival() {
-            fetch(`{{route("admin.festivals.index")}}`, {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'no-pagination' : 'no-pagination'
-                },
-                body: null
-            }).then(res=>res.json())
-            .then( res => {
-                if (res.status) {
-                    let txt = `<option value="">Select Option</option>`;
-                    if (res.data.items.length > 0) {
-                        res.data.items.forEach(element => {
-                            txt += `<option value="${element.id}">${element.name}</option>`;
-                        });
-                        document.querySelector('#festival_id').innerHTML = txt;
-                    } else {
-                        let txt = `<option value="">Nothing Found</option>`;
-                        document.querySelector('#festival_id').innerHTML = txt;
-                    }
-                    $("#attachFestivalModal").modal('show')
-                }
-            })
-        }
-
-      
 
         function deleteAll() {
             let formD = new FormData();

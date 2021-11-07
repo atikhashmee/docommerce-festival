@@ -30,7 +30,7 @@
                                 </button>
                                 <div class="dropdown all-check d-none">
                                     <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="count"></span> Items Selected
+                                        <span id="selected_count"></span> Items Selected
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="attachDetachToFestival()">Attach & Detach to <strong>{{request()->festival->name}}</strong></a>
@@ -68,7 +68,7 @@
                                 @foreach ($items as $item)
                                     <tr>
                                         <td>
-                                            <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$item->id}}">
+                                            <input name="ids[]" type="checkbox" class="massCheck" onchange="checkSpecific(this, {{$item}})" value="{{$item->id}}">
                                         </td>
                                         <td>
                                             {{ $item->id }}
@@ -179,7 +179,20 @@
             }
             checkItem();
         }
+        function checkSpecific(evt, obj) {
+            if ($(evt).prop('checked')) {
+                selectedIds[$(evt).val()] = $(evt).val();
+            } else {
+                selectedIds = selectedIds.filter(iv => iv != $(evt).val())
+            }
+            checkItem();
+        }
+        function updateCount() {
+            selectedIds = selectedIds.filter(iv => !IsNaN(iv))
+            $("#selected_count").text(selectedIds.length)
+        }
         function checkItem() {
+            //updateCount();
             if (selectedIds.length  > 0) {
                 $('input[name="select_all"]').attr('checked', true);
                 $("input[name='ids[]']").each(function (indexInArray, valueOfElement) { 

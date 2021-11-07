@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
         $data  = [];
         $festival = $request->festival;
-        $data['stores'] = Store::select('*')
+        $data['stores'] = Store::select('stores.*')
         ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
         ->get();
