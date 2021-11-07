@@ -21,6 +21,11 @@
     @yield('styles')
 </head>
 <body>
+    <!-- loader div start -->
+    <div class="loader-div">
+		<div class="loader"></div>
+    </div>
+    <!-- loader div end -->
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">
@@ -108,6 +113,11 @@
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('admin_assets/js/script.js')}}"></script>
+    <script>
+        $(window).on('load', function () {
+            $('.loader-div').hide();
+        })
+    </script>
     @yield('scripts')
 </body>
 </html>
