@@ -1,32 +1,17 @@
 <footer class="w-100">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <a href="index.html">
-                    <img src="{{asset('web_assets/images/do-commerce-w-logo.png')}}" alt="logo" loading="lazy" class="img-fluid d-block">
+            <div class="col-md-6">
+                <a href="{{ url('/') }}">
+                    <img src="{{asset('web_assets/images/footer-logo.png')}}" alt="Docommerce 11-11 Festival" loading="lazy" class="img-fluid d-block mx-auto mx-md-0">
                 </a>
-                <p class="my-4 p-0 footer-about">
-                    Enjoy upto 70% Discount from the bestsellers.
-                </p>
-
-                <ul class="social_icons m-0 p-0">        
-                    <li><a target="_blank" href="https://www.facebook.com/DoCommerceLtd"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a target="_blank" href="https://www.instagram.com/docommerceltd/"><i class="fab fa-instagram"></i></a></li>
-                </ul>
+                
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-6 text-center text-md-right">
                 <h4 class="footer-header mt-4 mt-md-0">Quick Links</h4>
                 <ul class="m-0 mt-4 p-0 footer-quick-links">
-                    <li><a href="#">How to Order</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Supplier Registration</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-3">
-                <h4 class="footer-header d-none d-md-block">&nbsp;</h4>
-                <ul class="m-0 mt-4 p-0 footer-quick-links">
+                    <li><a href="#">How to order</a></li>
                     <li><a href="#">Terms and Conditions</a></li>
                     <li><a href="#">Privacy Policies</a></li>
                     <li><a href="javascript:void(0)"  onclick="event.preventDefault();
@@ -34,17 +19,10 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
+                    <li>Contact: <a href="tel:01745408181">01745408181</a></li>
                 </ul>
             </div>
-
-            <div class="col-md-3">
-                <h4 class="footer-header">Contact Info</h4>
-                <ul class="m-0 mt-4 p-0 footer-quick-links">
-                    <li><i class="fa fa-map-marker"></i> Mirpur 12</li>
-                    <li><i class="fa fa-envelope"></i> <a href="mailto:festive@docommerce.com">festive@docommerce.com</a></li>
-                    <li><i class="fa fa-mobile"></i> <a href="#">01780430305</a></li>
-                </ul>
-            </div>
+            
         </div>
     </div>
     <div class="w-100 bottom-footer">

@@ -17,9 +17,41 @@
         width: 120px !important;
     }
 
+    .py-6 {
+        padding-bottom: 3rem!important;
+        padding-top: 3rem!important;
+    }
+
     .shop_cart_table .table .btn-danger {
         font-size: 12px;
         width: 85px;
+    }
+
+    .festive-name {
+        margin-top: 25px;
+    }
+
+    .name-inner h1 {
+        font-size: 16px;
+    }
+
+    .product-heading h2 {
+        font-size: 16px;
+    }
+
+    .product-search .form-control {
+        width: 185px;
+        min-width: 185px;
+    }
+
+    .login-li, .cart-li {
+        margin-top: 15px;
+    }
+
+    .wish-zoom {
+        left: 5%;
+        visibility: visible;
+        opacity: 1;
     }
 
 }
