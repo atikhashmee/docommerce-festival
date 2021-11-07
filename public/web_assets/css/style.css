@@ -519,6 +519,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
     box-shadow: none;
 }
 
+.faq-section .nav-link {
+    color: #e76f51;
+}
+
+.faq-section .nav-pills .nav-link.active {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#963fa7+0,813790+100 */
+    background: rgb(150,63,167); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(150,63,167,1) 0%, rgba(129,55,144,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(150,63,167,1) 0%,rgba(129,55,144,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(150,63,167,1) 0%,rgba(129,55,144,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', endColorstr='#813790',GradientType=1 ); /* IE6-9 */
+    box-shadow: none;
+    color: #fff !important;
+    border-color: rgb(129,55,144);
+}
+
+
 .faq-btn {
     font-weight: 600;
     color: #e76f51;

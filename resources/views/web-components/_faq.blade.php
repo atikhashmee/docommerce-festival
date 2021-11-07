@@ -6,12 +6,12 @@
                     FAQ about DoCommerce 11-11 festival 2021
                 </h3>
 
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills mt-4 mx-auto justify-content-center" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">English</a>
+                        <a class="nav-link active" id="pills-english-tab" data-toggle="pill" href="#pills-english" role="tab" aria-controls="pills-english" aria-selected="true">English</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">বাংলা</a>
+                        <a class="nav-link" id="pills-ban-tab" data-toggle="pill" href="#pills-ban" role="tab" aria-controls="pills-ban" aria-selected="false">বাংলা</a>
                     </li>
                 </ul>
             </div>
@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-md-12 tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active" id="pills-english" role="tabpanel" aria-labelledby="pills-english-tab">
                     <div class="accordion mt-5" id="festivalFAQ">
                         <div class="card">
                         <div class="card-header" id="headingOne">
@@ -59,6 +59,53 @@
                             </h2>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#festivalFAQ">
+                            <div class="card-body">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-ban" role="tabpanel" aria-labelledby="pills-ban-tab">
+                    <div class="accordion mt-5" id="festivalFAQBan">
+                        <div class="card">
+                        <div class="card-header" id="headingOneBan">
+                            <h2 class="mb-0">
+                            <button class="btn btn-block text-left faq-btn" type="button" data-toggle="collapse" data-target="#collapseOneban" aria-expanded="true" aria-controls="collapseOneban">
+                                Q1: কবে থেকে শুরু হবে এই উৎসব?
+                            </button>
+                            </h2>
+                        </div>
+                    
+                        <div id="collapseOneban" class="collapse show" aria-labelledby="headingOneBan" data-parent="#festivalFAQBan">
+                            <div class="card-body">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
+                            </div>
+                        </div>
+                        </div>
+                        <div class="card">
+                        <div class="card-header" id="headingTwoBan">
+                            <h2 class="mb-0">
+                            <button class="btn btn-block text-left faq-btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwoban" aria-expanded="false" aria-controls="collapseTwoban">
+                                Q2: When can I view the discounted prices?
+                            </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwoban" class="collapse" aria-labelledby="headingTwoBan" data-parent="#festivalFAQBan">
+                            <div class="card-body">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
+                            </div>
+                        </div>
+                        </div>
+                        <div class="card">
+                        <div class="card-header" id="headingThreeBan">
+                            <h2 class="mb-0">
+                            <button class="btn btn-block text-left faq-btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThreeban" aria-expanded="false" aria-controls="collapseThreeban">
+                                Q3: How can I be sure that I get the maximum discounts?
+                            </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThreeban" class="collapse" aria-labelledby="headingThreeBan" data-parent="#festivalFAQBan">
                             <div class="card-body">
                                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
                             </div>
