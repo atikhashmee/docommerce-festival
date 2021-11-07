@@ -99,7 +99,7 @@ $(document).ready(function () {
             nav:false
         },
         600:{
-            items:5,
+            items:4,
             nav:false
         },
         1000:{
