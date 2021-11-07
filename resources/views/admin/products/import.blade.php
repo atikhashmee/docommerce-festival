@@ -15,11 +15,11 @@
                     <div class="d-flex align-items-start" v-if="products.length > 0">
                         <div class="form-group custom-price-group d-inline-block">
                             <label for="">Fixed(1.00)</label>
-                            <input type="number" value="0" @keyup="changePriceAll($event, 'fixed')">
+                            <input type="number" value="0" id="fixed_all" @keyup="changePriceAll($event, 'fixed')">
                         </div>
                         <div class="form-group custom-price-group d-inline-block">
                             <label for="">Percentage(%)</label>
-                            <input type="number" value="0" @keyup="changePriceAll($event, 'percen')">
+                            <input type="number" value="0" id="percent_all" @keyup="changePriceAll($event, 'percen')">
                         </div>
                         <div class="form-group d-inline-block mr-2">
                             <!-- <label for="">Category</label> -->
@@ -40,7 +40,7 @@
                     <select name="store_id" id="store_id" class="form-control" @change="changeStore($event)">
                         <option value="">Select Store</option>
                         @foreach ($stores as $store)
-                            <option  value="{{$store->id}}">{{$store->name}}</option>
+                            <option  value="{{$store->original_store_id}}">{{$store->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -105,7 +105,7 @@
                                                 <tr>
                                                     <td>New Price</td>
                                                     <td>
-                                                        <input type="number" class="form-control" v-model="product.new_price" placeholder="">
+                                                        <input type="number" class="form-control" readonly v-model="product.new_price" placeholder="">
                                                     </td>
                                                 </tr>
                                             </table>
@@ -150,11 +150,11 @@
             <div class="d-flex">
                 <div class="form-group custom-price-group">
                     <label for="">Fixed(1.00)</label>
-                    <input type="number" value="0" @keyup="changePriceAll($event, 'fixed', true)">
+                    <input type="number" value="0" id="fixed_all_var" @keyup="changePriceAll($event, 'fixed', true)">
                 </div>
                 <div class="form-group custom-price-group">
                     <label for="">Percentage(%)</label>
-                    <input type="number" value="0" @keyup="changePriceAll($event, 'percen', true)">
+                    <input type="number" value="0" id="percent_all_var" @keyup="changePriceAll($event, 'percen', true)">
                 </div>
             </div>
             <table class="table table-bordered">
@@ -186,7 +186,7 @@
                                 <tr>
                                     <td>New Price</td>
                                     <td>
-                                        <input type="number" class="form-control" v-model="vr_p.new_price" placeholder="">
+                                        <input type="number" class="form-control" readonly v-model="vr_p.new_price" placeholder="">
                                     </td>
                                 </tr>
                             </table>
@@ -251,14 +251,18 @@
             }, 
             methods: {
                 changeStore(dom) {
-                    let url = `{{url("admin/products/get-store-products/")}}/${$("#store_id").val()}`;
-                    fetch(url)
-                    .then(res=>res.json())
-                    .then(res => {
-                        if (res.length > 0) {
-                            this.products = [...res]
-                        }
-                    })
+                    if (dom.currentTarget.value) {
+                        $('.loader-div').show();
+                        let url = `{{url("admin/products/get-store-products/")}}/${$("#store_id").val()}`;
+                        fetch(url)
+                        .then(res=>res.json())
+                        .then(res => {
+                            $('.loader-div').hide();
+                            if (res.length > 0) {
+                                this.products = [...res]
+                            }
+                        })
+                    }
                 },
                 checkSpecific() {
 
@@ -312,12 +316,14 @@
                         if (this.variants_products.length > 0) {
                             this.variants_products.forEach( item => {
                                 if (type === 'percen') {
+                                    document.querySelector('#fixed_all_var').value = 0;
                                     item.fixed = 0; item.percentage = rateValue
                                     let dataPrice = Number(item.product_price) - Number((rateValue / 100 )  * Number(item.product_price))
                                     if (dataPrice > 0) {
                                         item.new_price = Number(dataPrice).toFixed(2)
                                     }
                                 } else if (type === 'fixed') {
+                                    document.querySelector('#percent_all_var').value = 0;
                                     item.percentage = 0 
                                     item.fixed = rateValue
                                     let dataPrice =  Number(item.product_price) - Number(rateValue)
@@ -331,12 +337,14 @@
                         if (this.products.length > 0) {
                             this.products.forEach(element => {
                                 if (type === 'percen') {
+                                    document.querySelector('#fixed_all').value = 0;
                                     element.fixed = 0; element.percentage = rateValue
                                     let dataPrice = Number(element.price) - Number((rateValue / 100 )  * Number(element.price))
                                     if (dataPrice > 0) {
                                         element.new_price = Number(dataPrice).toFixed(2)
                                     }
                                 } else if (type === 'fixed') {
+                                    document.querySelector('#percent_all').value = 0;
                                     element.percentage = 0 
                                     element.fixed = rateValue
                                     let dataPrice =  Number(element.price) - Number(rateValue)

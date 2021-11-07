@@ -12,8 +12,9 @@ trait Crud {
      */
     public function index(Request $request)
     {
+        $modelObj = new $this->model();
         $data = [];
-        $itemSql = $this->model::select(strtolower(class_basename($this->model)).'s.*');
+        $itemSql = $this->model::select($modelObj->getTable().'.*');
         if ($request->search) {
             foreach ($request->search as $field => $val)
             $itemSql->where($field, "LIKE", "%".$val."%");

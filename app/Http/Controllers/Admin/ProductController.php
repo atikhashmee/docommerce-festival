@@ -55,10 +55,10 @@ class ProductController extends Controller
         $data['festivals'] = Festival::get(); 
         $data['categories'] = Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get(); 
-        $data['stores'] = Store::select('*')
+        $data['stores'] = Store::select('stores.*')
         ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
-        ->get(); 
+        ->get();
         $data['products'] = []; 
        
         return view('admin.products.import', $data);
