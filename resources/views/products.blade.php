@@ -16,7 +16,7 @@
         </div>
     </section>
 
-    <section class="w-100 products-section py-6">
+    <section class="w-100 products-section py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
@@ -79,6 +79,18 @@
                 </div>
 
                 <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+        
+                            <h5 class="product-section-heading storeNameDiv mb-5">
+                                Store name
+        
+                                <a href="#" class="float-right">
+                                    View owner's store <i class="fas fa-angle-right"></i>
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
                     <div class="row justify-content-center">
                         @if (count($exclusives) > 0)
                             @foreach ($exclusives as $product)
