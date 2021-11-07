@@ -50,12 +50,12 @@ class Store extends Model
         return $this->belongsToMany(Festival::class, 'store_festivals', 'festival_id', 'store_id');
     }
 
-    protected static function booted()
-    {
-        static::created(function ($store) {
-            StoreFestival::create(['store_id' => $store->id, 'festival_id' => auth()->guard('admin')->user()->festival_id]);
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::created(function ($store) {
+    //         StoreFestival::create(['store_id' => $store->id, 'festival_id' => auth()->guard('admin')->user()->festival_id]);
+    //     });
+    // }
 
     /**
      * Get all of the products for the Store

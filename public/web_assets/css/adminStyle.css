@@ -233,9 +233,7 @@ input[type="text"], textarea {
     color: #231f20;
 }
 
-.card-footer {
-    display: none;
-}
+
 
 .table-responsive {
     max-height: 70vh;

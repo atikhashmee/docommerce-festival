@@ -33,7 +33,7 @@
                                         <span id="count"></span> Items Selected
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="attachDetachToFestival()">Attach & Detach to <strong>{{request()->festival->name}}</strong></a>
                                     </div>
                                 </div>
                             </th>
@@ -44,6 +44,7 @@
                                     <i class="fa fa-arrow-down" aria-hidden="true"></i>
                                 </span>
                             </th>
+                            <th>Attached To Festival</th>
                             <th>Logo</th>
                             <th data-sort="name">
                                 Name
@@ -72,6 +73,9 @@
                                         <td>
                                             {{ $item->id }}
                                         </td>
+                                        <td>
+                                            {{ $item->attached_store_id == null ? "No" : "Yes" }}
+                                        </td>
                                         <td>  
                                             <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="100" width="100">
                                             
@@ -88,6 +92,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="#">Detail</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="attachDetachToFestivalSingle({{$item}})">  {{ $item->attached_store_id == null ? "Attach To" : "Remove From" }} <strong>{{request()->festival->name}}</strong> </a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
                                                     <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.stores.destroy', ['store' => $item])}}">
                                                         @csrf
@@ -158,9 +163,6 @@
 @endsection
 @section('scripts')
     <script>
-        $(document).ready(function () {
-            
-        });
         let selectedIds = [];
         $("#festivalTableContainer").DataSorting({    
             formId : "filter_form",
@@ -207,29 +209,40 @@
             }
         }
 
-        function attachToFestival() {
-            fetch(`{{route("admin.festivals.index")}}`, {
-                method: 'GET',
+        function attachDetachToFestival() {
+            let formD = new FormData();
+            formD.append('store_ids', JSON.stringify(selectedIds));
+            formD.append('type', 'bulk');
+            fetch(`{{route("admin.attach.store.data")}}`, {
+                method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN' : `{{csrf_token()}}`,
                     'X-Requested-With': 'XMLHttpRequest',
-                    'no-pagination' : 'no-pagination'
                 },
-                body: null
+                body: formD
             }).then(res=>res.json())
             .then( res => {
                 if (res.status) {
-                    let txt = `<option value="">Select Option</option>`;
-                    if (res.data.items.length > 0) {
-                        res.data.items.forEach(element => {
-                            txt += `<option value="${element.id}">${element.name}</option>`;
-                        });
-                        document.querySelector('#festival_id').innerHTML = txt;
-                    } else {
-                        let txt = `<option value="">Nothing Found</option>`;
-                        document.querySelector('#festival_id').innerHTML = txt;
-                    }
-                    $("#attachFestivalModal").modal('show')
+                    window.location.reload()
+                }
+            })
+        }
+
+        function attachDetachToFestivalSingle(obj) {
+            let formD = new FormData();
+            formD.append('store_id', obj.id);
+            formD.append('type', 'single');
+            fetch(`{{route("admin.attach.store.data")}}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formD
+            }).then(res=>res.json())
+            .then( res => {
+                if (res.status) {
+                    window.location.reload()
                 }
             })
         }
