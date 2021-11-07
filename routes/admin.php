@@ -19,6 +19,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::get('orders/{order_id}', [App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('order.change.status');
         Route::resource('orders', OrderController::class);
         Route::middleware(['configFestival', 'getFestival'])->group(function () {
+            Route::post('attach-store-data', [App\Http\Controllers\Admin\StoreController::class, 'bulkAttachtoFestival'])->name('attach.store.data');
             Route::get('sync-store-data', [App\Http\Controllers\Admin\StoreController::class, 'syncStoreData'])->name('sync.store.data');
             Route::resource('stores', StoreController::class)->only('index', 'destroy');
             Route::resource('categories', CategoryController::class);
