@@ -51,18 +51,18 @@
                         <thead>
                         <tr>
                             <th class="massActionWrapper" width="66px">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0" onclick="checkAll()">
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0" @click="checkAll()">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
                                        data-placement="top" title="Select All"></i>
                                 </button>
                                 <div class="dropdown all-check d-none">
                                     <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="count"></span> Items Selected
+                                        <span id="count">@{{selectedProduct.length}}</span> Items Selected
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {{-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </th>
                             <th>Product</th>
@@ -73,7 +73,7 @@
                         </thead>
                             <tbody v-if="products.length > 0">
                                 <tr v-for="product in products">
-                                    <td><input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" :value="product.id"></td>
+                                    <td><input name="ids[]" type="checkbox" class="massCheck" v-model="selectedProduct" @change="checkSpecific($event)" :value="product.original_product_id"></td>
                                     <td>  
                                         {{-- <img :src="product.original_product_img" class="rounded" height="50" width="50"> --}}
                                         <h5>@{{ product.name }}</h5>
@@ -248,6 +248,7 @@
             data: {
                 products: [],
                 variants_products: [],
+                selectedProduct: [],
             }, 
             methods: {
                 changeStore(dom) {
@@ -264,8 +265,12 @@
                         })
                     }
                 },
-                checkSpecific() {
-
+                checkSpecific(obj) {
+                    if ($(obj).prop('checked')) {
+                        
+                    }
+                    this.checkItem()
+                    console.log(this.selectedProduct, 'asdf');
                 },
                 changePrice(prod, type, isVariant=false) {
                     if (isVariant) {
@@ -365,23 +370,30 @@
                     }
                 },
                 importStoredData() {
-                    let formD = new FormData();
-                    formD.append('products', JSON.stringify(this.products))
-                    formD.append('store_id', $("#store_id").val())
-                    fetch(`{{route("admin.product.import.store")}}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                        body: formD
-                    })
-                    .then(res=>res.json())
-                    .then(res=>{
-                        if (res.status) {
-                            window.location.reload()
-                        }
-                    })
+                    if (this.selectedProduct.length > 0) {
+                        this.products = this.products.filter(item=>{
+                            return this.selectedProduct.find(vv => vv == item.original_product_id)
+                        })
+                        let formD = new FormData();
+                        formD.append('products', JSON.stringify(this.products))
+                        formD.append('store_id', $("#store_id").val())
+                        fetch(`{{route("admin.product.import.store")}}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                            body: formD
+                        })
+                        .then(res=>res.json())
+                        .then(res=>{
+                            if (res.status) {
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        alert('Select Products')
+                    }
                 },
                 openModal(product) {
                     this.variants_products  =[]
@@ -448,6 +460,35 @@
                     }
                     
                    $("#variantmodal").modal('hide') 
+                },
+                checkItem() {
+                    if (this.selectedProduct.length  > 0) {
+                        $('input[name="select_all"]').attr('checked', true);
+                        $(".massActionWrapper").attr('colspan', '6')
+                        $('table tr th').each(function(i, v) {
+                            $(v).hide();
+                        })
+                        $('table tr th:eq(0)').show()
+                        $(".all-check").removeClass('d-none');
+
+                    } else {
+                        $('input[name="select_all"]').attr('checked', false);
+                        $(".massActionWrapper").attr('colspan', '0')
+                        $('table tr th').each(function(i, v) {
+                            $(v).show();
+                        })
+                        $(".all-check").addClass('d-none');
+                    }
+                },
+                checkAll() {
+                    if ($('input[name="select_all"]').prop('checked')) {
+                        $("input[name='ids[]']").each((indexInArray, valueOfElement) => { 
+                            this.selectedProduct.push($(valueOfElement).val());
+                        });
+                    } else {
+                        this.selectedProduct = [];
+                    }
+                    this.checkItem()
                 }
             },
             watch: {

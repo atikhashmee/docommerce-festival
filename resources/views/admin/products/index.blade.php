@@ -106,6 +106,13 @@
                     </table>
                 </div>
             </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ $products->withQueryString()->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
         <form method="POST" id="bulk-trash-or-destroy" action="#" accept-charset="UTF-8" class="data-form non-validate">
             @csrf

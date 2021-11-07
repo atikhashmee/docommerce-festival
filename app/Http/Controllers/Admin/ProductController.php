@@ -45,7 +45,7 @@ class ProductController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->search.'%');
             }
         });
-        $data['products'] = $productSql->get();
+        $data['products'] = $productSql->paginate(100);
         return view('admin.products.index', $data);
     }
 
