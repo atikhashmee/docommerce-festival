@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\SendSMSService;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,9 @@ Route::middleware(['auth', 'getFestival'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\IndexController::class, 'profile'])->name('profile_page');
     Route::put('/profile', [App\Http\Controllers\IndexController::class, 'profileUpdate'])->name('profile_update_page');
 });
-Auth::routes();
+Route::post('submit-otp',  [App\Http\Controllers\Auth\LoginController::class, 'submitOtp'])->name('submit.otp');
+Route::post('request-otp',  [App\Http\Controllers\Auth\LoginController::class, 'otpRequest'])->name('otp.login');
+Auth::routes(['register' => false, 'reset' => false]);
 
 
 

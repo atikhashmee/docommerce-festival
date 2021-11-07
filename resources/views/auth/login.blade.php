@@ -22,9 +22,64 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="login-wrapper shadow-sm p-4 rounded bg-white">
-                    <h3 class="mb-3">Login</h3>
+                                      
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 
-                    <form method="POST" action="{{ route('login') }}">
+                    @if (isset($mobile))
+                      @if (isset($error))
+                          <div class="alert alert-danger">{{$error}}</div>
+                      @endif
+                    <h3 class="mb-3">OTP</h3>
+                      
+                      <form method="POST" action="{{ route('submit.otp') }}">
+                        @csrf
+                          <div class="form-group">
+                              <input type="hidden" name="mobile" value="{{$mobile}}">
+                              <input id="otp" type="number" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autofocus>
+                              @error('otp')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                          <div class="form-group">
+                              <button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
+                          </div>
+                      </form> 
+                      <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
+                        @csrf
+                        <input  type="hidden" name="mobile" value="{{$mobile}}">
+                      </form> 
+                      <a href="javascript:void(0)" onclick="document.querySelector('#resend-otp').submit()">Resend OTP to {{$mobile}}</a> <br>
+                      <a href="{{route("login")}}">Change Mobile Number</a>
+                    @else
+                      <h3 class="mb-3">Mobile</h3>
+                      <form method="POST" action="{{ route('otp.login') }}">
+                        @csrf
+                          <div class="form-group">
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="Email/Phone Number" autofocus>
+                              @error('mobile')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                          <div class="form-group">
+                              <button type="submit" class="btn btn-primary btn-block" name="login">Send OTP</button>
+                          </div>
+                      </form> 
+                    @endif
+                    
+                    
+                    {{-- <form method="POST" action="{{ route('login') }}">
                       @csrf
                         <div class="form-group">
                             <input id="email_or_phone" type="email_or_phone" class="form-control @error('email_or_phone') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="Email/Phone Number" autofocus>
@@ -54,13 +109,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block" name="login">Log in</button>
                         </div>
-                    </form>
-
-                    <div class="different_login">
-                        <span> or</span>
-                    </div>
-
-                    <div class="form-note text-center">Don't Have an Account? <a href="{{route('register')}}">Sign up now</a></div>
+                    </form> --}}
                 </div>
             </div>
         </div>
