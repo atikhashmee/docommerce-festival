@@ -12,23 +12,24 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('web_assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('web_assets/css/style.css')}}" />
 
     <style>
         html, body {
-            height: 100vh;
+            min-height: 100vh;
             width: 100%;
             background-color: #000;
+            font-family: 'Lato', sans-serif;
         }
         * {
             margin: 0;
             padding:0;
         }
         .cs-wrapper {
-            height: 100vh;
+            height: 70vh;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -39,18 +40,13 @@
             max-width: 100%;
             height: 100%;
         }
-        .w-100 {
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
+        
         .copyright {
             text-align: center;
             color: #ddd;
             padding:15px 0;
             margin: 0;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Lato', sans-serif;
             font-size: 12px;
         }
         .copyright a {
@@ -94,15 +90,304 @@
 		    margin-bottom: 30px;
 		}
 
-        @media only screen and (min-device-width: 320px) and (max-device-width: 812px) {
-            body {
-                overflow-x: hidden;
-            }
-            .cs-wrapper img {
-                max-width: 100%;
-                height: auto;
-            }
-        }
+        /* countdown */
+
+.flipper {
+  color: #333;
+  display: block;
+  font-size: 50px;
+  line-height: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: 70px !important;
+  height: 90px;
+}
+.flipper.flipper-invisible {
+  font-size: 0px !important;
+}
+
+.flipper-group {
+  position: relative;
+  white-space: nowrap;
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+.flipper-group label {
+  position: absolute;
+  color: #ffea3f;
+  font-size: 30%;
+  top: 100%;
+  line-height: 1em;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  text-align: center;
+  padding-top: .5em;
+}
+
+.flipper-digit {
+  white-space: nowrap;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  float: left;
+  height: 1.2em;
+  overflow-y: hidden;
+}
+.flipper-digit span {
+  font-size: 25%;
+}
+
+.flipper-delimiter {
+  white-space: nowrap;
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 0;
+  color: #ffea3f;
+  min-width: .1em;
+  white-space: nowrap;
+  display: block;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  line-height: 1em;
+}
+
+.flipper-group.flipper-delimiter {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.digit-face {
+  display: block;
+  visibility: hidden;
+  position: relative;
+  border-radius: 0.1em;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.digit-next {
+  display: block;
+  position: relative;
+  border-radius: 0.1em;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  height: 1.2em;
+  background: #ffea3f;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  box-sizing: border-box;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.digit-top {
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  position: absolute;
+  background: #ffea3f;
+  padding-top: 0.1em;
+  padding-bottom: 0;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  border-top-left-radius: 0.1em;
+  border-top-right-radius: 0.1em;
+  box-sizing: border-box;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background 0s linear, -webkit-transform 0s linear;
+  transition: transform 0s linear, background 0s linear;
+  transition: transform 0s linear, background 0s linear, -webkit-transform 0s linear;
+  -webkit-transform-origin: 0 0.6em 0 !important;
+          transform-origin: 0 0.6em 0 !important;
+  -webkit-transform-style: preserve-3d !important;
+          transform-style: preserve-3d !important;
+  z-index: 20;
+}
+.digit-top.r {
+  transition: background 0.2s linear, -webkit-transform 0.2s linear;
+  transition: transform 0.2s linear, background 0.2s linear;
+  transition: transform 0.2s linear, background 0.2s linear, -webkit-transform 0.2s linear;
+  -webkit-transform: rotateX(90deg);
+          transform: rotateX(90deg);
+  background: #efb61c;
+}
+
+.digit-top2 {
+  visibility: hidden;
+  position: absolute;
+  height: 50%;
+  left: 0;
+  right: 0;
+  background: #efb61c;
+  transition: -webkit-transform 0.2s linear;
+  transition: transform 0.2s linear;
+  transition: transform 0.2s linear, -webkit-transform 0.2s linear;
+  line-height: 0em !important;
+  top: 50% !important;
+  bottom: auto !important;
+  padding-top: 0;
+  padding-bottom: 0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  border-bottom-left-radius: 0.1em;
+  border-bottom-right-radius: 0.1em;
+  overflow: hidden;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background 0s linear, -webkit-transform 0s linear;
+  transition: transform 0s linear, background 0s linear;
+  transition: transform 0s linear, background 0s linear, -webkit-transform 0s linear;
+  -webkit-transform: rotateX(-90deg);
+          transform: rotateX(-90deg);
+  -webkit-transform-style: preserve-3d !important;
+          transform-style: preserve-3d !important;
+  -webkit-transform-origin: 0 0 0 !important;
+          transform-origin: 0 0 0 !important;
+  z-index: 20;
+}
+.digit-top2.r {
+  visibility: visible;
+  transition: background 0.2s linear 0.2s, -webkit-transform 0.2s linear 0.2s;
+  transition: transform 0.2s linear 0.2s, background 0.2s linear 0.2s;
+  transition: transform 0.2s linear 0.2s, background 0.2s linear 0.2s, -webkit-transform 0.2s linear 0.2s;
+  -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+  background: #ffea3f;
+}
+
+.digit-bottom {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  overflow: hidden;
+  background: #ffea3f;
+  height: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  line-height: 0em;
+  padding-top: 0;
+  padding-bottom: 0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  border-bottom-left-radius: 0.1em;
+  border-bottom-right-radius: 0.1em;
+  box-sizing: border-box;
+  text-align: center;
+  transition: none;
+}
+.digit-bottom.r {
+  transition: background 0.2s linear;
+  background: #efb61c;
+}
+
+.flipper-digit:after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  top: 50%;
+  display: block;
+  z-index: 30;
+  left: 0;
+  right: 0;
+}
+
+.flipper-dark {
+  color: #ffea3f;
+}
+.flipper-dark .flipper-delimiter {
+  color: #333;
+}
+.flipper-dark .digit-next {
+  background: #333;
+}
+.flipper-dark .digit-top {
+  background: #333;
+}
+.flipper-dark .digit-top.r {
+  background: black;
+}
+.flipper-dark .digit-top2 {
+  background: black;
+}
+.flipper-dark .digit-top2.r {
+  background: #333;
+}
+.flipper-dark .digit-bottom {
+  background: #333;
+}
+
+.flipper-dark-labels .flipper-group label {
+  color: #333;
+}
+
+.applyDiv {
+    margin-top: 65px;
+}
+
+.addcart-btn {
+    font-weight: 400;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 812px) {
+    body {
+        overflow-x: hidden;
+    }
+    .cs-wrapper img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .flipper {
+        font-size: 40px !important;
+        height: 54px;
+    }
+    .flipper-group.flipper-delimiter {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    .flipper-group label {
+        font-size: 40%;
+    }
+}
     </style>
 </head>
 
@@ -112,7 +397,9 @@
         <img src="{{asset('web_assets/images/fastival-coming-soon-sm.jpg')}}" alt="DoCommerce 11-11 Festival 2021" class="d-block d-md-none">
     </div>
 
-    <div class="w-100 text-center">
+    <div class="flipper d-flex justify-content-center" data-reverse="true" data-datetime="2021-11-11 00:00:00" data-template="dd|HH|ii|ss" data-labels="Days|Hours|Minutes|Seconds" id="myFlipper"></div>
+
+    <div class="w-100 text-center applyDiv">
         <button class="btn btn-success addcart-btn participate-btn">Apply to Participate</button>
         <p class="copyright">Copyright &copy; 2021 <a href="https://docommerce.com/">DoCommerce Ltd</a></p>
     </div>
@@ -191,6 +478,7 @@
 
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('web_assets/js/jquery.flipper-responsive.js')}}"></script>
 
     <script>
         $('.participate-btn').click(function () {
@@ -199,6 +487,10 @@
         @if($errors->any())
             $('#participate-modal').modal('show');
         @endif
+
+        jQuery(function ($) {
+            $('#myFlipper').flipper('init');
+        });
     </script>
     <script src="{{ asset('web_assets/iCheck/icheck.min.js') }}"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>

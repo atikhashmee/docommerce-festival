@@ -38,8 +38,8 @@
         @include('layouts._index')
     @elseif(in_array(Route::currentRouteName(), ['store_page', 'category_page'])) 
         <section class="w-100 header text-center">
-            <div id="particles-js"></div>
-            <img src="{{asset('web_assets/images/brands/brands.png')}}" alt="Store name | DoCommerce Festival" class="img-fluid mx-auto d-block festive-logo store-banner-logo">
+            <img src="{{asset('web_assets/images/top-banner.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
+            <img src="{{asset('web_assets/images/top-banner-2.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none">
         </section>
     @endif
     @include('layouts._menu')

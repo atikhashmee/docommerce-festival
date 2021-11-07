@@ -34,7 +34,7 @@
                                 </div>
                             </form>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item mx-1 login-li">
                             @guest
                                 <a href="{{route('login')}}" class="top-notification-icons p-2"><i class="fas fa-user"></i></a>
                             @else

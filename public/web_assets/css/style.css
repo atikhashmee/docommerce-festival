@@ -80,26 +80,22 @@ h1, h2, h3, h4, h5, h6 {
 .festive-logo {
     position: relative;
     max-width: 100%;
-    padding: 70px 0;
-
 }
 
 canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container ---- */ #particles-js{ position:absolute; width: 100%; height: 100%; background-color: #232741; background-image: url("../images/festival-bg.png"); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } /* ---- stats.js ---- */ .count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } .js-count-particles{ font-size: 1.1em; } #stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } #stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
 
 .festive-name {
-    margin-top: -43px;
+    margin-top: -33px;
 }
 
 .name-inner {
-    border:3px solid #e76f51;
     border-radius: 7px;
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff7b0d+0,ffa84c+50,ff7b0d+100 */
-background: rgb(255,123,13); /* Old browsers */
-background: -moz-linear-gradient(top,  rgba(255,123,13,1) 0%, rgba(255,168,76,1) 50%, rgba(255,123,13,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top,  rgba(255,123,13,1) 0%,rgba(255,168,76,1) 50%,rgba(255,123,13,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(255,123,13,1) 0%,rgba(255,168,76,1) 50%,rgba(255,123,13,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
-
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d89626+0,f6e054+33,efdd83+49,f6e054+64,d89626+100 */
+    background: rgb(216,150,38); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(216,150,38,1) 0%, rgba(246,224,84,1) 33%, rgba(239,221,131,1) 49%, rgba(246,224,84,1) 64%, rgba(216,150,38,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(216,150,38,1) 0%,rgba(246,224,84,1) 33%,rgba(239,221,131,1) 49%,rgba(246,224,84,1) 64%,rgba(216,150,38,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(216,150,38,1) 0%,rgba(246,224,84,1) 33%,rgba(239,221,131,1) 49%,rgba(246,224,84,1) 64%,rgba(216,150,38,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d89626', endColorstr='#d89626',GradientType=0 ); /* IE6-9 */
 }
 
 .name-inner h1 {
@@ -145,12 +141,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', end
 }
 
 .product-heading {
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff7b0d+0,ffa84c+50,ff7b0d+100 */
-background: rgb(255,123,13); /* Old browsers */
-background: -moz-linear-gradient(top,  rgba(255,123,13,1) 0%, rgba(255,168,76,1) 50%, rgba(255,123,13,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top,  rgba(255,123,13,1) 0%,rgba(255,168,76,1) 50%,rgba(255,123,13,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(255,123,13,1) 0%,rgba(255,168,76,1) 50%,rgba(255,123,13,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d89626+0,f6e054+33,efdd83+49,f6e054+64,d89626+100 */
+    background: rgb(216,150,38); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(216,150,38,1) 0%, rgba(246,224,84,1) 33%, rgba(239,221,131,1) 49%, rgba(246,224,84,1) 64%, rgba(216,150,38,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(216,150,38,1) 0%,rgba(246,224,84,1) 33%,rgba(239,221,131,1) 49%,rgba(246,224,84,1) 64%,rgba(216,150,38,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(216,150,38,1) 0%,rgba(246,224,84,1) 33%,rgba(239,221,131,1) 49%,rgba(246,224,84,1) 64%,rgba(216,150,38,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d89626', endColorstr='#d89626',GradientType=0 ); /* IE6-9 */
 }
 
 .product-heading h2 {
@@ -195,6 +191,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', end
 .top-notification-icons i {
     color: #333;
     font-size: 30px;
+}
+
+.login-li, .cart-li {
+    margin-top: 7px;
 }
 
 .cart-dropdown-wrap {
@@ -957,5 +957,18 @@ footer .container {
 
 .custome-radio .form-check-input {
     display: none;
+}
+
+stores-slide {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+    background: #d99322;
+}
+
+.storeNameDiv.product-section-heading a {
+    font-size: 70%;
 }
   

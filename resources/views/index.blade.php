@@ -1,22 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="w-100 products-section py-6">
+<section class="w-100 products-section py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row justify-content-center">
+            <div class="col-6 col-md-4">
                 <img src="{{asset('web_assets/images/discount-offer.png')}}" alt="upto 70% discount" class="img-fluid d-block mx-auto pb-5">
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-md-4">
                 <img src="{{asset('web_assets/images/gifts.png')}}" alt="gifts" class="img-fluid d-block mx-auto pb-5">
             </div>
 
-            <div class="col-md-3">
-                <img src="{{asset('web_assets/images/caskback.png')}}" alt="cashback" class="img-fluid d-block mx-auto pb-5">
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-6 col-md-4">
                 <img src="{{asset('web_assets/images/delivery.png')}}" alt="delivery" class="img-fluid d-block mx-auto pb-5">
             </div>
         </div>
@@ -33,7 +29,7 @@
         <div class="row justify-content-center">
             @if (count($hot_deals) > 0)
                 @foreach ($hot_deals as $product)
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                         @component('web-components._product', compact('product'))
                             
                         @endcomponent
@@ -63,7 +59,7 @@
         <div class="row justify-content-center">
             @if (count($exclusives) > 0)
                 @foreach ($exclusives as $product)
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                         @component('web-components._product', compact('product'))
                             
                         @endcomponent
