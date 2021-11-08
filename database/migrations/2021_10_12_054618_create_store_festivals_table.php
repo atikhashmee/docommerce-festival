@@ -17,6 +17,7 @@ class CreateStoreFestivalsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('festival_id');
             $table->unsignedBigInteger('store_id');
+            $table->string('img')->nullable();
             $table->foreign('festival_id')->on('festivals')->references('id')->onDelete('cascade');
             $table->foreign('store_id')->on('stores')->references('id')->onDelete('cascade');
             $table->timestamps();

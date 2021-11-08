@@ -6,8 +6,11 @@ use App\Models\Festival;
 use Illuminate\Http\Request;
 use App\Models\StoreFestival;
 use App\Http\Controllers\Crud;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\MediaController;
+use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
@@ -61,11 +64,42 @@ class StoreController extends Controller
 
 
     public function indexQuery(Request $request, $query) {
-        $query->addSelect('store_festivals.store_id as attached_store_id');
+        $query->addSelect('store_festivals.store_id as attached_store_id', 'store_festivals.img as upload_image');
         return $query->leftJoin('store_festivals', function($q) use($request) {
             $q->on('store_festivals.store_id', '=', 'stores.id');
             $q->where('store_festivals.festival_id', $request->festival->id);
         });
+    }
+
+    public function attachImage(Request $request)
+    {
+        $festival = $request->festival;
+        $validator = Validator::make($request->all(), [
+            'store_id' => ['required', Rule::exists('store_festivals')->where(function ($query) use($festival, $request) {
+                return $query->where([
+                    'festival_id' => $festival->id,
+                    'store_id' => $request->store_id
+                ]);
+            })]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            if ($request->hasFile('imageFile')) {
+                $image = (new MediaController())->imageUpload($request->file('imageFile'), 'stores');
+                $data['image'] = $image['name'];
+                $stored = StoreFestival::where([
+                    'festival_id' => $festival->id,
+                    'store_id' =>  $request->store_id,
+                ])->update(['img' => $image['name']]);
+                return redirect()->back()->with('success', 'image uploaded successfully');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        }
     }
    
 }

@@ -77,8 +77,11 @@
                                             {{ $item->attached_store_id == null ? "No" : "Yes" }}
                                         </td>
                                         <td>  
-                                            <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="100" width="100">
-                                            
+                                            @if ($item->upload_image !=null && file_exists(public_path('storage/stores/'.$item->upload_image)))
+                                                <img src="{{ asset('storage/stores/'.$item->upload_image) }}" alt="{{ $item->name }}" height="100" width="100">
+                                            @else
+                                                <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="100" width="100">
+                                            @endif
                                         </td>
                                         <td>  
                                             <h5>{{ $item->name }}</h5>
@@ -93,6 +96,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="#">Detail</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="attachDetachToFestivalSingle({{$item}})">  {{ $item->attached_store_id == null ? "Attach To" : "Remove From" }} <strong>{{request()->festival->name}}</strong> </a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="attachImageModal({{$item->id}})">Attach Image</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
                                                     <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.stores.destroy', ['store' => $item])}}">
                                                         @csrf
@@ -138,14 +142,42 @@
                 </div>
             </div>
         </div>
-        <form method="POST" id="bulk-trash-or-destroy" action="#" accept-charset="UTF-8" class="data-form non-validate">
-            @csrf
-            @method('delete')
-            <input type="hidden" name="type">
-        </form>
     </section>
 @endsection
-
+@section('modals')
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form action="{{route("admin.attach.store.image")}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" id="store_id" name="store_id">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Store Image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="img_container" width="100" height="100" alt="">
+                <div class="form-group">
+                    <input type="file" name="imageFile" id="imageFile" class="form-control">
+                    @error('imageFile')
+                        <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @error('store_id')
+                        <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+@endsection
 @section('styles')
     <style>
         th > .sort {
@@ -163,6 +195,18 @@
 @endsection
 @section('scripts')
     <script>
+
+        @if($errors->any())
+            $("#imageModal").modal('show')
+            console.log(document.querySelector("#store_id").value);
+        @endif
+
+        imageFile.onchange = evt => {
+            const [file] = imageFile.files
+            if (file) {
+                img_container.src = URL.createObjectURL(file)
+            }
+        }
         let selectedIds = [];
         $("#festivalTableContainer").DataSorting({    
             formId : "filter_form",
@@ -258,6 +302,11 @@
                     window.location.reload()
                 }
             })
+        }
+        
+        function attachImageModal(store_id) {
+            document.querySelector("#store_id").value=store_id;
+            $("#imageModal").modal('show')
         }
     </script>
 @endsection

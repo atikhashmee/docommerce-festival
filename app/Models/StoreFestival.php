@@ -14,5 +14,6 @@ class StoreFestival extends Model
     protected $fillable = [
         'festival_id',
         'store_id',
+        'img',
     ];
 }
