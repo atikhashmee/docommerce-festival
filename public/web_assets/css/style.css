@@ -129,15 +129,14 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 
 .brands-img {
     border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.15);
     transition: all 0.3s ease;
     position: relative;
     z-index: 2;
 }
 
 .brands-img:hover {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
 .product-heading {
@@ -659,7 +658,7 @@ footer .container {
 }
 
 .breadcrumb-item a {
-    color: rgb(51, 51, 51);
+    color: #813790;
 }
 
 .breadcrumb-item.active {

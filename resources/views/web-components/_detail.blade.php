@@ -1,5 +1,17 @@
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+
+            <h5 class="product-section-heading storeNameDiv mb-5">
+                Store name
+
+                <a href="#" class="float-right">
+                    View owner's store <i class="fas fa-angle-right"></i>
+                </a>
+            </h5>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{asset('web_assets/images/products/1.png')}}"
             data-zoom-image="{{asset('web_assets/images/products/1.png')}}"/>

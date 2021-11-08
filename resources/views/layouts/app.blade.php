@@ -32,15 +32,15 @@
             Successfully added in the <span class="textChange">cart</span>.
         </p>
     </div>
-    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'home']))
+    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'detail_page', 'home']))
         @include('layouts._top_banner')
     @endif
     @if(Route::currentRouteName() == 'index_page')
         @include('layouts._index')
     @elseif(in_array(Route::currentRouteName(), ['store_page', 'category_page'])) 
         <section class="w-100 header text-center">
-            <img src="{{asset('web_assets/images/top-banner.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
-            <img src="{{asset('web_assets/images/top-banner-2.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none">
+            <a href="{{route('index_page')}}"><img src="{{asset('web_assets/images/top-banner.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
+            <img src="{{asset('web_assets/images/top-banner-2.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none"></a>
         </section>
     @endif
     @include('layouts._menu')
