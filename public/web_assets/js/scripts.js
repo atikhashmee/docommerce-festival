@@ -223,7 +223,11 @@ function getDistrict(dists) {
     if (districtDom) {
         if (state_districts.length > 0) {
             state_districts.forEach(item => {
-                txt += `<option value="${item.id}">${item.name}</option>`
+                if (item.id == 47) {
+                    txt += `<option value="${item.id}" selected>${item.name}</option>`
+                } else {
+                    txt += `<option value="${item.id}" disabled>${item.name}</option>`
+                }
             })
         }
         districtDom.innerHTML = txt;

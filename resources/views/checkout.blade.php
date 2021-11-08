@@ -71,11 +71,11 @@
                             <div class="col-md-6">
                             <div class="form-group state_id_group">
                                 <div class="custom_select ">
-                                    <select name="state_id" id="state_id" class="form-control" onchange="getDistrict({{json_encode($districts)}})">
+                                    <select name="state_id" id="state_id" class="form-control">
                                         <option value="">Select Region</option>
                                         @if (count($states) > 0)
                                             @foreach ($states as $state)
-                                                <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                                <option value="{{ $state->id }}" @if($state->id == 6) selected @else disabled @endif>{{ $state->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -89,6 +89,7 @@
                                         <option value="">Select District</option>
                                     </select>
                                 </div>
+                                <small>(* Current festival is only delivered to Dhaka)</small>
                             </div>
                             </div>
                             <div class="col-md-6">
@@ -181,4 +182,11 @@
 </section>
 
 @include('web-components._faq')
+
+@endsection
+@section('scripts')
+<script>
+    getDistrict(<?=json_encode($districts)?>)
+</script>
+
 @endsection

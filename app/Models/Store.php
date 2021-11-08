@@ -24,6 +24,7 @@ class Store extends Model
         'store_logo_url',
         'store_slogan',
         'store_domain',
+        'store_address',
     ];
 
     /**
@@ -38,6 +39,7 @@ class Store extends Model
         'store_logo_url' => 'string',
         'store_slogan' => 'string',
         'store_domain' => 'string',
+        'store_address' => 'array',
     ];
 
     public static $rules = [
