@@ -297,7 +297,90 @@ function placeOrder() {
     })
 }
 
-function changeVariant(variantObj, dom) {
+var allVarinats = [];
+var selectedVariant = {};
+
+function updatePrice() {
+    let options = [];
+    $('.each-variant-row .active').each(function() { 
+        options.push($(this).data('item'));
+    });
+    allVarinats.forEach(item=> {
+        let itemSelected = [];
+        if (typeof options[0]!=='undefined') {
+            if (item.opt1_value !== null) {
+                if (options[0] === item.opt1_value) {
+                    itemSelected.push(1);
+                }
+            }
+        }
+
+        if (typeof options[1]!=='undefined') {
+            if (item.opt2_value !== null) {
+                if (options[1] === item.opt2_value) {
+                    itemSelected.push(1);
+                }
+            }
+        }
+
+        if (typeof options[2]!=='undefined') {
+            if (item.opt3_value !== null) {
+                if (options[2] === item.opt3_value) {
+                    itemSelected.push(1);
+                }
+            }
+        }
+        if (options.length === itemSelected.length) {
+            document.querySelector('#product_price').innerHTML = item.price;
+            document.querySelector('#product_old_price').innerHTML = item.old_price;
+            //document.querySelector('#selected_variant').value = JSON.stringify(item)
+        }
+    })
+}
+
+function fillVariantData(vaData) {
+    if (vaData.length > 0) {
+        vaData.forEach(item=>{
+            let names = item.name.split('/');
+            let obj = {}
+            obj.opt1_value = typeof names[0] !== 'undefined' ? item.opt1_value: null 
+            obj.opt2_value = typeof names[1] !== 'undefined' ? item.opt2_value: null 
+            obj.opt3_value = typeof names[2] !== 'undefined' ? item.opt3_value: null 
+            obj.old_price = item.old_price
+            obj.price = item.price
+            obj.id = item.id
+            allVarinats.push(obj)
+        })
+    }
+}
+
+function variantInit() {
+    selectedVariant = JSON.parse(document.querySelector('#selected_variant').value);
+    var vaData = document.querySelector('#variants_data');
+    if (vaData) {
+        vaData = JSON.parse(vaData.value);
+        fillVariantData(vaData);
+    }
+
+    //initial Active 
+    let allrows = document.querySelectorAll('.each-variant-row');
+    if (allrows.length > 0) {
+        for (let index = 0; index < allrows.length; index++) {
+            const parent = allrows[index];
+            let allbuttons = parent.querySelectorAll('button');
+            if (allbuttons.length > 0) {
+                for (let jindex = 0; jindex < allbuttons.length; jindex++) {
+                    const button = allbuttons[jindex];
+                    let value = button.getAttribute('data-item');
+                    if (selectedVariant.opt1_value === value || selectedVariant.opt2_value === value || selectedVariant.opt3_value === value) {
+                        button.classList.add('active')
+                    }
+                }
+            }
+        }
+    }
+}
+function changeVariant(dom) {
     let rowVar = dom.closest('.each-variant-row');
     let varItems = rowVar.querySelectorAll('button');
     if (varItems.length > 0) {
@@ -307,16 +390,10 @@ function changeVariant(variantObj, dom) {
         }
     }
     dom.classList.add('active');
-    let price = document.querySelector('#product_price');
-    let oldprice = document.querySelector('#product_old_price');
-    if (price) {
-        price.innerHTML = variantObj.price;
-    }
-
-    if (oldprice) {
-        oldprice.innerHTML = variantObj.old_price;
-    }
+    updatePrice();
 }
+
 renderCartItem();
 updateQuantity();
+variantInit();
 

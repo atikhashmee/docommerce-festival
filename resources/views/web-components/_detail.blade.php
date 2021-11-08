@@ -35,12 +35,12 @@
                 <small style="text-decoration: line-through;">৳<span id="product_old_price">{{$product->old_price}}</span></small>
             </h6>
             @if (count($product->show_variants) > 0)
-                <div class="options pt-3">
+                <div class="options pt-3 variant_data">
                     @foreach ($product->show_variants as $name => $item)
                         <div class="each-variant-row">
                             <span class="mr-1">{{$name}}</span>
                             @foreach ($item as $prop => $val)
-                                <button type="button" onclick="changeVariant({{json_encode($val)}}, this)" class="btn btn-info btn-sm mr-1 @if(isset($product->smallest_variant) && $val->id == $product->smallest_variant->id) active @endif">{{$prop}}</button>
+                                <button type="button" onclick="changeVariant(this)" data-item="{{ $prop }}" class="btn btn-info btn-sm mr-1">{{$prop}}</button>
                             @endforeach
                         </div>
                     @endforeach
@@ -70,4 +70,10 @@
 
         </div>
     </div>
+</div>
+
+<div id="extra_field">
+    <input type="hidden" name="variants_data" id="variants_data" value="{{ json_encode($product->variants) }}">
+    <input type="hidden" name="product_quantity" id="product_quantity"/>         
+    <input type="hidden" name="selected_variant" id="selected_variant" value="{{ json_encode($product->smallest_variant) }}">
 </div>
