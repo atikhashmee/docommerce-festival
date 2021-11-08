@@ -41,9 +41,9 @@
                         <div class="item">
                             <a href="{{route('store_page', ['store_id' => $store->id])}}">
                                 @if ($store->img !=null && file_exists(public_path('storage/stores/'.$store->img)))
-                                    <img src="{{ asset('storage/stores/'.$store->img) }}" alt="{{ $store->name }}" height="100" width="100">
+                                    <img src="{{ asset('storage/stores/'.$store->img) }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
                                 @else
-                                    <img src="{{ $store->store_logo_url }}" alt="{{ $store->name }}" height="100" width="100">
+                                    <img src="{{ $store->store_logo_url }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
                                 @endif
                                 {{-- <img src="{{$img}}" alt="{{$store->name}}" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5"> --}}
                             </a>

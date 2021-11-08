@@ -149,7 +149,7 @@
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Ready to Ship', 'Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('In Progress', {{ $detail->id }})" @endif href="javascript:void(0)">In Progress</a>
+                                                            <a class="dropdown-item disabled"  @if (in_array($detail->status, ['Ready to Ship', 'Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('In Progress', {{ $detail->id }})" @endif href="javascript:void(0)">In Progress</a>
                                                             <a class="dropdown-item"  @if (in_array($detail->status, ['Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('Ready to Ship', {{ $detail->id }})" @endif href="javascript:void(0)">Ready To Ship</a>
                                                             <a class="dropdown-item"  @if (in_array($detail->status, ['Delivered' ])) disabled @else onclick="changeStatus('Shipped', {{ $detail->id }})" @endif href="javascript:void(0)">Shipped</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Delivered', {{ $detail->id }})" href="javascript:void(0)">Delivered</a>

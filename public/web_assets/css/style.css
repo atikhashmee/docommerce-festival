@@ -133,6 +133,7 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     transition: all 0.3s ease;
     position: relative;
     z-index: 2;
+    max-height: 97px;
 }
 
 .brands-img:hover {
