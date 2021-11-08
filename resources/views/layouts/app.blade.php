@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css">
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.theme.default.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('web_assets/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/style.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css')}}" />
     <script>
@@ -31,15 +32,15 @@
             Successfully added in the <span class="textChange">cart</span>.
         </p>
     </div>
-    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'home']))
+    @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'detail_page', 'home']))
         @include('layouts._top_banner')
     @endif
     @if(Route::currentRouteName() == 'index_page')
         @include('layouts._index')
     @elseif(in_array(Route::currentRouteName(), ['store_page', 'category_page'])) 
         <section class="w-100 header text-center">
-            <img src="{{asset('web_assets/images/top-banner.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
-            <img src="{{asset('web_assets/images/top-banner-2.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none">
+            <a href="{{route('index_page')}}"><img src="{{asset('web_assets/images/top-banner.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
+            <img src="{{asset('web_assets/images/top-banner-2.png')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none"></a>
         </section>
     @endif
     @include('layouts._menu')
@@ -49,11 +50,10 @@
     <a id="back-to-top" href="#" class="btn btn-primary btn-sm back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="{{asset('web_assets/js/particles.js')}}"></script>
     <script src="{{asset('web_assets/js/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script src="{{asset('web_assets/js/custom.js')}}"></script>
     <script src="{{asset('web_assets/js/scripts.js')}}"></script>
+    @yield('scripts')
 </body>
 </html>

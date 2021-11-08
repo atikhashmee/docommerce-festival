@@ -26,10 +26,10 @@
                 </h3>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row">
             @if (count($hot_deals) > 0)
                 @foreach ($hot_deals as $product)
-                    <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-3 mb-4">
                         @component('web-components._product', compact('product'))
                             
                         @endcomponent
@@ -56,10 +56,10 @@
                 </h3>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row">
             @if (count($exclusives) > 0)
                 @foreach ($exclusives as $product)
-                    <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-3 mb-4">
                         @component('web-components._product', compact('product'))
                             
                         @endcomponent

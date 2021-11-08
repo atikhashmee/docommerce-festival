@@ -129,15 +129,14 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 
 .brands-img {
     border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.15);
     transition: all 0.3s ease;
     position: relative;
     z-index: 2;
 }
 
 .brands-img:hover {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
 .product-heading {
@@ -659,7 +658,7 @@ footer .container {
 }
 
 .breadcrumb-item a {
-    color: rgb(51, 51, 51);
+    color: #813790;
 }
 
 .breadcrumb-item.active {
@@ -987,5 +986,37 @@ footer .container {
 
 .storeNameDiv.product-section-heading a {
     font-size: 70%;
+}
+
+/* filter price */
+
+.filter_price .ui-widget.ui-widget-content {
+    border: 0;
+    border-radius: 0;
+    background-color: #ddd;
+    height: 4px;
+    margin-bottom: 20px;
+}
+
+.filter_price .ui-slider .ui-slider-range {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#963fa7+0,813790+100 */
+    background: rgb(150,63,167); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(150,63,167,1) 0%, rgba(129,55,144,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(150,63,167,1) 0%,rgba(129,55,144,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(150,63,167,1) 0%,rgba(129,55,144,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', endColorstr='#813790',GradientType=1 ); /* IE6-9 */
+    border-radius: 0;
+}
+
+.filter_price .ui-slider .ui-slider-handle {
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 100%;
+    border: 0;
+    height: 18px;
+    top: -8px;
+    width: 18px;
+    margin: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
   

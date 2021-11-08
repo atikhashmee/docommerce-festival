@@ -156,8 +156,7 @@ $('[data-quantity="minus"]').click(function(e) {
 $('.different_address_swt').click(function () {
   $('.different_address_div').toggle('slow');
   $(this).toggleClass('active')
-});
-  
+});  
 
   
 });
