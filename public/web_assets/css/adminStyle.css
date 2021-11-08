@@ -329,3 +329,7 @@ input[type="text"], textarea {
     color: #333;
     box-shadow: none;
 }
+
+.disabled {
+    cursor: no-drop !important;
+}

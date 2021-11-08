@@ -113,7 +113,7 @@
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" onclick="changeStatus('In Progress', {{ $detail->id }})" href="javascript:void(0)">In Progress</a>
+                                                            <a class="dropdown-item disabled" onclick="changeStatus('In Progress', {{ $detail->id }})" href="javascript:void(0)">In Progress</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Ready to Ship', {{ $detail->id }})" href="javascript:void(0)">Ready To Ship</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Shipped', {{ $detail->id }})" href="javascript:void(0)">Shipped</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Delivered', {{ $detail->id }})" href="javascript:void(0)">Delivered</a>
