@@ -46,7 +46,7 @@
                                     <td>{{strtotime($order->order_number)}}</td>
                                     <td>{{$order->order_details_count}}</td>
                                     <td>Cash On</td>
-                                    <td>{{$order->total_final_amount}}</td>
+                                    <td>৳{{$order->total_final_amount}}</td>
                                     <td>
                                         <a href="{{route('order_detail_page', ['order_id' => $order->id])}}" class="btn-link">Detail</a>
                                     </td>
