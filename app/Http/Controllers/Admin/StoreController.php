@@ -80,7 +80,8 @@ class StoreController extends Controller
                     'festival_id' => $festival->id,
                     'store_id' => $request->store_id
                 ]);
-            })]
+            })],
+            'imageFile' => 'required|file'
         ]);
 
         if ($validator->fails()) {
