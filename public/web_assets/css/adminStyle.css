@@ -332,4 +332,9 @@ input[type="text"], textarea {
 
 .disabled {
     cursor: no-drop !important;
+    pointer-events: all !important;
+}
+
+#imageFile {
+    border: none;
 }

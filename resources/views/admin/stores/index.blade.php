@@ -78,9 +78,9 @@
                                         </td>
                                         <td>  
                                             @if ($item->upload_image !=null && file_exists(public_path('storage/stores/'.$item->upload_image)))
-                                                <img src="{{ asset('storage/stores/'.$item->upload_image) }}" alt="{{ $item->name }}" height="100" width="100">
+                                                <img src="{{ asset('storage/stores/'.$item->upload_image) }}" alt="{{ $item->name }}" height="97" width="176">
                                             @else
-                                                <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="100" width="100">
+                                                <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="97" width="176">
                                             @endif
                                         </td>
                                         <td>  
@@ -158,9 +158,9 @@
             </button>
             </div>
             <div class="modal-body">
-                <img src="" id="img_container" width="100" height="100" alt="">
-                <div class="form-group">
-                    <input type="file" name="imageFile" id="imageFile" class="form-control">
+                <img src="{{asset('web_assets/images/stores/0.png')}}" id="img_container" width="176" height="97" alt="Store logo">
+                <div class="form-group mt-4">
+                    <input type="file" name="imageFile" id="imageFile" class="form-control p-0">
                     @error('imageFile')
                         <div class="alert alert-danger">{{$message}}</div>
                     @enderror
