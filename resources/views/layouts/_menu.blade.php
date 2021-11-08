@@ -38,7 +38,7 @@
                             @guest
                                 <a href="{{route('login')}}" class="top-notification-icons p-2"><i class="fas fa-user"></i></a>
                             @else
-                                <a href="{{route('home')}}" class="top-notification-icons p-2"><i class="fas fa-user"></i></a>
+                                <a href="{{route('orders_page')}}" class="top-notification-icons p-2"><i class="fas fa-user"></i></a>
                             @endguest
                         </li>
                         <li class="nav-item mx-1 cart-li">
