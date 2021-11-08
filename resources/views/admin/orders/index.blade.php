@@ -96,13 +96,13 @@
                                         <td>
                                             <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}">
                                         </td>
-                                        <td>  {{ $order->id }} </td>
+                                        <td>  {{ strtotime($order->order_number) }} </td>
                                         <td>  {{ $order->created_at }} </td>
                                         <td>  {{ $order->user->name }} </td>
                                         <td>  Cash-on                  </td>
                                         <td> {{ $order->orderDetails[0]->store->name ?? 'N/A'  }}</td>
                                         <td>  {{ $order->status  }}</td>
-                                        <td>  {{ $order->total_final_amount  }}</td>
+                                        <td>  ৳{{ $order->total_final_amount  }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -110,8 +110,8 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{{route("admin.orders.show", ['order' => $order->id])}}">Detail</a>
-                                                    <a class="dropdown-item" href="{{route("admin.order.change.status", ["order_id" => $order->id])}}">Change Status</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Canceled', {{ $order->id }})">Cancel & Refund</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Confirmed', {{ $order->id }})">Confirm</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Canceled', {{ $order->id }})">Cancel</a>
                                                 </div>
                                             </div>
                                         </td>

@@ -30,15 +30,15 @@
                 <form action="{{route('admin.users.store')}}" method="post" id="create_form">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Name<span class="text-danger">*</span></label>
                         <input type="text" id="name" name="name" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email<span class="text-danger">*</span></label>
                         <input type="text" id="email" name="email" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="phone_number">Phone Number</label>
+                        <label for="phone_number">Phone Number<span class="text-danger">*</span></label>
                         <input type="text" id="phone_number" name="phone_number" class="form-control" />
                     </div>
                     <div class="form-group">

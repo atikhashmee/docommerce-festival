@@ -40,9 +40,9 @@
                                          <strong class="order-line-height">Order Number : </strong> {{ strtotime($order->order_number) }} <br>
                                          <strong class="order-line-height">Order Date : </strong> {{ date('d M Y', strtotime($order->created_at)) }} <br>
                                          <strong class="order-line-height">Order Status : </strong> {{ $order->status }}<br>
-                                         <strong class="order-line-height">Total Amount : </strong>{{ $order->cur_symb}}{{ $order->sub_total}}<br>
-                                         <strong class="order-line-height">Total Discount : </strong> (-) $ {{ $order->discount_amount }}<br>
-                                         <strong class="order-line-height">Total Amount : </strong>{{ $order->cur_symb}}{{ $order->total_amount }}<br>
+                                         <strong class="order-line-height">Total Amount : </strong>৳{{ $order->sub_total}}<br>
+                                         <strong class="order-line-height">Total Discount : </strong> (-) ৳{{ $order->discount_amount }}<br>
+                                         <strong class="order-line-height">Total Amount : </strong>৳{{ $order->total_amount }}<br>
                                          <strong class="order-line-height">Payment Type : </strong> Cash On<br>
                                      </p>
                                  </div>
@@ -116,16 +116,16 @@
                                                             </div>
                                                         </td>
                                                         <td>  {{ $detail->status }}</td>
-                                                        <td>{{ $order->cur_symb}} {{ $detail->product_unit_price }}
+                                                        <td>৳{{ $detail->product_unit_price }}
                                                             <br>
                                                             @if ($detail->additional_delivery_charge > 0)
-                                                                ({{ $order->cur_symb}}  {{ $detail->additional_delivery_charge }})
+                                                                (৳{{ $detail->additional_delivery_charge }})
                                                             @endif
                                                         </td>
                                                         <td>{{ $detail->product_quantity }}</td>
-                                                        <td>{{ $subtotal }}</td>
+                                                        <td>৳{{ $subtotal }}</td>
                                                         <td> {{ $detail->discount_amount!=0?'-'.$detail->discount_amount:'N/A' }} </td>
-                                                        <th class="text-right">{{ $order->cur_symb}}{{ $detail->total }}</th>
+                                                        <th class="text-right">৳{{ $detail->total }}</th>
                                                     </tr>
                                                 </tbody>
                                              @endforeach

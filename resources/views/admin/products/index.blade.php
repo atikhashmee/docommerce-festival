@@ -57,6 +57,8 @@
                             </th>
                             <th>#SL</th>
                             <th>Product</th>
+                            <th>Price</th>
+                            <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
                             <th>Store</th>
                             <th></th>
@@ -72,6 +74,8 @@
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
                                             <h5>{{ $item->name }}</h5>
                                         </td>
+                                        <td>৳{{ $item->price }}</td>
+                                        <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>
                                         <td>  {{ $item->store->name ?? 'N/A' }}</td>
                                         <td>

@@ -90,6 +90,9 @@ class OrderController extends Controller
         try {
             $updated = Order::where('id', $data['order_id'])->update(['status' => $data['status']]);
             if ($updated) {
+                if ($data['status'] == 'Confirmed') {
+                    OrderDetail::where('order_id', $data['order_id'])->update(['status' => 'In Progress']);
+                }
                 return response()->json(['status' => true, 'data'=> 'Successfully Updated']);
             }
         } catch (\Exception $e) {

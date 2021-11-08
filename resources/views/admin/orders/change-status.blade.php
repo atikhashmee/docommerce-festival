@@ -12,21 +12,21 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <p>
                             @php
                                 $discount_amount = $order->discount_amount;
                                 $total_amount = $order->total_amount
                             @endphp
-                            <strong class="order-line-height">Order&nbsp;ID : </strong> {{ $order->order_number }} <br>
-                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{ date('d M Y', strtotime($order->created_at)) }} <br>
+                            <strong class="order-line-height">Order&nbsp;ID : </strong> {{ strtotime($order->order_number) }} <br>
+                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{ date('d M Y, H:i', strtotime($order->created_at)) }} <br>
                             <strong class="order-line-height">Order&nbsp;Status : </strong> {{ $order->status }}<br>
-                            <strong class="order-line-height">SubTotal : </strong> {{ $order->sub_total}}<br>
-                            <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  {{ $order->discount_amount }}<br>
-                            <strong class="order-line-height">Total&nbsp;Amount : </strong> {{ $order->total_amount }}<br>
+                            <strong class="order-line-height">SubTotal : </strong> ৳{{ $order->sub_total}}<br>
+                            <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  ৳{{ $order->discount_amount }}<br>
+                            <strong class="order-line-height">Total&nbsp;Amount : </strong> ৳{{ $order->total_amount }}<br>
                         </p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h2>Order Address</h2>
                         <address>
                             @php
@@ -49,6 +49,42 @@
                             @endif
                         </address>
                     </div>
+                    <div class="col-md-4">
+                        <h2>Store Address</h2>
+                        <address>
+                            @php
+                                $store = $order->orderDetails[0]->store ?? null;
+                            @endphp
+                            @if(!empty($store))
+                                <strong class="order-line-height">ID  : </strong> {{ $store->id }} <br>
+                                <strong class="order-line-height">Name  : </strong> {{ $store->name }} <br>
+                                <strong class="order-line-height">Address : </strong>
+                                @php
+                                    $adrs = $store->store_address;
+                                @endphp
+                                @if ($adrs['address_line_1'])
+                                    {{$adrs['address_line_1']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['address_line_2'])
+                                    {{$adrs['address_line_2']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['hotline_number'])
+                                    {{$adrs['hotline_number']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['email'])
+                                    {{$adrs['email']}}
+                                    <br>
+                                @endif
+                            @else
+                                {{ __('web.billing_address_message') }}<br>
+                                <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
+                            @endif
+                        </address>
+                    </div>
+                   
                 </div>
                 <div class="row">
                     <div class="col">
@@ -97,25 +133,25 @@
                                                        </div>
                                                    </td>
                                                    <td>  {{ $detail->status }}</td>
-                                                   <td>{{ $order->cur_symb}} {{ $detail->product_unit_price }}
+                                                   <td>৳{{ $detail->product_unit_price }}
                                                        <br>
                                                        @if ($detail->additional_delivery_charge > 0)
-                                                           ({{ $order->cur_symb}}  {{ $detail->additional_delivery_charge }})
+                                                           (৳{{ $detail->additional_delivery_charge }})
                                                        @endif
                                                    </td>
                                                    <td>{{ $detail->product_quantity }}</td>
-                                                   <td>{{ $subtotal }}</td>
+                                                   <td>৳{{ $subtotal }}</td>
                                                    <td> {{ $detail->discount_amount!=0?'-'.$detail->discount_amount:'N/A' }} </td>
-                                                   <th class="text-right">{{ $order->cur_symb}}{{ $detail->total }}</th>
+                                                   <th class="text-right">৳{{ $detail->total }}</th>
                                                    <th>
                                                     <div class="dropdown">
                                                         <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item disabled" onclick="changeStatus('In Progress', {{ $detail->id }})" href="javascript:void(0)">In Progress</a>
-                                                            <a class="dropdown-item" onclick="changeStatus('Ready to Ship', {{ $detail->id }})" href="javascript:void(0)">Ready To Ship</a>
-                                                            <a class="dropdown-item" onclick="changeStatus('Shipped', {{ $detail->id }})" href="javascript:void(0)">Shipped</a>
+                                                            <a class="dropdown-item disabled"  @if (in_array($detail->status, ['Ready to Ship', 'Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('In Progress', {{ $detail->id }})" @endif href="javascript:void(0)">In Progress</a>
+                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('Ready to Ship', {{ $detail->id }})" @endif href="javascript:void(0)">Ready To Ship</a>
+                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Delivered' ])) disabled @else onclick="changeStatus('Shipped', {{ $detail->id }})" @endif href="javascript:void(0)">Shipped</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Delivered', {{ $detail->id }})" href="javascript:void(0)">Delivered</a>
                                                         </div>
                                                     </div>
