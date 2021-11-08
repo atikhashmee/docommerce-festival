@@ -138,14 +138,17 @@ class ProductController extends Controller
                             'meta_description' => $item['meta_description'],
                             'visit_count' => $item['visit_count'],
                         ]);
+                        $dataArr = [];
                         if (count($item['variants']) > 0) {
                             foreach ($item['variants'] as $variant) {
-                                ProductVariant::updateOrCreate([
-                                    'store_id' => $item['original_store_id'],
-                                    'product_id' => $product->id,
+                                ProductVariant::where([
+                                    'store_id' => $item['original_store_id'], 
+                                    'original_product_id' => $item['original_product_id'],
                                     'festival_id' => $data['festival_id']
-                                ], [
+                                ])->delete();
+                                $dataArr[] = [
                                     'product_id' => $product->id,
+                                    'original_product_id' => $product->original_product_id,
                                     'festival_id' => $data['festival_id'],
                                     'store_id' => $data['store_id'],
                                     'name' => $variant['name'],
@@ -160,9 +163,9 @@ class ProductController extends Controller
                                     'old_price' => $variant['old_price'] ?? 0,
                                     'price' => $variant['price'],
                                     'barcode' => $variant['barcode'],
-                                ]);
+                                ];
                             }
-        
+                            ProductVariant::insert($dataArr);
                         }
                     }
                 }

@@ -17,6 +17,7 @@ class CreateProductVariantsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('festival_id');
+            $table->unsignedBigInteger('original_product_id');
             $table->unsignedBigInteger('store_id');
             $table->string('name');
             $table->enum('discount_type', ['percentage', 'fixed']);
