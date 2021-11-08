@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css">
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.theme.default.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('web_assets/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/style.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css')}}" />
     <script>
@@ -49,11 +50,10 @@
     <a id="back-to-top" href="#" class="btn btn-primary btn-sm back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="{{asset('web_assets/js/particles.js')}}"></script>
     <script src="{{asset('web_assets/js/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script src="{{asset('web_assets/js/custom.js')}}"></script>
     <script src="{{asset('web_assets/js/scripts.js')}}"></script>
+    @yield('scripts')
 </body>
 </html>
