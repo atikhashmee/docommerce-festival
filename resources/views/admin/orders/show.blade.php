@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <p>
                             @php
                                 $discount_amount = $order->discount_amount;
@@ -26,8 +26,31 @@
                             <strong class="order-line-height">Total&nbsp;Amount : </strong> {{ $order->total_amount }}<br>
                         </p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h2>Order Address</h2>
+                        <address>
+                            @php
+                                $shipping = $order->address;
+                            @endphp
+                            @if(!empty($shipping))
+                                <strong class="order-line-height">{{ __('web.name') }} : </strong> {{ $shipping->name }} <br>
+                                <strong class="order-line-height">{{ __('web.address') }} : </strong>{{ $shipping->address_line_1 }}
+                                @if($shipping->address_line_2)
+                                    {{ $shipping->address_line_2 }} <br>
+                                @endif
+                                    {{ $shipping->district_name }}
+                                {{ $shipping->state_name.', '. $shipping->zip_code?$shipping->zip_code.',':'' }}
+                                {{ $shipping->country_name }} <br>
+                                <strong class="order-line-height">{{ __('web.phone_number') }} : </strong>{{ $shipping->phone }} <br>
+                                <strong class="order-line-height">{{ __('web.email') }} : </strong>{{ $shipping->email }} <br>
+                            @else
+                                {{ __('web.billing_address_message') }}<br>
+                                <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
+                            @endif
+                        </address>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Store Address</h2>
                         <address>
                             @php
                                 $shipping = $order->address;

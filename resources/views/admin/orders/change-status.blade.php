@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <p>
                             @php
                                 $discount_amount = $order->discount_amount;
@@ -26,7 +26,7 @@
                             <strong class="order-line-height">Total&nbsp;Amount : </strong> {{ $order->total_amount }}<br>
                         </p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h2>Order Address</h2>
                         <address>
                             @php
@@ -49,6 +49,42 @@
                             @endif
                         </address>
                     </div>
+                    <div class="col-md-4">
+                        <h2>Store Address</h2>
+                        <address>
+                            @php
+                                $store = $order->orderDetails[0]->store ?? null;
+                            @endphp
+                            @if(!empty($store))
+                                <strong class="order-line-height">ID  : </strong> {{ $store->id }} <br>
+                                <strong class="order-line-height">Name  : </strong> {{ $store->name }} <br>
+                                <strong class="order-line-height">Address : </strong>
+                                @php
+                                    $adrs = $store->store_address;
+                                @endphp
+                                @if ($adrs['address_line_1'])
+                                    {{$adrs['address_line_1']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['address_line_2'])
+                                    {{$adrs['address_line_2']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['hotline_number'])
+                                    {{$adrs['hotline_number']}}
+                                    <br>
+                                @endif
+                                @if ($adrs['email'])
+                                    {{$adrs['email']}}
+                                    <br>
+                                @endif
+                            @else
+                                {{ __('web.billing_address_message') }}<br>
+                                <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
+                            @endif
+                        </address>
+                    </div>
+                   
                 </div>
                 <div class="row">
                     <div class="col">
@@ -113,9 +149,9 @@
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" onclick="changeStatus('In Progress', {{ $detail->id }})" href="javascript:void(0)">In Progress</a>
-                                                            <a class="dropdown-item" onclick="changeStatus('Ready to Ship', {{ $detail->id }})" href="javascript:void(0)">Ready To Ship</a>
-                                                            <a class="dropdown-item" onclick="changeStatus('Shipped', {{ $detail->id }})" href="javascript:void(0)">Shipped</a>
+                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Ready to Ship', 'Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('In Progress', {{ $detail->id }})" @endif href="javascript:void(0)">In Progress</a>
+                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Shipped', 'Delivered' ])) disabled @else onclick="changeStatus('Ready to Ship', {{ $detail->id }})" @endif href="javascript:void(0)">Ready To Ship</a>
+                                                            <a class="dropdown-item"  @if (in_array($detail->status, ['Delivered' ])) disabled @else onclick="changeStatus('Shipped', {{ $detail->id }})" @endif href="javascript:void(0)">Shipped</a>
                                                             <a class="dropdown-item" onclick="changeStatus('Delivered', {{ $detail->id }})" href="javascript:void(0)">Delivered</a>
                                                         </div>
                                                     </div>
