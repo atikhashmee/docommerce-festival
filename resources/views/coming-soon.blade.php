@@ -29,7 +29,7 @@
             padding:0;
         }
         .cs-wrapper {
-            height: 70vh;
+            height: 64vh;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -92,15 +92,15 @@
 
         /* countdown */
 
-.flipper {
+    .flipper {
   color: #333;
   display: block;
   font-size: 50px;
   line-height: 100%;
   padding: 0;
   margin: 0;
-  font-size: 70px !important;
-  height: 90px;
+  font-size: 50px !important;
+  height: 65px;
 }
 .flipper.flipper-invisible {
   font-size: 0px !important;
@@ -134,7 +134,7 @@
   margin: 0;
   display: inline-block;
   float: left;
-  height: 1.2em;
+    height: 1.2em;
   overflow-y: hidden;
 }
 .flipper-digit span {
