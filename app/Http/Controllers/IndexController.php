@@ -155,9 +155,17 @@ class IndexController extends Controller
                     'state_id'  => $data['state_id'],
                     'country_id'  => 19,
                 ]);
-
                 if (count($cartItems) > 0) {
                     foreach ($cartItems as $cart) {
+                        $variant_id = null;
+                        $variant_detail = [];
+                        if ($cart['selected_variant'] != null) {
+                            $splitted_product_id = explode('_',  $cart['id']);
+                            $cart['id'] = $splitted_product_id[0];
+                            $variant_id = $splitted_product_id[1];
+                            $variant_detail =  $cart['selected_variant'];
+                        }
+
                         OrderDetail::create([
                             'order_id' => $order->id,
                             'original_store_id' => $cart['original_store_id'],
@@ -166,9 +174,9 @@ class IndexController extends Controller
                             'product_id' => $cart['id'],
                             'original_product_id' => $cart['original_product_id'],
                             'admin_id' => $cart['admin_id'],
-                            'product_variant_id' => null,
+                            'product_variant_id' => $variant_id,
                             'product_name' => $cart['name'],
-                            'product_variant_details' => json_encode([]),
+                            'product_variant_details' => $variant_detail,
                             'product_unit_price' => $cart['price'],
                             'additional_delivery_charge' => 0,
                             'discount_amount' => 0,

@@ -102,15 +102,15 @@
                                                             <div>
                                                                 {{ $detail->product_name }}
                                                                 <br>
-                                                                @if(!empty($detail->productVariant))
-                                                                    @if($detail->productVariant->opt1_name)
-                                                                        (<strong>{{ $detail->productVariant->opt1_name }}:</strong> {{ $detail->productVariant->opt1_value }})<br>
+                                                                @if(!empty($detail->product_variant_details))
+                                                                    @if($detail->product_variant_details['opt1_name'] != null)
+                                                                        (<strong>{{ $detail->product_variant_details['opt1_name'] }}:</strong> {{ $detail->product_variant_details['opt1_value'] }})<br>
                                                                     @endif
-                                                                    @if($detail->productVariant->opt2_name)
-                                                                        (<strong>{{ $detail->productVariant->opt2_name }}:</strong> {{ $detail->productVariant->opt2_value }})<br>
+                                                                    @if($detail->product_variant_details['opt2_name'] != null)
+                                                                        (<strong>{{ $detail->product_variant_details['opt2_name'] }}:</strong> {{ $detail->product_variant_details['opt2_value'] }})<br>
                                                                     @endif
-                                                                    @if($detail->productVariant->opt3_name)
-                                                                        (<strong>{{ $detail->productVariant->opt3_name }}:</strong> {{ $detail->productVariant->opt3_value }})<br>
+                                                                    @if($detail->product_variant_details['opt3_name'] != null)
+                                                                        (<strong>{{ $detail->product_variant_details['opt3_name'] }}:</strong> {{ $detail->product_variant_details['opt3_value'] }})<br>
                                                                     @endif
                                                                 @endif
                                                             </div>

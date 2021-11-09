@@ -49,4 +49,8 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Store::class, 'original_store_id');
     }
+
+    protected $casts = [
+        'product_variant_details' => 'array',
+    ];
 }

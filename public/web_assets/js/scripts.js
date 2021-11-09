@@ -21,6 +21,7 @@ function CartItem(product) {
     this.slug = product.slug || null;
     this.name = product.name ||  null;
     this.price = product.price || 0;
+    this.selected_variant = product.selected_variant || null;
     this.quantity = 1;
     this.image = product.original_product_img || null;
     this.store_id =  product.store_id || null;
@@ -74,12 +75,30 @@ function renderCartItem() {
     let checkoutPage = '';
     if (cartArr.length > 0) {
         cartArr.forEach(element => {
+        let option1 = "" 
+        let option2 = "" 
+        let option3 = "" 
+        if (element.selected_variant !== null) {
+            if (element.selected_variant.opt1_name !== null) {
+                option1 = "("+element.selected_variant.opt1_name+" : "+element.selected_variant.opt1_value+")"
+            }
+        }
+        if (element.selected_variant !== null) {
+            if (element.selected_variant.opt2_name !== null) {
+                option2 = "("+element.selected_variant.opt2_name+" : "+element.selected_variant.opt2_value+")"
+            }
+        }
+        if (element.selected_variant !== null) {
+            if (element.selected_variant.opt3_name !== null) {
+                option3 = "("+element.selected_variant.opt3_name+" : "+element.selected_variant.opt3_value+")"
+            }
+        }
         txt += `<li>
                 <div class="shopping-cart-img">
                     <a href="#"><img alt="product" src="${element.image}"></a>
                 </div>
                 <div class="shopping-cart-title">
-                    <h4><a href="shop-product-right.html">${element.name}</a></h4>
+                    <h4><a href="shop-product-right.html">${element.name} ${option1} ${option2} ${option3}</a></h4>
                     <h4><span>${element.quantity} × </span>৳${element.price}</h4>
                 </div>
                 <div class="shopping-cart-delete">
@@ -92,7 +111,7 @@ function renderCartItem() {
                     <img src="${element.image}" alt="${element.name}" class="cart-product-img">
                 </td>
                 <td>
-                    <p class="product_name">${element.name}</p>
+                    <p class="product_name">${element.name} ${option1} ${option2} ${option3}</p>
                 </td>
                 <td>
                     <p class="product_price">৳${element.price}</p>
@@ -128,7 +147,7 @@ function renderCartItem() {
                     <img src="${element.image}" alt="${element.name}" class="checkout-product-img">
                 </td>
                 <td>
-                    <p class="product_name">${element.name}</p>
+                    <p class="product_name">${element.name} ${option1} ${option2} ${option3}</p>
                 </td>
                 <td>
                     <p class="product_price">৳${element.price}</p>
@@ -334,7 +353,12 @@ function updatePrice() {
         if (options.length === itemSelected.length) {
             document.querySelector('#product_price').innerHTML = item.price;
             document.querySelector('#product_old_price').innerHTML = item.old_price;
-            document.querySelector('#selected_variant').value = JSON.stringify(item)
+            var vaData = document.querySelector('#variants_data');
+            if (vaData) {
+                vaData = JSON.parse(vaData.value);
+                let selectedVariantData = vaData.find(ite => ite.id == item.id);
+                document.querySelector('#selected_variant').value = JSON.stringify(selectedVariantData)
+            }
         }
     })
 }
