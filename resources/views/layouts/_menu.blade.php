@@ -3,8 +3,8 @@
         <div class="row">
             
             <div class="col-md-9 order-md-12">
-                <div class="float-right p-0 py-md-2">
-                    <ul class="nav mx-auto ml-md-auto cart-notification-ul align-items-center">
+                <div class="float-left float-md-right p-0 py-md-2">
+                    <ul class="nav cart-notification-ul align-items-center">
                         <li class="nav-item mx-1">
                             <form class="form-inline my-2 my-lg-0 product-search">
                                 <div class="input-group ml-auto top-search">
@@ -44,13 +44,7 @@
 
                             </div>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)"  onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();" class="btn btn-outline-success btn-sm ml-3">Logout</a>
-                        </li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+                        
                         
                     </ul>
                 </div>

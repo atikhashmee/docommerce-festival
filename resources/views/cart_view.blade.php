@@ -80,5 +80,5 @@
             </div>
         </div>
     </section>
-    @include('web-components._faq')
+    
 @endsection

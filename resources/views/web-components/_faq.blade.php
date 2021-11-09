@@ -1,4 +1,4 @@
-<section class="faq-section w-100 py-5">
+<section id="faq" class="faq-section w-100 py-5">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">

@@ -11,9 +11,11 @@
             <div class="col-md-6 text-center text-md-right">
                 <h4 class="footer-header mt-4 mt-md-0">Quick Links</h4>
                 <ul class="m-0 mt-4 p-0 footer-quick-links">
-                    <li><a href="#">How to order</a></li>
+                    
                     <li><a href="#">Terms and Conditions</a></li>
                     <li><a href="#">Privacy Policies</a></li>
+                    <li><a href="{{ url('/#faq') }}">FAQ</a></li>
+                    <li><a href="#">Return Policy</a></li>
                     {{-- <li><a href="javascript:void(0)"  onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
