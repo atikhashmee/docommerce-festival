@@ -55,6 +55,7 @@ function addToCart(product) {
             }
         }
     }
+    flashMessage('success', item.name)
     storage.putData(cartArr);
     updateQuantity();
     renderCartItem();

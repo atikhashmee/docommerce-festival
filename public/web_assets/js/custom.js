@@ -1,4 +1,18 @@
 // =========================
+function flashMessage(type, header = "", message = "") {
+    if (type === 'success') {
+      $item =  $('.added-message');
+      if (header!== "") {
+        $item.find('.p_name').text(header)
+      }
+      if (message !== "") {
+        $item.find('.p_desc').text(message)
+      }
+      $item.addClass("active").delay(2000).queue(function(){
+        $(this).removeClass("active").dequeue();
+      });
+    }
+}
 $(document).ready(function () {
 
     $(window).scroll(function () {
@@ -16,11 +30,7 @@ $(document).ready(function () {
         return false;
       });
   
-  $('.addcart-btn').click(function () {
-    $('.added-message').addClass("active").delay(2000).queue(function(){
-      $(this).removeClass("active").dequeue();
-    });
-  });
+
 
   $('.add-wishlist-switch').click(function () {
     $(".added-message").find(".textChange").text("wishlist");

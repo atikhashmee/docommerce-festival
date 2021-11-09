@@ -6,7 +6,11 @@
     <h6>
         <span class="text-danger font-weight-bold">৳{{$product->price}}</span> <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
     </h6>
-    <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
+    @if ($product->variants_count > 0)
+        <a href="javascript:void(0)" class="btn btn-warning p-d-switch btn-block mt-4 text-capitalize" data-product_id="{{$product->id}}">Add to cart</a>
+    @else
+        <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
+    @endif
     <div class="wish-zoom">
         <a href="javascript:void(0)" class="p-d-switch" data-product_id="{{$product->id}}">
             <i class="fas fa-expand-arrows-alt"></i>

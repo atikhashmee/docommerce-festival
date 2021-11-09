@@ -28,8 +28,9 @@
 <body>
     <div class="added-message">
         <p>
-            <span>Product Name</span><br>
-            Successfully added in the <span class="textChange">cart</span>.
+            <span class="p_name">Product Name</span><br>
+            <span class="p_desc">Successfully added in the <span class="textChange">cart</span>.</span>
+            
         </p>
     </div>
     @if (in_array(Route::currentRouteName(), ['index_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'detail_page', 'home']))
