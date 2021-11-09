@@ -22,7 +22,7 @@
     <form  id="checkout_form">
         <div class="px-4">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-4">
                     <h5>Your Orders</h5>
                     <div class="table-responsive p-3 bg-white rounded mt-4 shadow-sm">
                         <table class="table table-bordered checkout-tbl">

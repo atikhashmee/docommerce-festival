@@ -1,27 +1,8 @@
 <section class="product-menu w-100 py-3 sticky-top">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Browse Categories
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @if (count($categories) > 0)
-                                @foreach ($categories as $category)
-                                    <a class="dropdown-item" href="{{route('category_page', ['category_id' => $category->id])}}">{{$category->name}}</a>
-                                @endforeach
-                            @endif
-                        </div>
-                        </li>
-                    </ul>
-                    
-                </nav>
-            </div>
-
-            <div class="col-md-9">
+            
+            <div class="col-md-9 order-md-12">
                 <div class="float-right p-0 py-md-2">
                     <ul class="nav mx-auto ml-md-auto cart-notification-ul align-items-center">
                         <li class="nav-item mx-1">
@@ -74,6 +55,27 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="col-md-3 order-md-1">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Browse Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @if (count($categories) > 0)
+                                @foreach ($categories as $category)
+                                    <a class="dropdown-item" href="{{route('category_page', ['category_id' => $category->id])}}">{{$category->name}}</a>
+                                @endforeach
+                            @endif
+                        </div>
+                        </li>
+                    </ul>
+                    
+                </nav>
+            </div>
+
         </div>
     </div>
 </section>
