@@ -3,9 +3,8 @@
         <div class="col-md-12">
 
             <h5 class="product-section-heading storeNameDiv mb-5">
-                Store name
-
-                <a href="#" class="float-right">
+                {{$product->store->name}}
+                <a href="//{{$product->store->store_url}}" class="float-right">
                     View owner's store <i class="fas fa-angle-right"></i>
                 </a>
             </h5>

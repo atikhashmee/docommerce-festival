@@ -34,7 +34,7 @@ class IndexController extends Controller
     public function detail($slug)
     {
         $data = [];
-        $product  = Product::with('variants', 'category')->where('slug', $slug)->first();
+        $product  = Product::with('variants', 'category', 'store')->where('slug', $slug)->first();
         $data['product'] =  $this->processedProductDetails($product);
         //dd($data['product']);
         return view('product_detail', $data);
@@ -43,7 +43,7 @@ class IndexController extends Controller
     public function quickView($id)
     {
         $data = [];
-        $product  = Product::with('variants', 'category')->where('id', $id)->first();
+        $product  = Product::with('variants', 'category', 'store')->where('id', $id)->first();
         $data['product'] =  $this->processedProductDetails($product);
         return view('web-components._detail', $data);
     }

@@ -56,7 +56,7 @@ class Product extends Model
      */
     public function store()
     {
-        return $this->belongsTo(Store::class, 'store_id');
+        return $this->belongsTo(Store::class, 'original_store_id', 'original_store_id');
     }
 
     /**
