@@ -27,7 +27,7 @@ class OrderController extends Controller
         if (isset($request->to)) {
             $sql->whereDate('orders.created_at', '<=', $request->to);
         }
-       
+        $sql->orderBy("id", "DESC");
         $data['orders'] = $sql->paginate(50);
         return view('admin.orders.index', $data);
     }

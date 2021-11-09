@@ -138,8 +138,8 @@
                         <h5>Payment</h5>
                         <div class="payment_option d-flex flex-wrap">
                             <div class="custome-radio flex-fill">
-                            <input type="radio" name="payment_option" id="exampleRadios1" class="form-check-input" value="cash_on">
-                            <label for="exampleRadios1" class="form-check-label"><span>Cash On</span></label>
+                            <input type="radio" name="payment_option" id="exampleRadios1" class="form-check-input" checked value="cash_on">
+                            <label for="exampleRadios1" class="form-check-label"><span>Cash On Delivery</span></label>
                             </div>
                         </div>
                     </div>

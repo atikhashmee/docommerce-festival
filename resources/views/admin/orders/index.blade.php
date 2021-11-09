@@ -21,7 +21,7 @@
                         <a href="javascript:void(0)" onclick="changeFilter('Pending', 'filter')" class="btn btn-primary">Pending<span class="sr-only" >(current)</span></a>
                         <a href="javascript:void(0)" onclick="changeFilter('In Progress', 'filter')" class="btn btn-primary">In Progress<span class="sr-only">(current)</span></a>
                         <a href="javascript:void(0)" onclick="changeFilter('Delivered', 'filter')" class="btn btn-primary">Delivered<span class="sr-only">(current)</span></a>
-                        <a href="javascript:void(0)" onclick="changeFilter('Failed', 'filter')" class="btn btn-primary">Failed<span class="sr-only">(current)</span></a>
+                        {{-- <a href="javascript:void(0)" onclick="changeFilter('Failed', 'filter')" class="btn btn-primary">Failed<span class="sr-only">(current)</span></a> --}}
                     </div>
                     <div class="col-md-6">
                         <div class="form-inline justify-content-end">
@@ -44,12 +44,13 @@
                         <thead>
                         <tr>
                             <th class="massActionWrapper">
-                                <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
+                                SL
+                                {{-- <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
                                         @click="checkAll">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
                                        data-placement="top" title="Select All"></i>
-                                </button>
+                                </button> --}}
                                 {{-- <div class="input-group-btn all-check">
                                     <div class="ahow-option">
                                         <button type="button" class="btn btn-xs btn-default checkbox-caret">
@@ -91,10 +92,11 @@
                         </thead>
                         @if (count($orders) > 0)
                             <tbody>
-                                @foreach ($orders as $order)
+                                @foreach ($orders as $key => $order)
                                     <tr>
                                         <td>
-                                            <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}">
+                                            {{++$key}}
+                                            {{-- <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}"> --}}
                                         </td>
                                         <td>  {{ strtotime($order->order_number) }} </td>
                                         <td>  {{ $order->created_at }} </td>
