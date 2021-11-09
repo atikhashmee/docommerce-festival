@@ -89,7 +89,7 @@
                                         <option value="">Select District</option>
                                     </select>
                                 </div>
-                                <small>(* Current festival is only delivered to Dhaka)</small>
+                                <small class="text-danger">(* Current festival is only delivered to Dhaka)</small>
                             </div>
                             </div>
                             <div class="col-md-6">

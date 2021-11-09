@@ -51,13 +51,13 @@ body {
     right: 25px;
     display: none;
     z-index: 5;
-    background-color: #ff841d;
-    border-color: #ff841d;
+    background-color: #813790;
+    border-color: #813790;
 }
 
-.back-to-top:is(:hover, :focus) {
-    background-color: #a74b00;
-    border-color: #a74b00;
+.back-to-top:is(:hover, :focus), .back-to-top:not(:disabled):not(.disabled):active {
+    background-color: #963fa7;
+    border-color: #963fa7;
     box-shadow: none;
 }
 
@@ -346,6 +346,12 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     color: #fff;
 }
 
+.shopping-cart-button .btn-success:is(:hover, :focus), .shopping-cart-button .btn-success:not(:disabled):not(.disabled):active {
+    background-color: #4b1157;
+    color: #fff;
+    border: 2px solid #4b1157 !important;
+}
+
 .shopping-cart-button .btn-outline-success:is(:hover, :focus) {
     border: 2px solid #813790;
     background-color: #813790;
@@ -451,12 +457,11 @@ a:hover .product-name {
     transition: all 0.3s ease;
     border-color: rgb(129,55,144);
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#813790+0,622d75+100 */
-background: rgb(129,55,144); /* Old browsers */
-background: -moz-linear-gradient(left,  rgba(129,55,144,1) 0%, rgba(98,45,117,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left,  rgba(129,55,144,1) 0%,rgba(98,45,117,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right,  rgba(129,55,144,1) 0%,rgba(98,45,117,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#813790', endColorstr='#622d75',GradientType=1 ); /* IE6-9 */
-
+    background: rgb(129,55,144); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(129,55,144,1) 0%, rgba(98,45,117,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(129,55,144,1) 0%,rgba(98,45,117,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(129,55,144,1) 0%,rgba(98,45,117,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#813790', endColorstr='#622d75',GradientType=1 ); /* IE6-9 */
 }
 
 .addcart-btn:is(:hover, :focus) {

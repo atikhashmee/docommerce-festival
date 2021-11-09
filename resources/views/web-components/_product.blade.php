@@ -4,7 +4,7 @@
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
     <h6>
-        <span class="text-danger font-weight-bold">৳{{$product->price}}</span> <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
+        <span class="text-danger font-weight-bold">৳{{$product->price}}</span> <small style="text-decoration: line-through;">৳{{$product->old_price}}</small> <small>-10%</small>
     </h6>
     <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
     <div class="wish-zoom">
