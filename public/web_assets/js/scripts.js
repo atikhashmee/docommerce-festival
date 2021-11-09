@@ -22,7 +22,7 @@ function CartItem(product) {
     this.name = product.name ||  null;
     this.price = product.price || 0;
     this.selected_variant = product.selected_variant || null;
-    this.quantity = 1;
+    this.quantity = product.quantity || 1;
     this.image = product.original_product_img || null;
     this.store_id =  product.store_id || null;
     this.admin_id =  product.admin_id || null;
@@ -436,7 +436,7 @@ function variantProductAdd(product) {
         product.selected_variant = se_var
         product.id = product.id+"_"+se_var.id
     }
-    product.product_quantity = product_quantity.value;
+    product.quantity = product_quantity.value;
     addToCart(product)
 }
 
