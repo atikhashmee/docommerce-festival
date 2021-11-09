@@ -505,6 +505,11 @@ a .product-name {
     color: #333;
 }
 
+.save-pill {
+    font-size: 65%;
+    padding: 5px;
+}
+
 a:hover {
     text-decoration:none;
 }
