@@ -339,6 +339,8 @@ class IndexController extends Controller
                     $vc->opt2_value = $item->opt2_value;
                     $vc->opt3_value = $item->opt3_value;
                     $vc->old_price = $item->old_price;
+                    $vc->discount_type = $item->discount_type;
+                    $vc->discount_amount = $item->discount_amount;
                     $vc->price = $item->price;
                     return $vc;
                 });
@@ -378,6 +380,8 @@ class IndexController extends Controller
                             $smv->opt1_value = $variant->opt1_value;
                             $smv->opt2_value = $variant->opt2_value;
                             $smv->opt3_value = $variant->opt3_value;
+                            $smv->discount_type = $variant->discount_type;
+                            $smv->discount_amount = $variant->discount_amount;
                             $smv->id = $variant->id;
                             $smv->price = $variant->price;
                             $smv->old_price = $variant->old_price;
@@ -389,6 +393,8 @@ class IndexController extends Controller
                 if ($smallest_variant!=null) {
                     $item->price = $smallest_variant->price;
                     $item->old_price = $smallest_variant->old_price;
+                    $item->discount_type = $smallest_variant->discount_type;
+                    $item->discount_amount = $smallest_variant->discount_amount;
                 }
             }
             $item->variants = $variants;

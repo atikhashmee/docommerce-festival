@@ -1,5 +1,9 @@
 <div class="productsDiv p-3 shadow-sm rounded">
-    <div class="ribbon ribbon-top-left"><span>Save 20%</span></div>
+    @if ($product->discount_type == 'fixed')
+        <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}BDT</span></div>
+    @else
+        <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}%</span></div>
+    @endif
 
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
         <img src="{{$product->original_product_img}}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">

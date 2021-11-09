@@ -372,6 +372,25 @@
                                         element.new_price =  Number(dataPrice).toFixed(2)
                                     }
                                 }
+                                if (element.variants.length > 0) {
+                                    element.variants = element.variants.map(varnt => {
+                                        if (type === 'percen') {
+                                            varnt.fixed = 0; varnt.percentage = rateValue
+                                            let dataPrice = Number(varnt.price) - Number((rateValue / 100 )  * Number(varnt.price))
+                                            if (dataPrice > 0) {
+                                                varnt.new_price = Number(dataPrice).toFixed(2)
+                                            }
+                                        } else if (type === 'fixed') {
+                                            varnt.percentage = 0 
+                                            varnt.fixed = rateValue
+                                            let dataPrice =  Number(varnt.price) - Number(rateValue)
+                                            if (dataPrice > 0) {
+                                                varnt.new_price =  Number(dataPrice).toFixed(2)
+                                            }
+                                        }
+                                        return varnt;
+                                    })
+                                }
                             });
                         }
                     }
