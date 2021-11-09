@@ -74,7 +74,7 @@ class IndexController extends Controller
     {
         $festival = request()->festival; 
         $data = [];
-        $data['exclusives'] = Product::where('store_id', $store_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
+        $data['exclusives'] = Product::where('original_store_id', $store_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();

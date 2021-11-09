@@ -39,7 +39,7 @@
                 @if (count($stores) > 0)
                     @foreach ($stores as $store)
                         <div class="item">
-                            <a href="{{route('store_page', ['store_id' => $store->id])}}">
+                            <a href="{{route('store_page', ['store_id' => $store->original_store_id])}}">
                                 @if ($store->img !=null && file_exists(public_path('storage/stores/'.$store->img)))
                                     <img src="{{ asset('storage/stores/'.$store->img) }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
                                 @else
