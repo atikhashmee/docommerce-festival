@@ -54,13 +54,13 @@
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                     </div>
-                    <input class="input-group-field" type="number" name="quantity" min="1" max="999" value="1">
+                    <input class="input-group-field" type="number" name="quantity" id="product_quantity" min="1" max="999" value="1">
                     <div class="input-group-button">
                     <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                     </div>
-                    <a href="javascript:void(0)" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
+                    <a href="javascript:void(0)"  onclick="variantProductAdd({{ json_encode($product) }})" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
                 </div>
             </div>
             <hr>

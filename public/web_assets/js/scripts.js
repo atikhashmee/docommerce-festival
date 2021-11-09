@@ -44,7 +44,7 @@ function addToCart(product) {
         } else {
             let alreadyThere = false;
             cartArr = cartArr.map(element=>{
-                if (Number(element.id) === Number(item.id)) {
+                if (element.id == item.id) {
                     element.quantity = element.quantity + 1
                     alreadyThere = true;
                 }
@@ -333,7 +333,7 @@ function updatePrice() {
         if (options.length === itemSelected.length) {
             document.querySelector('#product_price').innerHTML = item.price;
             document.querySelector('#product_old_price').innerHTML = item.old_price;
-            //document.querySelector('#selected_variant').value = JSON.stringify(item)
+            document.querySelector('#selected_variant').value = JSON.stringify(item)
         }
     })
 }
@@ -355,7 +355,8 @@ function fillVariantData(vaData) {
 }
 
 function variantInit() {
-    selectedVariant = JSON.parse(document.querySelector('#selected_variant').value);
+    let selectVarDom = document.querySelector('#selected_variant');
+    selectedVariant = JSON.parse(selectVarDom ? selectVarDom.value : '[]');
     var vaData = document.querySelector('#variants_data');
     if (vaData) {
         vaData = JSON.parse(vaData.value);
@@ -393,7 +394,77 @@ function changeVariant(dom) {
     updatePrice();
 }
 
+function variantProductAdd(product) {
+    let selected_variant = document.getElementById('selected_variant')
+    let product_quantity = document.getElementById('product_quantity')
+    let flag = true;
+    if ('raw_variants' in product) {
+        if (product.raw_variants.length> 0 && (selected_variant === null && (selected_variant.value ==="" || selected_variant.value === null))) {
+            errorLists.appendChild(createError('you have to select a variant'))
+            flag = false
+        }
+    }
+
+    if (!flag) return
+    let se_var = JSON.parse(document.querySelector('#selected_variant').value);
+    if (se_var!==null) {
+        product.selected_variant = se_var
+        product.id = product.id+"_"+se_var.id
+    }
+    product.product_quantity = product_quantity.value;
+    addToCart(product)
+}
+
 renderCartItem();
 updateQuantity();
 variantInit();
 
+
+$('.p-d-switch').click(function () {
+    fetch(baseUrl+'/quick-view/'+$(this).data('product_id'))
+    .then(res=>res.text())
+    .then(res=>{
+      $("#productDetailsModal .modal-body").html(res);
+      $('#productDetailsModal').modal('show');
+      $("#zoom_01").ezPlus({
+        containLensZoom: true, gallery: 'gallery_01', cursor: 'pointer', galleryActiveClass: 'active'
+      });
+
+      // addPriceCart
+
+      $('[data-quantity="plus"]').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If is not undefined
+        if (!isNaN(currentVal)) {
+            // Increment
+            $('input[name='+fieldName+']').val(currentVal + 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+    // This button will decrement the value till 0
+    $('[data-quantity="minus"]').click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 1) {
+            // Decrement one
+            $('input[name='+fieldName+']').val(currentVal - 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(1);
+        }
+    });
+        variantInit();
+    })
+  });
