@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/owl.theme.default.min.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/jquery-ui.css')}}" />
-    <link rel="stylesheet" href="{{asset('web_assets/css/style.css')}}" />
-    <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css')}}" />
+    <link rel="stylesheet" href="{{asset('web_assets/css/style.css?v='.time())}}" />
+    <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css?v='.time())}}" />
     <script>
         var baseUrl = `{{url('/')}}`
     </script>
@@ -53,8 +53,8 @@
     <script src="{{asset('web_assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('web_assets/js/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
-    <script src="{{asset('web_assets/js/custom.js')}}"></script>
-    <script src="{{asset('web_assets/js/scripts.js')}}"></script>
+    <script src="{{asset('web_assets/js/custom.js?v='.time())}}"></script>
+    <script src="{{asset('web_assets/js/scripts.js?v='.time())}}"></script>
     @yield('scripts')
 </body>
 </html>
