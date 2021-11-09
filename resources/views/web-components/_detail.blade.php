@@ -31,9 +31,9 @@
         <div class="col-md-6">
             <h6 class="product-details mb-3">{{$product->name}}</h6>
             <h6 class="product-details-price mb-3">
-                <span class="text-danger font-weight-bold">৳<span id="product_price">{{$product->price}}</span></span> 
+                <span class="text-danger font-weight-bold">৳<span id="product_price">{{$product->price}}</span></span><br>
                 <small style="text-decoration: line-through;">৳<span id="product_old_price">{{$product->old_price}}</span></small>
-                <small>-10%</small>
+                <small class="text-success save-sm"><span>-10%</span> <span>Save ৳100</span></small>
             </h6>
             @if (count($product->show_variants) > 0)
                 <div class="options pt-3 variant_data">

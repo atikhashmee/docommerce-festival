@@ -494,6 +494,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
     border-color: rgb(129,55,144);
 }
 
+.save-sm {
+    font-weight: 700;
+}
+
 .wish-zoom {
     position: absolute;
     top: 15%;
