@@ -14,11 +14,11 @@
                     <li><a href="#">How to order</a></li>
                     <li><a href="#">Terms and Conditions</a></li>
                     <li><a href="#">Privacy Policies</a></li>
-                    <li><a href="javascript:void(0)"  onclick="event.preventDefault();
+                    {{-- <li><a href="javascript:void(0)"  onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a></li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
-                    </form>
+                    </form> --}}
                     <li>Contact: <a href="tel:01745408181">01745408181</a></li>
                 </ul>
             </div>
