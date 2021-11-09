@@ -51,7 +51,7 @@
                               @enderror
                           </div>
                           <div class="form-group">
-                              <button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
+                              <button type="submit" class="btn btn-success btn-block" name="login">Login</button>
                           </div>
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
@@ -73,7 +73,7 @@
                               @enderror
                           </div>
                           <div class="form-group">
-                              <button type="submit" class="btn btn-primary btn-block" name="login">Send OTP</button>
+                              <button type="submit" class="btn btn-success btn-block" name="login">Send OTP</button>
                           </div>
                       </form> 
                     @endif

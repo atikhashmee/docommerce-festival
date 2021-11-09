@@ -327,7 +327,13 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     align-self: center;
 }
 
-.cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a {
+.btn-success {
+    color: #fff;
+    background-color: #813790;
+    border-color: #813790;
+}
+
+.btn-success, .btn-outline-success {
     display: inline-block;
     font-size: 14px;
     border-radius: 4px;
@@ -337,7 +343,11 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     border: 2px solid #813790;
 }
 
-.shopping-cart-button .btn-outline-success {
+.btn-outline-success.btn-sm {
+    padding: .25rem .5rem;
+}
+
+.btn-outline-success {
     color: #813790;
 }
 
@@ -346,13 +356,13 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     color: #fff;
 }
 
-.shopping-cart-button .btn-success:is(:hover, :focus), .shopping-cart-button .btn-success:not(:disabled):not(.disabled):active {
+.btn-success:is(:hover, :focus), .btn-success:not(:disabled):not(.disabled):active {
     background-color: #4b1157;
     color: #fff;
-    border: 2px solid #4b1157 !important;
+    border-color: #4b1157 !important;
 }
 
-.shopping-cart-button .btn-outline-success:is(:hover, :focus) {
+.btn-outline-success:is(:hover, :focus) {
     border: 2px solid #813790;
     background-color: #813790;
     color: #fff;

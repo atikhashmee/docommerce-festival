@@ -40,8 +40,8 @@
     }
 
     .product-search .form-control {
-        width: 185px;
-        min-width: 185px;
+        width: 100px;
+        min-width: 100px;
     }
 
     .login-li, .cart-li {
@@ -56,6 +56,10 @@
 
     .sticky-offset {
         top: 142px;
+    }
+
+    .top-notification-icons i {
+        font-size: 25px;
     }
 
 }
