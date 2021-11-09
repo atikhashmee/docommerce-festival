@@ -74,6 +74,7 @@ class IndexController extends Controller
     {
         $festival = request()->festival; 
         $data = [];
+        $data['store'] = Store::where('original_store_id', $store_id)->first();
         $data['exclusives'] = Product::where('original_store_id', $store_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
@@ -84,6 +85,7 @@ class IndexController extends Controller
     public function categoryData($category_id) {
         $festival = request()->festival; 
         $data = [];
+        $data['category'] = Category::where('id', $category_id)->first();
         $data['exclusives'] = Product::withCount('variants')->where('category_id', $category_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')

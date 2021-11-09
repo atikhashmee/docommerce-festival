@@ -1,6 +1,6 @@
 <div class="productsDiv p-3 shadow-sm rounded">
     @if ($product->discount_type == 'fixed')
-        <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}BDT</span></div>
+        <div class="ribbon ribbon-top-left"><span>Save ৳{{$product->discount_amount}}</span></div>
     @else
         <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}%</span></div>
     @endif

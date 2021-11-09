@@ -1,14 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $Datacategory = null;
+        $Datastore = null;
+        if (isset($store)) {
+            $Datastore = $store;
+        }
+        if (isset($category)) {
+            $Datacategory = $category;
+        }
+    @endphp
     <section class="w-100 bg-light sticky-top sticky-offset">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('index_page')}}" class="font-weight-bold"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Store name</li>
+                            <li class="breadcrumb-item"><a href="{{route('index_page')}}" class="font-weight-bold"><i class="fas fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @if ($Datastore != null)
+                                    {{$Datastore->name}}
+                                @else
+                                    {{$Datacategory->name}}
+                                @endif
+                            </li>
                         </ol>
                     </nav>
                 </div>
@@ -101,11 +117,18 @@
                         <div class="col-md-12">
         
                             <h5 class="product-section-heading storeNameDiv mb-5">
-                                Store name
+                                @if ($Datastore != null)
+                                    {{$Datastore->name}}
+                                @else
+                                    {{$Datacategory->name}}
+                                @endif
         
-                                <a href="#" class="float-right">
-                                    View owner's store <i class="fas fa-angle-right"></i>
-                                </a>
+                                @if ($Datastore != null)  
+                                    <a href="//{{$Datastore->store_url}}" class="float-right">
+                                        View owner's store <i class="fas fa-angle-right"></i>
+                                    </a>
+                                @endif
+                              
                             </h5>
                         </div>
                     </div>
