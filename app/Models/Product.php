@@ -34,6 +34,7 @@ class Product extends Model
         'admin_id',
         'price',
         'old_price',
+        'quantity',
         'original_product_img',
         'is_feature',
         'is_new_arrival',

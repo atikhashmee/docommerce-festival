@@ -4,8 +4,8 @@
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
     <h6>
-        <span class="text-danger font-weight-bold">৳{{$product->price}}</span><br>
-        <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
+        <span class="text-danger font-weight-bold">৳{{intval($product->price)}}</span>
+        <small style="text-decoration: line-through;">৳{{intval($product->old_price)}}</small>
         <small class="text-success save-sm"><span>-10%</span> <span>Save ৳100</span></small>
     </h6>
     @if ($product->variants_count > 0)

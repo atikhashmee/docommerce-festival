@@ -72,11 +72,13 @@ class ProductController extends Controller
                 if (count($items['data']) > 0) {
                     foreach ($items['data'] as $item) {
                         $item['percentage'] = 0;
+                        $item['quantity'] = 0;
                         $item['fixed'] = 0;
                         $item['new_price'] = 0;
                         $item['category_id'] = "";
                         if (count($item['variants']) > 0) {
                             foreach ($item['variants'] as &$variant) {
+                                $variant['quantity'] = 0;
                                 $variant['percentage'] = 0;
                                 $variant['fixed'] = 0;
                                 $variant['new_price'] = 0;
@@ -111,6 +113,14 @@ class ProductController extends Controller
             if (count($items) > 0) {
                 foreach ($items as $key => $item) {
                     if ($item['category_id'] != null) {
+                        $discount_type = $item['percentage'] == 0 ? 'fixed' : 'percentage';
+                        $old_price = $item['price'];
+                        $price =  $item['price'];
+                        if ($discount_type == 'fixed') {
+                            $price -= $item['fixed'];
+                        } else {
+                            $price -= ($item['percentage'] / 100) * $item['price'] ;
+                        }
                         $product = Product::updateOrCreate([
                             'original_store_id' => $item['original_store_id'],
                             'original_product_id' => $item['original_product_id'],
@@ -123,13 +133,14 @@ class ProductController extends Controller
                             'name' => $item['name'],
                             'section_type' => 'hot_deals',
                             'original_product_url' => $item['original_product_url'],
-                            'discount_type' => $item['percentage'] == 0 ? 'fixed' : 'percentage',
+                            'discount_type' => $discount_type,
                             'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
                             'slug' => $item['slug'],
                             'short_description' => $item['short_description'],
                             'admin_id' => $item['admin_id'],
-                            'price' => $item['price'],
-                            'old_price' => $item['old_price'] ?? 0,
+                            'quantity' => $item['quantity'],
+                            'price' => $price,
+                            'old_price' => $old_price ?? 0,
                             'original_product_img' => $item['original_product_img'],
                             'is_feature' => $item['is_feature'],
                             'is_new_arrival' => $item['is_new_arrival'],
@@ -146,13 +157,22 @@ class ProductController extends Controller
                                     'original_product_id' => $item['original_product_id'],
                                     'festival_id' => $data['festival_id']
                                 ])->delete();
+                                $var_discount_type = $variant['percentage'] == 0 ? 'fixed' : 'percentage';
+                                $var_old_price = $variant['price'];
+                                $var_price =  $variant['price'];
+                                if ($var_discount_type == 'fixed') {
+                                    $var_price -= $variant['fixed'];
+                                } else {
+                                    $var_price -= ($variant['percentage'] / 100) * $variant['price'] ;
+                                }
+
                                 $dataArr[] = [
                                     'product_id' => $product->id,
                                     'original_product_id' => $product->original_product_id,
                                     'festival_id' => $data['festival_id'],
                                     'store_id' => $data['store_id'],
                                     'name' => $variant['name'],
-                                    'discount_type' => $variant['percentage'] == 0 ? 'fixed' : 'percentage',
+                                    'discount_type' => $var_discount_type,
                                     'discount_amount' => $variant['percentage'] == 0 ?  $variant['fixed'] : $variant['percentage'],
                                     'opt1_name' => $variant['opt1_name'],
                                     'opt2_name' => $variant['opt2_name'],
@@ -160,8 +180,9 @@ class ProductController extends Controller
                                     'opt1_value' => $variant['opt1_value'],
                                     'opt2_value' => $variant['opt2_value'],
                                     'opt3_value' => $variant['opt3_value'],
-                                    'old_price' => $variant['old_price'] ?? 0,
-                                    'price' => $variant['price'],
+                                    'old_price' => $var_old_price ?? 0,
+                                    'price' =>  $var_price,
+                                    'quantity' => $variant['quantity'],
                                     'barcode' => $variant['barcode'],
                                 ];
                             }

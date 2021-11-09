@@ -13,6 +13,7 @@ use App\Models\OrderAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 class IndexController extends Controller
 {
@@ -21,8 +22,12 @@ class IndexController extends Controller
         $data = [];
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', $festival->id)->get();
-        $data['hot_deals']  = Product::withCount('variants')->take(10)->limit(10)->get();
-        $data['exclusives'] = Product::withCount('variants')->take(1)->limit(10)->get();
+        $hot_deals = Product::withCount('variants')->take(10)->limit(10)->paginate(10);
+        $exclusives = Product::withCount('variants')->take(1)->limit(10)->paginate(10);
+        $this->processedProductData($hot_deals->getCollection());
+        $this->processedProductData($exclusives->getCollection());
+        $data['hot_deals'] = $hot_deals;
+        $data['exclusives'] = $exclusives;
         return view('index', $data);
     }
 
@@ -79,7 +84,7 @@ class IndexController extends Controller
     public function categoryData($category_id) {
         $festival = request()->festival; 
         $data = [];
-        $data['exclusives'] = Product::where('category_id', $category_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
+        $data['exclusives'] = Product::withCount('variants')->where('category_id', $category_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
@@ -318,5 +323,78 @@ class IndexController extends Controller
         }
         Perticipant::create($request->all());
         return redirect()->back()->withSuccess('Success');
+    }
+
+    public function processedProductData(Collection $arrData)
+    {
+        $arrData->map(function($item) {
+            $variants = [];
+            $smallest_variant = null;
+            if (count($item->variants)>0) {
+                $item->raw_variants = $item->variants->map(function($item) {
+                    $vc = new \stdclass;
+                    $vc->id  = $item->id;
+                    $vc->name = $item->name;
+                    $vc->opt1_value = $item->opt1_value;
+                    $vc->opt2_value = $item->opt2_value;
+                    $vc->opt3_value = $item->opt3_value;
+                    $vc->old_price = $item->old_price;
+                    $vc->price = $item->price;
+                    return $vc;
+                });
+
+                $price = 0;
+                foreach ($item->variants as $variant) {
+                    if ($variant->opt1_name != null && $variant->opt1_value !=null) {
+                        $opt1 = new \stdclass;
+                        $opt1->value = $variant->opt1_value;
+                        $opt1->id = $variant->id;
+                        $opt1->price = $variant->price;
+                        $opt1->old_price = $variant->old_price;
+                        $variants[$variant->opt1_name][$variant->opt1_value] = $opt1;
+                    }
+
+                    if ($variant->opt2_name != null && $variant->opt2_value != null) {
+                        $opt2 = new \stdclass;
+                        $opt2->value = $variant->opt2_value;
+                        $opt2->id = $variant->id;
+                        $opt2->price = $variant->price;
+                        $opt2->old_price = $variant->old_price;
+                        $variants[$variant->opt2_name][$variant->opt2_value] = $opt2;
+                    }
+                    if ($variant->opt3_name != null && $variant->opt3_value != null) {
+                        $opt3 = new \stdclass;
+                        $opt3->value = $variant->opt3_value;
+                        $opt3->id = $variant->id;
+                        $opt3->price = $variant->price;
+                        $opt3->old_price = $variant->old_price;
+                        $variants[$variant->opt3_name][$variant->opt3_value] = $opt3;
+                    }
+
+                    if (isset($variant->price)) {
+                        if ($variant->price < $price || $price ==0) {
+                            $price = $variant->price;
+                            $smv = new \stdclass;
+                            $smv->opt1_value = $variant->opt1_value;
+                            $smv->opt2_value = $variant->opt2_value;
+                            $smv->opt3_value = $variant->opt3_value;
+                            $smv->id = $variant->id;
+                            $smv->price = $variant->price;
+                            $smv->old_price = $variant->old_price;
+                            $smallest_variant = $smv;
+                        }
+                    }
+                }
+
+                if ($smallest_variant!=null) {
+                    $item->price = $smallest_variant->price;
+                    $item->old_price = $smallest_variant->old_price;
+                }
+            }
+            $item->variants = $variants;
+            $item->smallest_variant = $smallest_variant;
+            $item->quantity = 1;
+            return $item;
+        });
     }
 }

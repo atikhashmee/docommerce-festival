@@ -33,7 +33,7 @@
                             </select>
                         </div>
                         
-                        <button class="btn btn-primary" @click="importStoredData()" type="button">Update</button>
+                        <button class="btn btn-primary" @click="importStoredData()" type="button">Save Changes</button>
                     </div>
                 </div>
                 <div class="search-form d-flex">
@@ -65,7 +65,9 @@
                                     </div> --}}
                                 </div>
                             </th>
+                            <th>Store Product ID</th>
                             <th>Product</th>
+                            <th>Stock</th>
                             <th>Price</th>
                             <th>Update Price</th>
                             <th>Category</th>
@@ -74,9 +76,20 @@
                             <tbody v-if="products.length > 0">
                                 <tr v-for="product in products">
                                     <td><input name="ids[]" type="checkbox" class="massCheck" v-model="selectedProduct" @change="checkSpecific($event)" :value="product.original_product_id"></td>
+                                    <td>
+                                        <h5>@{{ product.original_product_id }}</h5>
+                                    </td>
                                     <td>  
                                         {{-- <img :src="product.original_product_img" class="rounded" height="50" width="50"> --}}
                                         <h5>@{{ product.name }}</h5>
+                                    </td>
+                                    <td>
+                                        <div v-if="product.variants.length > 0">
+                                            <a href="javascript:void(0)" @click="openModal(product)">Change Product Quantity</a>
+                                        </div> 
+                                        <div v-else>
+                                            <input type="number" class="form-control" v-model="product.quantity" placeholder="">
+                                        </div>
                                     </td>
                                     <td> 
                                         <span v-if="product.variants.length > 0">
@@ -125,7 +138,7 @@
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="6" class="text-center">
+                                    <td colspan="7" class="text-center">
                                         <h3>
                                             No Record Found
                                         </h3>
@@ -162,6 +175,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Stock</th>
                         <th>Update Price</th>
                     </tr>
                 </thead>
@@ -169,6 +183,7 @@
                     <tr v-for="vr_p in variants_products">
                         <td>@{{vr_p.product_name}}</td>
                         <td>@{{vr_p.product_price}}</td>
+                        <td><input type="number" v-model="vr_p.quantity" class="form-control"></td>
                         <td>
                             <table>
                                 <tr>
@@ -447,6 +462,7 @@
                                         if (product.variants.length > 0) {
                                             product.variants.forEach( variant => {
                                                 if (Number(variant.id) === Number(element.id)) {
+                                                    variant.quantity = element.quantity;
                                                     variant.fixed = element.fixed;
                                                     variant.percentage = element.percentage;
                                                     variant.new_price = element.new_price;
