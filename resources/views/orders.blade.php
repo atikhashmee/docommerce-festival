@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="w-100 bg-light">
+<section class="w-100 bg-light sticky-top sticky-offset">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -17,7 +17,7 @@
     </div>
 </section>
 
-<div class="container">
+<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-4">
             @include('web-components._user_nav')

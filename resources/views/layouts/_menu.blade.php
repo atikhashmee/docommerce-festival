@@ -1,4 +1,4 @@
-<section class="product-menu w-100 py-3">
+<section class="product-menu w-100 py-3 sticky-top">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
