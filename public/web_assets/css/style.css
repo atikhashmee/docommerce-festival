@@ -457,9 +457,8 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 .ribbon span {
     position: absolute;
     display: block;
-    width: 232px;
-    padding: 15px 0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 4px 0;
     color: #111;
     font-size: 14px;
     font-weight: 700;
@@ -485,15 +484,15 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 }
 .ribbon-top-left::before {
     top: 0;
-    right: 0;
+    right: 22px;
 }
 .ribbon-top-left::after {
-    bottom: 0;
+    bottom: 22px;
     left: 0;
 }
 .ribbon-top-left span {
-    right: -36px;
-    top: 20px;
+    right: -15px;
+    top: 28px;
     transform: rotate(-45deg);
 }
 

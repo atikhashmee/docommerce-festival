@@ -181,8 +181,6 @@
     </form>
 </section>
 
-@include('web-components._faq')
-
 @endsection
 @section('scripts')
 <script>

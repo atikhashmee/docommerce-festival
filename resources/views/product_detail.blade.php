@@ -19,5 +19,5 @@
     <section class="w-100 products-section py-5">
         @include('web-components._detail')
     </section>
-    @include('web-components._faq')
+    
 @endsection
