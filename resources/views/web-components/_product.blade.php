@@ -1,12 +1,13 @@
 <div class="productsDiv p-3 shadow-sm rounded">
+    <div class="ribbon ribbon-top-left"><span>Save 20%</span></div>
+
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
-        <img src="{{$product->original_product_img}}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded">
+        <img src="{{$product->original_product_img}}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
     <h6>
-        <span class="text-danger font-weight-bold">৳{{$product->price}}</span><br>
+        <span class="text-danger font-weight-bold">৳{{$product->price}}</span>
         <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
-        <small class="text-success save-sm"><span>-10%</span> <span>Save ৳100</span></small>
     </h6>
     @if ($product->variants_count > 0)
         <a href="javascript:void(0)" class="btn btn-warning p-d-switch btn-block mt-4 text-capitalize" data-product_id="{{$product->id}}">Add to cart</a>
