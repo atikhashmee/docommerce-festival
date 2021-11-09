@@ -1,11 +1,12 @@
 <div class="productsDiv p-3 shadow-sm rounded">
+    <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
     @if ($product->discount_type == 'fixed')
         <div class="ribbon ribbon-top-left"><span>Save ৳{{$product->discount_amount}}</span></div>
     @else
         <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}%</span></div>
     @endif
 
-    <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
+    
         <img src="{{$product->original_product_img}}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
@@ -20,7 +21,7 @@
     @endif
     <div class="wish-zoom">
         <a href="javascript:void(0)" class="p-d-switch" data-product_id="{{$product->id}}">
-            <i class="fas fa-expand-arrows-alt"></i>
+            <i class="fas fa-search-plus"></i>
         </a>
         {{-- <a href="javascript:void(0)" class="add-wishlist-switch">
             <i class="fas fa-heart"></i>

@@ -573,7 +573,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
 
 .wish-zoom a i {
     color: #444;
-    background-color: rgba(255, 132, 29, 0.5);
+    background-color: rgba(255, 132, 29, 0.8);
     font-size: 14px;
     height: 40px;
     width: 40px;
@@ -595,7 +595,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
 }
 
 .wish-zoom a:hover i {
-    background-color: rgba(255, 132, 29, 0.9);
+    background-color: rgba(255, 132, 29, 1);
 }
 
 .productsDiv:hover .wish-zoom {
@@ -811,7 +811,7 @@ footer .container {
 /* zoomContainer */
 
 .zoomContainer {
-    z-index: 2050 !important;
+    z-index: 999 !important;
 }
 
 #productDetailsModal .modal-header {
