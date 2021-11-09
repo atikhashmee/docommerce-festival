@@ -19,16 +19,16 @@
 </section>
  
  <div class="main_content">
-     <div class="section py-2">
+     <div class="section py-5">
          <div class="container">
              <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3 mb-4">
                     @include('web-components._user_nav')
                 </div>
  
-                <div class="col-md-8">
-                     <div class="card">
-                         <div class="card-header">Order Detail</div>
+                <div class="col-md-9">
+                     <div class="card mb-5">
+                         <div class="card-header"><h5 class="m-0">Order Detail</h5></div>
                          <div class="card-body" style="min-height: 260px;">
                              <div class="row">
                                  <div class="col-md-6">
@@ -47,7 +47,7 @@
                                      </p>
                                  </div>
                                  <div class="col-md-6">
-                                     <h2>Address</h2>
+                                     <h5>Address</h5>
                                      <address>
                                          @php
                                              $shipping = $order->address;
@@ -73,64 +73,67 @@
                      <div class="row">
                          <div class="col">
                              <div class="card">
-                                 <div class="card-header">Order Items</div>
+                                 <div class="card-header"><h5 class="m-0">Order Items</h5></div>
                                  <div class="card-body p-0">
-                                     <table class="table table-bordered">
-                                         <thead>
-                                         <tr>
-                                             <th>#SL</th>
-                                             <th>Name</th>
-                                             <th>Status</th>
-                                             <th>Price</th>
-                                             <th>Quantity</th>
-                                             <th>Subtotal</th>
-                                             <th>Discount</th>
-                                             <th class="text-right">Total</th>
-                                         </tr>
-                                         </thead>
-                                         @if(!empty($order->orderDetails))
-                                             @foreach($order->orderDetails as $key => $detail)
-                                               @php
-                                                   
-                                                   $subtotal = $detail->product_unit_price * $detail->quantity;
-                                                   $supplier_total = 0;
-                                               @endphp
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{ $detail->id }}</td>
-                                                        <td>
-                                                            <div>
-                                                                {{ $detail->product_name }}
-                                                                <br>
-                                                                @if(!empty($detail->product_variant_details))
-                                                                    @if($detail->product_variant_details['opt1_name'] != null)
-                                                                        (<strong>{{ $detail->product_variant_details['opt1_name'] }}:</strong> {{ $detail->product_variant_details['opt1_value'] }})<br>
-                                                                    @endif
-                                                                    @if($detail->product_variant_details['opt2_name'] != null)
-                                                                        (<strong>{{ $detail->product_variant_details['opt2_name'] }}:</strong> {{ $detail->product_variant_details['opt2_value'] }})<br>
-                                                                    @endif
-                                                                    @if($detail->product_variant_details['opt3_name'] != null)
-                                                                        (<strong>{{ $detail->product_variant_details['opt3_name'] }}:</strong> {{ $detail->product_variant_details['opt3_value'] }})<br>
-                                                                    @endif
-                                                                @endif
-                                                            </div>
-                                                        </td>
-                                                        <td>  {{ $detail->status }}</td>
-                                                        <td>৳{{ $detail->product_unit_price }}
-                                                            <br>
-                                                            @if ($detail->additional_delivery_charge > 0)
-                                                                (৳{{ $detail->additional_delivery_charge }})
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $detail->product_quantity }}</td>
-                                                        <td>৳{{ $subtotal }}</td>
-                                                        <td> {{ $detail->discount_amount!=0?'-'.$detail->discount_amount:'N/A' }} </td>
-                                                        <th class="text-right">৳{{ $detail->total }}</th>
-                                                    </tr>
-                                                </tbody>
-                                             @endforeach
-                                         @endif
-                                     </table>
+                                     <div class="table-responsive">
+                                        <table class="table table-bordered m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>#SL</th>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Subtotal</th>
+                                                <th>Discount</th>
+                                                <th class="text-right">Total</th>
+                                            </tr>
+                                            </thead>
+                                            @if(!empty($order->orderDetails))
+                                                @foreach($order->orderDetails as $key => $detail)
+                                                  @php
+                                                      
+                                                      $subtotal = $detail->product_unit_price * $detail->quantity;
+                                                      $supplier_total = 0;
+                                                  @endphp
+                                                   <tbody>
+                                                       <tr>
+                                                           <td>{{ $detail->id }}</td>
+                                                           <td>
+                                                               <div>
+                                                                   <strong>{{ $detail->product_name }}</strong>
+                                                                   <br>
+                                                                   @if(!empty($detail->product_variant_details))
+                                                                       @if($detail->product_variant_details['opt1_name'] != null)
+                                                                           (<strong>{{ $detail->product_variant_details['opt1_name'] }}:</strong> {{ $detail->product_variant_details['opt1_value'] }})<br>
+                                                                       @endif
+                                                                       @if($detail->product_variant_details['opt2_name'] != null)
+                                                                           (<strong>{{ $detail->product_variant_details['opt2_name'] }}:</strong> {{ $detail->product_variant_details['opt2_value'] }})<br>
+                                                                       @endif
+                                                                       @if($detail->product_variant_details['opt3_name'] != null)
+                                                                           (<strong>{{ $detail->product_variant_details['opt3_name'] }}:</strong> {{ $detail->product_variant_details['opt3_value'] }})<br>
+                                                                       @endif
+                                                                   @endif
+                                                               </div>
+                                                           </td>
+                                                           <td>  {{ $detail->status }}</td>
+                                                           <td>৳{{ $detail->product_unit_price }}
+                                                               <br>
+                                                               @if ($detail->additional_delivery_charge > 0)
+                                                                   (৳{{ $detail->additional_delivery_charge }})
+                                                               @endif
+                                                           </td>
+                                                           <td>{{ $detail->product_quantity }}</td>
+                                                           <td>৳{{ $subtotal }}</td>
+                                                           <td> {{ $detail->discount_amount!=0?'-'.$detail->discount_amount:'N/A' }} </td>
+                                                           <th class="text-right">৳{{ $detail->total }}</th>
+                                                       </tr>
+                                                   </tbody>
+                                                @endforeach
+                                            @endif
+                                        </table>
+                                     </div>
+                                     
                                  </div>
                              </div>
                          </div>

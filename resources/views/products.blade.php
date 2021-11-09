@@ -121,10 +121,10 @@
                         @endif
                     </div>
 
-                    <div class="row py-5">
+                    <div class="row pt-3 pb-5">
                         <div class="col-md-12">
-                            <a href="https://docommerce.com/" target="_blank">
-                                <img src="{{asset('web_assets/images/banner.jpg')}}" alt="banner" class="rounded img-fluid d-block mx-auto">
+                            <a href="https://docommerce.com/pricing" target="_blank">
+                                <img src="{{asset('web_assets/images/banner.jpg')}}" alt="banner" class="rounded img-fluid d-block mx-auto img-thumbnail">
                             </a>
                         </div>
                     </div>

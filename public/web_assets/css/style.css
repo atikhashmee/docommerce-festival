@@ -23,7 +23,7 @@ body {
     background-color: rgba(11, 107, 4, 0.8);
     border-radius: 6px;
     padding: 15px;
-    z-index: 1060;
+    z-index: 2080;
     display: none;
 }
 
@@ -59,6 +59,14 @@ body {
     background-color: #963fa7;
     border-color: #963fa7;
     box-shadow: none;
+}
+
+.modal-backdrop {
+    z-index: 2060;
+}
+
+.modal {
+    z-index: 2070;
 }
 
 .py-6 {
@@ -460,7 +468,7 @@ a:hover .product-name {
     color: rgb(204, 204, 204);
 }
 
-.addcart-btn {
+.addcart-btn, .btn-warning.p-d-switch {
     color: #fff;
     font-size: 14px;
     font-weight: 700;
@@ -474,7 +482,7 @@ a:hover .product-name {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#813790', endColorstr='#622d75',GradientType=1 ); /* IE6-9 */
 }
 
-.addcart-btn:is(:hover, :focus) {
+.addcart-btn:is(:hover, :focus), .btn-warning.p-d-switch:is(:hover, :focus) {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#963fa7+0,813790+100 */
 background: rgb(150,63,167); /* Old browsers */
 background: -moz-linear-gradient(left,  rgba(150,63,167,1) 0%, rgba(129,55,144,1) 100%); /* FF3.6-15 */
