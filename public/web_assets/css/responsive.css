@@ -54,4 +54,8 @@
         opacity: 1;
     }
 
+    .sticky-offset {
+        top: 142px;
+    }
+
 }

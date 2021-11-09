@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="w-100 bg-light">
+    <section class="w-100 bg-light sticky-top sticky-offset">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -123,7 +123,9 @@
 
                     <div class="row py-5">
                         <div class="col-md-12">
-                            <img src="{{asset('web_assets/images/banner.jpg')}}" alt="banner" class="rounded img-fluid d-block mx-auto">
+                            <a href="https://docommerce.com/" target="_blank">
+                                <img src="{{asset('web_assets/images/banner.jpg')}}" alt="banner" class="rounded img-fluid d-block mx-auto">
+                            </a>
                         </div>
                     </div>
 

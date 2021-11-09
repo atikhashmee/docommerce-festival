@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="w-100 bg-light">
+<section class="w-100 bg-light sticky-top sticky-offset">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
