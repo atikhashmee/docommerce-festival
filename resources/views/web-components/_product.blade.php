@@ -8,7 +8,7 @@
     @endif
 
     
-        <img src="{{"https://zipgrip.delivery".strstr($product->original_product_img, '/storage')}}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">
+        <img src="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
     <h6>

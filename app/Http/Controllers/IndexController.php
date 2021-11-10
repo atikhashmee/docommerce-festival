@@ -370,6 +370,8 @@ class IndexController extends Controller
 
     public function processedProductDetails($item)
     {
+        $item->original_product_img = "https://zipgrip.delivery".strstr($item->original_product_img, '/storage');
+
         $item->variants = $item->variants != null ? json_decode($item->variants) : [];
         $item->stock_quantity = $item->quantity;
         $item->quantity = 1;
@@ -447,6 +449,8 @@ class IndexController extends Controller
     public function processedProductData(Collection $arrData)
     {
         $arrData->map(function($item) {
+            $item->original_product_img = "https://zipgrip.delivery".strstr($item->original_product_img, '/storage');
+
             $variants = [];
             $smallest_variant = null;
             if (count($item->variants)>0) {
