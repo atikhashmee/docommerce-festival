@@ -21,11 +21,19 @@
     <link rel="stylesheet" href="{{asset('web_assets/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/style.css?v='.time())}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css?v='.time())}}" />
+    <link rel="stylesheet" href="{{asset('web_assets/css/flip-count.css?v='.time())}}" />
     <script>
         var baseUrl = `{{url('/')}}`
     </script>
 </head>
 <body>
+    <!-- loader div start -->
+    <div class="loader-div">
+		<div class="loader"></div>
+    </div>
+    <!-- loader div end -->
+
+    
     <div class="added-message">
         <p>
             <span class="p_name">Product Name</span><br>
@@ -47,6 +55,24 @@
     @include('layouts._menu')
     @yield('content')
     @include('layouts._footer')
+
+    <!-- Modal -->
+    <div class="modal fade" id="festivalModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="festivalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                
+                <div class="modal-body">
+                    
+                    <img src="{{ asset('web_assets/images/festival-11-11.jpg') }}" alt="DoCommerce 11-11 Festival" class="img-fluid d-block mx-auto shadow" height="470" width="470" loading="lazy">
+                    
+                    
+                    <div class="flipper d-flex justify-content-center" data-reverse="true" data-datetime="2021-11-11 00:00:00" data-template="dd|HH|ii|ss" data-labels="Days|Hours|Minutes|Seconds" id="myFlipper"></div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
     
     <a id="back-to-top" href="#" class="btn btn-primary btn-sm back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
     <script src="{{asset('web_assets/js/jquery.min.js')}}"></script>
@@ -55,6 +81,16 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script src="{{asset('web_assets/js/custom.js?v='.time())}}"></script>
     <script src="{{asset('web_assets/js/scripts.js?v='.time())}}"></script>
+    <script src="{{asset('web_assets/js/jquery.flipper-responsive.js')}}"></script>
+    @if (env('ISLIVE'))  
+        <script>
+            $(window).on('load',function(){
+                $('#festivalModal').modal('show');
+                $('#myFlipper').flipper('init');
+            });
+
+        </script>
+    @endif
     @yield('scripts')
 </body>
 </html>

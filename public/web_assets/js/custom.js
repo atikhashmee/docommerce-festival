@@ -1,3 +1,7 @@
+$(window).on('load', function () {
+  $('.loader-div').hide();
+})
+
 // =========================
 function flashMessage(type, header = "", message = "") {
     if (type === 'success') {
