@@ -69,6 +69,10 @@
                     <a href="javascript:void(0)"  onclick="variantProductAdd({{ json_encode($product) }})" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
                 </div>
             </div>
+            <div>
+                <p>Save UPTO 25% on Bulk Orders</p>
+                <a href="javascript:void(0)" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Place Order</a>
+            </div>
             <hr>
             <p>
                 Category: <a href="{{route("category_page", ['category_id' => $product->category_id])}}">{{$product->category->name}}</a> 
