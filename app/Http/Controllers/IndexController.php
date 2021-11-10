@@ -103,7 +103,9 @@ class IndexController extends Controller
         
         $data['max_price'] = $exclusives->get()->max('price');
         $exclusives->take(1)->limit(10);
-        $data['exclusives'] = $exclusives->get();     
+        $exclusivesData = $exclusives->paginate(10);     
+        $this->processedProductData($exclusivesData->getCollection());
+        $data['exclusives'] = $exclusivesData;     
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
@@ -143,7 +145,9 @@ class IndexController extends Controller
 
         $data['max_price'] = $exclusives->get()->max('price');
         $exclusives->take(1)->limit(10);
-        $data['exclusives'] = $exclusives->get();         
+        $exclusivesData = $exclusives->paginate(10);     
+        $this->processedProductData($exclusivesData->getCollection());   
+        $data['exclusives'] = $exclusivesData;  
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
@@ -179,7 +183,9 @@ class IndexController extends Controller
         } 
         $data['max_price'] = $exclusives->get()->max('price');
         $exclusives->take(1)->limit(10);
-        $data['exclusives'] = $exclusives->get();    
+        $exclusivesData = $exclusives->paginate(10);     
+        $this->processedProductData($exclusivesData->getCollection());   
+        $data['exclusives'] = $exclusivesData;  
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
