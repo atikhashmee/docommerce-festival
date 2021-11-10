@@ -117,6 +117,9 @@ class ProductController extends Controller
             return response()->json(['status' => false, 'data'=> $validator->errors()]);
         }
 
+        //temporary
+        $store = Store::where('original_store_id', $data['store_id'])->first();
+
         try {
             \DB::beginTransaction();
             $items = json_decode($request->products, true);
@@ -137,7 +140,7 @@ class ProductController extends Controller
                             'festival_id' => $data['festival_id']
                         ], [
                             'category_id' => $item['category_id'],
-                            'store_id' => $data['store_id'],
+                            'store_id' => $store->id,
                             'original_store_id' => $item['original_store_id'],
                             'original_product_id' => $item['original_product_id'],
                             'name' => $item['name'],

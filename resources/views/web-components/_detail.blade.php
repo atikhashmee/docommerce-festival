@@ -135,7 +135,7 @@
                 </div>
             </div>
             
-            <a href="#">
+            <a href="{{route("bulk_order_page", ['product_id' => $product->id])}}">
                 <div class="ribbon-wrapper medium">
                     <span>
                         <span>Save UPTO 25% on Bulk Orders</span>
