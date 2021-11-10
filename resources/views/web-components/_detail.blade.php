@@ -109,7 +109,9 @@
                     @endif
                 @endif
             </h6>
-            <span class="badge badge-danger p-2"><span>Stockout</span></span>
+            @if (intval($product->stock_quantity) == 0)
+                <span class="badge badge-danger p-2"><span>Stockout</span></span>
+            @endif
             @if (count($product->show_variants) > 0)
                 <div class="options pt-3 variant_data">
                     @foreach ($product->show_variants as $name => $item)
@@ -136,7 +138,11 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                     </div>
-                    <a href="javascript:void(0)"  onclick="variantProductAdd({{ json_encode($product) }})" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
+                    @if (intval($product->stock_quantity) > 0)
+                        <a href="javascript:void(0)"  onclick="variantProductAdd({{ json_encode($product) }})" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
+                    @else
+                        <a href="javascript:void(0)"  class="btn btn-success addcart-btn ml-3 text-capitalize disabled"><i class="fas fa-cart-plus"></i> Add to cart</a>
+                    @endif
                 </div>
             </div>
             

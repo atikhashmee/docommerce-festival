@@ -278,7 +278,7 @@ class IndexController extends Controller
                             throw new \Exception($product->name." Stock does not meet given Quantity", 1);
                         }
 
-                        OrderDetail::create([
+                        $detailed = OrderDetail::create([
                             'order_id' => $order->id,
                             'original_store_id' => $cart['original_store_id'],
                             'store_id' => $cart['store_id'],
@@ -303,6 +303,10 @@ class IndexController extends Controller
                             'merchant_commission' => 0,
                             'product_cost' => 0,
                         ]);
+                        if ($detailed) {
+                            $product->quantity -= $cart['quantity'];
+                            $product->save();
+                        }
                     }
                 }
             }
@@ -361,6 +365,7 @@ class IndexController extends Controller
     public function processedProductDetails($item)
     {
         $item->variants = $item->variants != null ? json_decode($item->variants) : [];
+        $item->stock_quantity = $item->quantity;
         $item->quantity = 1;
         $show_variants = [];
         $smallest_variant = null;
@@ -507,6 +512,7 @@ class IndexController extends Controller
             }
             $item->variants = $variants;
             $item->smallest_variant = $smallest_variant;
+            $item->stock_quantity = $item->quantity;
             $item->quantity = 1;
             return $item;
         });
