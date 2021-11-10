@@ -89,12 +89,14 @@
                                                 <th class="text-right">Total</th>
                                             </tr>
                                             </thead>
+                                            @php
+                                                $subtotal_total = 0;
+                                            @endphp
                                             @if(!empty($order->orderDetails))
                                                 @foreach($order->orderDetails as $key => $detail)
                                                   @php
-                                                      
-                                                      $subtotal = $detail->product_unit_price * $detail->quantity;
-                                                      $supplier_total = 0;
+                                                      $subtotal = $detail->product_unit_price * $detail->product_quantity;
+                                                      $subtotal_total += $detail->total;
                                                   @endphp
                                                    <tbody>
                                                        <tr>
@@ -131,6 +133,21 @@
                                                    </tbody>
                                                 @endforeach
                                             @endif
+                                            <tr>
+                                                <td colspan="8" class="text-right">
+                                                    Total: ৳{{$subtotal_total}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8" class="text-right">
+                                                    Shipping charge: (+) ৳{{$order->total_shippings_charge}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8" class="text-right">
+                                                    Total Payable: ৳{{$subtotal_total+$order->total_shippings_charge}}
+                                                </td>
+                                            </tr>
                                         </table>
                                      </div>
                                      
