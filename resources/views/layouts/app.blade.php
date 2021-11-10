@@ -82,13 +82,15 @@
     <script src="{{asset('web_assets/js/custom.js?v='.time())}}"></script>
     <script src="{{asset('web_assets/js/scripts.js?v='.time())}}"></script>
     <script src="{{asset('web_assets/js/jquery.flipper-responsive.js')}}"></script>
-    <script>
-        $(window).on('load',function(){
-            $('#festivalModal').modal('show');
-            $('#myFlipper').flipper('init');
-        });
+    @if (env('ISLIVE'))  
+        <script>
+            $(window).on('load',function(){
+                $('#festivalModal').modal('show');
+                $('#myFlipper').flipper('init');
+            });
 
-    </script>
+        </script>
+    @endif
     @yield('scripts')
 </body>
 </html>
