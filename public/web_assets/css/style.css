@@ -370,10 +370,11 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     border-color: #4b1157 !important;
 }
 
-.btn-outline-success:is(:hover, :focus) {
+.btn-outline-success:is(:hover, :focus), .btn-outline-success:not(:disabled):not(.disabled):active {
     border: 2px solid #813790;
     background-color: #813790;
     color: #fff;
+    box-shadow: none;
 }
 
 .nav-item .top-notification-icons i {
@@ -405,6 +406,11 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     color: #333;
     border-left: 4px solid #e76f51;
     padding-left: 20px;
+}
+
+.product-section-heading.storeNameDiv {
+    border-left: 2px solid #e76f51;
+    padding-left: 10px;
 }
 
 .product-section-heading a {
@@ -562,7 +568,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
 
 .wish-zoom {
     position: absolute;
-    top: 15%;
+    top: 20px;
     right: -15px;
     z-index: 99;
     width: 40px;
@@ -599,7 +605,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
 }
 
 .productsDiv:hover .wish-zoom {
-    right: 5%;
+    right: 20px;
     visibility: visible;
     opacity: 1;
 }

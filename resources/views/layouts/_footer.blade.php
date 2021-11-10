@@ -9,11 +9,11 @@
             </div>
 
             <div class="col-md-6 text-center text-md-right">
-                <h4 class="footer-header mt-4 mt-md-0">Quick Links</h4>
-                <ul class="m-0 mt-4 p-0 footer-quick-links">
+                <h5 class="footer-header mt-5 mt-md-0">Quick Links</h5>
+                <ul class="m-0 mt-2 mt-md-4 p-0 footer-quick-links">
                     
                     <li><a href="#">Terms and Conditions</a></li>
-                    <li><a href="#">Privacy Policies</a></li>
+                    <li><a href="{{ route('privacy-policy') }}">Privacy Policies</a></li>
                     <li><a href="{{ url('/#faq') }}">FAQ</a></li>
                     <li><a href="#">Return Policy</a></li>
                     {{-- <li><a href="javascript:void(0)"  onclick="event.preventDefault();

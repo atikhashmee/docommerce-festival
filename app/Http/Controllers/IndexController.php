@@ -498,5 +498,10 @@ class IndexController extends Controller
         });
     }
 
+    public function privacyPolicy()
+    {
+        return view('privacy-policy');
+    }
+
     
 }

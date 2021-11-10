@@ -40,8 +40,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
+                    <button type="button" class="btn d-block mb-4 btn-outline-success d-md-none left-side-bar-swt">Filter</button>
                     <form method="GET" id="filterForm">
-                        <div class="left-linksDiv">
+                        <div class="left-linksDiv mb-5">
                             {{-- <h4>Categories</h4>
     
                             <ul class="categories-list">
@@ -100,7 +101,7 @@
                                     list($filter_price_min, $filter_price_max) = explode(',', Request::get('price_range'));
                                 }
                             @endphp
-                            <div class="filter_price">
+                            <div class="filter_price" style="width: 90%;">
                                 <input type="hidden" name="price_range" id="price_range" value="{{Request::get('price_range')}}">
                                 <div id="price_filter" data-min="0" data-max="{{$prodcut_max_price}}" data-min-value="{{$filter_price_min}}"  data-max-value="{{$filter_price_max}}" data-price-sign=" ৳" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
                                     <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;"></div>
@@ -214,6 +215,11 @@
             $("#filterForm").submit();
             //console.log(evt.currentTarget);
         })
+
+        $('.left-side-bar-swt').on('click', function (e) {
+            e.preventDefault();
+            $('.left-linksDiv').toggle();
+        });
     });
 
     </script>
