@@ -70,7 +70,7 @@
             <h6 class="product-section-heading storeNameDiv mb-5">
                 {{$product->store->name}}
                 <a href="//{{$product->store->store_url}}" class="float-right" target="_blank">
-                    View owner's store <i class="fas fa-angle-right"></i>
+                    Visit Owner's Store <i class="fas fa-angle-right"></i>
                 </a>
             </h6>
         </div>

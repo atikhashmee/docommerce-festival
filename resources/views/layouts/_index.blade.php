@@ -68,6 +68,11 @@
             @endif
 
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="blink"><span>More stores are coming...</span></div>
+            </div>
+        </div>
     </div>
 </section>
 
