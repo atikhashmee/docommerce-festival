@@ -98,7 +98,7 @@
                                                     Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Detail</a>
+                                                    <a class="dropdown-item" href="{{route("admin.product.edit", ['id' => $item->id])}}">Edit & Detail</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
                                                     <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.products.destroy', ['product' => $item])}}">
                                                         @csrf
