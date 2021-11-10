@@ -24,6 +24,7 @@ class OrderDetail extends Model
         'product_name',
         'product_variant_details',
         'product_unit_price',
+        'shipping_charge',
         'additional_delivery_charge',
         'discount_amount',
         'product_quantity',
