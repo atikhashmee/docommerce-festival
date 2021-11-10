@@ -1,11 +1,14 @@
 <div class="productsDiv p-3 shadow-sm rounded">
     {{-- @if(intval($product->stock_quantity) == 0) outOfStock @endif --}}
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
-    @if ($product->discount_type == 'fixed')
-        <div class="ribbon ribbon-top-left"><span>Save ৳{{intval($product->discount_amount)}}</span></div>
-    @else
-        <div class="ribbon ribbon-top-left"><span>Save {{intval($product->discount_amount)}}%</span></div>
-    @endif
+        @if (intval($product->discount_amount) > 0)
+            @if ($product->discount_type == 'fixed')
+                <div class="ribbon ribbon-top-left"><span>Save ৳{{intval($product->discount_amount)}}</span></div>
+            @else
+                <div class="ribbon ribbon-top-left"><span>Save {{intval($product->discount_amount)}}%</span></div>
+            @endif
+        @endif
+
 
     
         <img src="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}" alt="{{$product->name}}" class="img-fluid d-block mx-auto rounded mb-2">
