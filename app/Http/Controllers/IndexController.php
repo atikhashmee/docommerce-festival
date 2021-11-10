@@ -7,13 +7,14 @@ use App\Models\Order;
 use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\BulkOrder;
 use App\Models\OrderDetail;
 use App\Models\Perticipant;
 use App\Models\OrderAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Collection;
 
 class IndexController extends Controller
 {
@@ -508,6 +509,45 @@ class IndexController extends Controller
     public function privacyPolicy()
     {
         return view('privacy-policy');
+    }
+
+    public function bulkOrderCreate($product_id) {
+        if (!isset($product_id)) {
+            abort(404);
+            return redirect(route('index_page'));
+        }
+        $product = Product::where('id', $product_id)->first();
+        if (!$product) {
+            return redirect(route('index_page'));
+        }
+        $data['product'] = $product;
+        return view('bulk-order', $data);
+    }
+
+    public function submitBulkOrderInfo(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required',
+            'product_name' => 'required',
+            'product_quantity' => 'required|numeric',
+            'full_name' => 'required',
+            'mobile_number' => 'required',
+            'email' => 'email',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            BulkOrder::create($request->except('_token'));
+            return redirect(route('thank_you_page'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        }
+    }
+
+    public function bulkOrderCompleted()
+    {
+        return view('bulk-order-completed');
     }
 
     

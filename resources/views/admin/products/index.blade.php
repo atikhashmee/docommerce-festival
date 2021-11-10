@@ -67,9 +67,9 @@
                             <th>Product</th>
                             <th>Price</th>
                             <th>Stock</th>
-                            <th>Weight</th>
-                            <th>Order&nbsp;Quantity</th>
                             <th>Section</th>
+                            <th>Weight</th>
+                            <th>Order&nbsp;Quantity</th>>
                             <th>Category</th>
                             <th>Store</th>
                             <th></th>

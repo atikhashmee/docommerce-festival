@@ -71,7 +71,7 @@
             </div>
             <div>
                 <p>Save UPTO 25% on Bulk Orders</p>
-                <a href="javascript:void(0)" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Place Order</a>
+                <a href="{{route("bulk_order_page", ['product_id' => $product->id])}}" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Place Order</a>
             </div>
             <hr>
             <p>

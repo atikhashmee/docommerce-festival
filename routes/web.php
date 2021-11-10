@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index_page')->middleware('getFestival');
+Route::get('/thank-you', [App\Http\Controllers\IndexController::class, 'bulkOrderCompleted'])->name('thank_you_page')->middleware('getFestival');
+Route::post('/make-bulk-order', [App\Http\Controllers\IndexController::class, 'submitBulkOrderInfo'])->name('bulk_order_post_page');
+Route::get('/bulk-order/{product_id}', [App\Http\Controllers\IndexController::class, 'bulkOrderCreate'])->name('bulk_order_page');
 Route::get('/coming-soon', [App\Http\Controllers\IndexController::class, 'showComingSoon'])->name('coming_soon_page');
 Route::post('/store-perticipant', [App\Http\Controllers\IndexController::class, 'storePerticipant'])->name('store.perticipant');
 Route::get('/store/{store_id}', [App\Http\Controllers\IndexController::class, 'storeData'])->name('store_page')->middleware('getFestival');
