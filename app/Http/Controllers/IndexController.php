@@ -102,8 +102,8 @@ class IndexController extends Controller
         } 
         
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusives->take(1)->limit(10);
-        $exclusivesData = $exclusives->paginate(10);     
+        //$exclusives->take(1)->limit(10);
+        $exclusivesData = $exclusives->paginate(12);     
         $this->processedProductData($exclusivesData->getCollection());
         $data['exclusives'] = $exclusivesData;     
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
@@ -144,8 +144,8 @@ class IndexController extends Controller
         } 
 
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusives->take(1)->limit(10);
-        $exclusivesData = $exclusives->paginate(10);     
+        //$exclusives->take(1)->limit(10);
+        $exclusivesData = $exclusives->paginate(12);     
         $this->processedProductData($exclusivesData->getCollection());   
         $data['exclusives'] = $exclusivesData;  
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
@@ -182,8 +182,8 @@ class IndexController extends Controller
             }
         } 
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusives->take(1)->limit(10);
-        $exclusivesData = $exclusives->paginate(10);     
+        //$exclusives->take(1)->limit(10);
+        $exclusivesData = $exclusives->paginate(12);     
         $this->processedProductData($exclusivesData->getCollection());   
         $data['exclusives'] = $exclusivesData;  
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')

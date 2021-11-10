@@ -175,7 +175,7 @@
                             @endforeach
                         @endif
                     </div>
-                    
+                    {{$exclusives->links()}}
                 </div>
             </div>
 
