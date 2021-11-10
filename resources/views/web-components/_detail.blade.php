@@ -12,18 +12,16 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{asset('web_assets/images/products/1.png')}}"
-            data-zoom-image="{{asset('web_assets/images/products/1.png')}}"/>
+            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{$product->original_product_img}}"
+            data-zoom-image="{{$product->original_product_img}}"/>
             <div id="gallery_01" class="mb-4">
-                <a href="javascript:void(0)" data-image="{{asset('web_assets/images/products/1.png')}}" data-zoom-image="{{asset('web_assets/images/products/1.png')}}" class="active">
-                    <img id="img_01" src="{{asset('web_assets/images/products/1.png')}}"/>
-                </a>
-                <a href="javascript:void(0)" data-image="{{asset('web_assets/images/products/2.png')}}" data-zoom-image="{{asset('web_assets/images/products/2.png')}}">
-                    <img id="img_02" src="{{asset('web_assets/images/products/2.png')}}"/>
-                </a>
-                <a href="javascript:void(0)" data-image="{{asset('web_assets/images/products/3.png')}}" data-zoom-image="{{asset('web_assets/images/products/3.png')}}">
-                    <img id="img_03" src="{{asset('web_assets/images/products/3.png')}}"/>
-                </a>
+                @if (count($product->other_images) > 0)
+                    @foreach ($product->other_images as $key => $img)
+                        <a href="javascript:void(0)" data-image="{{$img['original_product_img']}}" data-zoom-image="{{$img['original_product_img']}}" class="active">
+                            <img id="img_{{$key}}" src="{{$img['original_product_img']}}"/>
+                        </a>
+                    @endforeach
+                @endif
             </div>
         </div>
 
