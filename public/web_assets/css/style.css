@@ -480,17 +480,17 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
-/* .productsDiv::before {
+.productsDiv.outOfStock::before {
     position: absolute;
     right: -15px;
     top: -20px;
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 86px;
     content: "";
-    background: url(../images/discount-badge.png);
+    background: url(../images/out-of-stock.png);
     background-size: cover;
     z-index: 1;
-} */
+}
 
 .ribbon {
     width: 130px;
@@ -615,7 +615,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
 
 .wish-zoom {
     position: absolute;
-    top: 20px;
+    top: 60px;
     right: -15px;
     z-index: 99;
     width: 40px;
@@ -1168,5 +1168,20 @@ footer .container {
     width: 18px;
     margin: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.blink{
+    padding: 15px;	
+    text-align: center;
+}
+.blink span{
+    font-size: 25px;
+    color: #813790;
+    animation: blink 2s linear infinite;
+}
+@keyframes blink{
+0%{opacity: 0;}
+50%{opacity: .5;}
+100%{opacity: 1;}
 }
   

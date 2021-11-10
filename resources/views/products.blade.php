@@ -137,7 +137,7 @@
         
                                 @if ($Datastore != null)  
                                     <a href="//{{$Datastore->store_url}}" class="float-right">
-                                        View owner's store <i class="fas fa-angle-right"></i>
+                                        Visit Owner's Store <i class="fas fa-angle-right"></i>
                                     </a>
                                 @endif
                               

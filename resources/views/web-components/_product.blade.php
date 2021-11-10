@@ -1,4 +1,4 @@
-<div class="productsDiv p-3 shadow-sm rounded">
+<div class="productsDiv p-3 shadow-sm rounded outOfStock">
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
     @if ($product->discount_type == 'fixed')
         <div class="ribbon ribbon-top-left"><span>Save ৳{{intval($product->discount_amount)}}</span></div>
