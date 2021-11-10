@@ -8,7 +8,7 @@ use App\Services\SendSMSService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session as FacadesSession;
 
@@ -42,6 +42,14 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        if (url()->previous() == url('checkout')) {
+            session()->put('intended_url', url()->previous());
+        }
+        return view('auth.login');
     }
 
     public function otpRequest(Request $request) {
@@ -85,6 +93,11 @@ class LoginController extends Controller
             return view('auth.login', $data);
         }
         $this->createOrLogin($request->mobile);
+        if(session()->has('intended_url') && (session()->get('intended_url') == url("checkout")))
+        {
+            session()->forget('intended_url');
+            return redirect(route('checkout_page'));
+        }
         return redirect(url($this->redirectTo));
     }
 
@@ -99,7 +112,6 @@ class LoginController extends Controller
             ]);
         }
         session()->forget($mobile_number);
-        session()->flush();
         $this->guard()->login($user);
         return true;
     }
