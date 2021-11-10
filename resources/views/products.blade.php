@@ -144,7 +144,7 @@
                             </h5>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         @if (count($exclusives) > 0)
                             @foreach ($exclusives as $product)
                                 <div class="col-md-4 mb-4">
@@ -154,7 +154,7 @@
                                 </div>
                             @endforeach
                         @endif
-                    </div>
+                    </div> --}}
 
                     <div class="row pt-3 pb-5">
                         <div class="col-md-12">
