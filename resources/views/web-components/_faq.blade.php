@@ -258,7 +258,7 @@
                             </div>
                             <div id="collapse8ban" class="collapse" aria-labelledby="heading8Ban" data-parent="#festivalFAQBan">
                                 <div class="card-body">
-                                    ডুকমার্স সম্পর্কে জানতে ভিজিট করুন <a href="https://docommerce.com" target="_blank">https://docommerce.com</a>।
+                                    ডুকমার্স সম্পর্কে জানতে ভিজিট করুন <a href="https://docommerce.com" target="_blank">https://docommerce.com</a>
                                 </div>
                             </div>
                         </div>
