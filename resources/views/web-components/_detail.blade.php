@@ -1,3 +1,68 @@
+<style>
+.medium {
+		 -webkit-transform: translateY(30px);
+		 -moz-transform: translateY(30px);
+		 -ms-transform: translateY(30px);
+		 -o-transform: translateY(30px);
+		 transform: translateY(30px);
+		 -webkit-animation: fadeIn 0.7s ease-in forwards;
+		 animation: fadeIn 0.7s ease-in forwards;
+		 font-size: 20px;
+         margin-top: -30px;
+         margin-left: 25px;
+         margin-bottom: 70px;
+	}
+	 .medium span {
+		 width: 100px;
+		 position: relative;
+		 display: block;
+		 background: #ffcf02;
+		 color: #111;
+		 text-align: center;
+		 -webkit-box-sizing: border-box;
+		 min-width: 220px;
+         font-size: 13px;
+         font-weight: 700;
+		 height: 40px;
+		 line-height: 40px;
+		 -webkit-transform-style: preserve-3d;
+	}
+	 .medium span:before, .medium span:after {
+		 content: "";
+		 position: absolute;
+		 display: block;
+		 bottom: -10px;
+		 border: 20px solid #ddb500;
+		 z-index: -1;
+		 -webkit-transform: translateZ(-1px);
+	}
+	 .medium span:before {
+		 left: -30px;
+		 border-left-color: transparent;
+	}
+	 .medium span:after {
+		 right: -30px;
+		 border-right-color: transparent;
+	}
+	 .medium span span:before, .medium span span:after {
+		 content: "";
+		 position: absolute;
+		 display: block;
+		 border-style: solid;
+		 bottom: -10px;
+		 border-color: #705c00 transparent transparent transparent;
+	}
+	 .medium span span:before {
+		 left: 0;
+		 border-width: 10px 0 0 10px;
+	}
+	 .medium span span:after {
+		 right: 0;
+		 border-width: 10px 10px 0 0;
+	}
+ 
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -67,10 +132,16 @@
                     <a href="javascript:void(0)"  onclick="variantProductAdd({{ json_encode($product) }})" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Add to cart</a>
                 </div>
             </div>
-            <div>
-                <p>Save UPTO 25% on Bulk Orders</p>
-                <a href="{{route("bulk_order_page", ['product_id' => $product->id])}}" class="btn btn-success addcart-btn ml-3 text-capitalize"><i class="fas fa-cart-plus"></i> Place Order</a>
-            </div>
+            
+            <a href="{{route("bulk_order_page", ['product_id' => $product->id])}}">
+                <div class="ribbon-wrapper medium">
+                    <span>
+                        <span>Save UPTO 25% on Bulk Orders</span>
+                    </span>
+                </div>
+            </a>
+                
+            
             <hr>
             <p>
                 Category: <a href="{{route("category_page", ['category_id' => $product->category_id])}}">{{$product->category->name}}</a> 
