@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class LoginController extends Controller
 {
@@ -48,21 +49,41 @@ class LoginController extends Controller
             'mobile' => 'required|numeric|digits:11',
         ]);
         $data =  [];
+        $session_data = [];
+        //check for validitty
+        $otp_number = $request->session()->get($request->mobile);
+        if ($otp_number) {
+            $to_time = strtotime(now());
+            $from_time = strtotime($otp_number['set_at']);
+            $calculated_time = round(abs($to_time - $from_time) / 60,2);
+            if ($calculated_time < 5) {
+                if (\Route::current()->getName() == 'login') {
+                    return redirect()->back()->withError("Next Request will be available after 5 minuets");
+                } else {
+                    $data['mobile'] =  $request->mobile;
+                    $data['error'] =  "Next Request will be available after 5 minuets";
+                    return view('auth.login', $data);
+                }
+            }
+        }
+        
         $data['otp']= $this->random_number(4);
+        $session_data['otp'] = $data['otp'];
+        $session_data['set_at'] = now();
         $sb = new SendSMSService($request->mobile, "Your DoCommerce Festival login OTP is ".$data['otp'].". Happy shopping!");
         $sb->send();
-        $request->session()->put($request->mobile, $data['otp']);
+        $request->session()->put($request->mobile, $session_data);
+        
         $data['mobile'] =  $request->mobile;
         return view('auth.login', $data);
     }
     public function submitOtp(Request $request) {
         $otp_number = $request->session()->get($request->mobile);
-        if ($otp_number != $request->otp) {
+        if ($otp_number['otp'] != $request->otp) {
             $data['mobile'] =  $request->mobile;
             $data['error'] =  'Otp Invalid';
             return view('auth.login', $data);
-        } 
-
+        }
         $this->createOrLogin($request->mobile);
         return redirect(url($this->redirectTo));
     }
@@ -77,6 +98,8 @@ class LoginController extends Controller
                 'password' => Hash::make(12345678),
             ]);
         }
+        session()->forget($mobile_number);
+        session()->flush();
         $this->guard()->login($user);
         return true;
     }

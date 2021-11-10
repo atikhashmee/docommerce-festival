@@ -98,6 +98,9 @@ input[type=number]::-webkit-outer-spin-button {
                       
                     @else
                       <h3 class="mb-3">Mobile Number</h3>
+                      @if(Session::has('error'))
+                        <p class="alert alert-danger">{{ Session::get('error') }}</p>
+                     @endif
                       <form method="POST" action="{{ route('otp.login') }}">
                         @csrf
                           <div class="form-group">
