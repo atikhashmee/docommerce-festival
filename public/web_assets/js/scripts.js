@@ -43,7 +43,7 @@ CartItem.prototype.totalPrice = function() {
 
 let storage = new StorageData();
 
-function addToCart(product) {
+function addToCart(product, popUp=false) {
     let cartArr = storage.getData();
     let item  = new CartItem(product);
     if (item.id !== null) {
@@ -53,7 +53,12 @@ function addToCart(product) {
             let alreadyThere = false;
             cartArr = cartArr.map(element=>{
                 if (element.id == item.id) {
-                    element.quantity = element.quantity + 1
+                    let product_quantity = document.getElementById('product_quantity')
+                    if (product_quantity && popUp) {
+                        element.quantity = Number(element.quantity) + Number(product_quantity.value)
+                    } else {
+                        element.quantity = Number(element.quantity) + 1
+                    }
                     alreadyThere = true;
                 }
                 return element;
@@ -478,7 +483,7 @@ function variantProductAdd(product) {
         product.id = product.id+"_"+se_var.id
     }
     product.quantity = product_quantity.value;
-    addToCart(product)
+    addToCart(product, true)
 }
 
 renderCartItem();
