@@ -36,6 +36,7 @@ Route::middleware(['auth', 'getFestival'])->group(function () {
 Route::post('submit-otp',  [App\Http\Controllers\Auth\LoginController::class, 'submitOtp'])->name('submit.otp');
 Route::post('request-otp',  [App\Http\Controllers\Auth\LoginController::class, 'otpRequest'])->name('otp.login');
 Auth::routes(['register' => false, 'reset' => false]);
+Route::get('/privacy-policy', [App\Http\Controllers\IndexController::class, 'privacyPolicy'])->name('privacy-policy');
 
 
 

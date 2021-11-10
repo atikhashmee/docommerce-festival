@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-md-12">
 
-            <h5 class="product-section-heading storeNameDiv mb-5">
+            <h6 class="product-section-heading storeNameDiv mb-5">
                 {{$product->store->name}}
                 <a href="//{{$product->store->store_url}}" class="float-right" target="_blank">
                     View owner's store <i class="fas fa-angle-right"></i>
                 </a>
-            </h5>
+            </h6>
         </div>
     </div>
     <div class="row">
