@@ -6,6 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('web_assets/images/favicon.png') }}" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Fonts -->
@@ -23,7 +24,7 @@
     <link rel="stylesheet" href="{{asset('web_assets/css/responsive.css?v='.time())}}" />
     <link rel="stylesheet" href="{{asset('web_assets/css/flip-count.css?v='.time())}}" />
     <script>
-        var baseUrl = `{{url('/')}}`
+        var baseUrl = `{{url('/')}}`;
     </script>
 </head>
 <body>
