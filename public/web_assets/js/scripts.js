@@ -206,7 +206,7 @@ function renderCartItem() {
         </tr>`;
         });
     }
-    document.querySelector('#total_price_top').innerHTML = totalPrice;
+    document.querySelector('#total_price_top').innerHTML = subTotalPrice;
     document.querySelector('#cart_items_short').innerHTML = txt;
 
     let cartPageView = document.querySelector('#cart_list_page');
