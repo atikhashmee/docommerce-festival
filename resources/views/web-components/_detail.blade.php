@@ -100,7 +100,9 @@
             <h6 class="product-details mb-3">{{$product->name}}</h6>
             <h6 class="product-details-price mb-3">
                 <span class="text-danger font-weight-bold">৳<span id="product_price">{{intval($product->price)}}</span></span><br>
-                <small style="text-decoration: line-through;">৳<span id="product_old_price">{{intval($product->old_price)}}</span></small>
+                @if (intval($product->old_price) > intval($product->price))
+                    <small style="text-decoration: line-through;">৳<span id="product_old_price">{{intval($product->old_price)}}</span></small>
+                @endif
                 @if (intval($product->discount_amount) > 0)
                     @if ($product->discount_type == 'fixed')
                         <small class="save-pill badge badge-success"><span>Save ৳{{intval($product->discount_amount)}}</span></small>

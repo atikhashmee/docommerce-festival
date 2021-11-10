@@ -16,7 +16,9 @@
     </a>
     <h6>
         <span class="text-danger font-weight-bold">৳{{intval($product->price)}}</span>
-        <small style="text-decoration: line-through;">৳{{intval($product->old_price)}}</small>
+        @if (intval($product->old_price) > intval($product->price))
+            <small style="text-decoration: line-through;">৳{{intval($product->old_price)}}</small>
+        @endif
     </h6>
     @if ($product->variants_count > 0)
         <a href="javascript:void(0)" class="btn btn-warning p-d-switch btn-block mt-4 text-capitalize" data-product_id="{{$product->id}}">Add to cart</a>
