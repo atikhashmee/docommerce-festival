@@ -124,10 +124,10 @@ function renderCartItem() {
         //variant specifies end
 
         //weight calculation start
-        if (Number(element.weight) > 0) {
-            weight = "<strong>("+element.weight+"kg)</strong>"
-            weightFee = "(Weight Fee: <strong>৳"+(element.quantity * Math.ceil(element.weight) * PER_KG_WEIGHT)+"</strong>)"
-        }
+        // if (Number(element.weight) > 0) {
+        //     weight = "<strong>("+element.weight+"kg)</strong>"
+        //     weightFee = "(Weight Fee: <strong>৳"+(element.quantity * Math.ceil(element.weight) * PER_KG_WEIGHT)+"</strong>)"
+        // }
         //weight calculation end
 
 
