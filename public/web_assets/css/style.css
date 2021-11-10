@@ -58,6 +58,10 @@ body {
     }
 }
 
+a {
+    color: #813790;
+}
+
 .added-message {
     position: fixed;
     top: 20px;
