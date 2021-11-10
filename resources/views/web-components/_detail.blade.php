@@ -83,13 +83,13 @@
                     $feature_imag = $product->other_images[0]['original_product_img'];
                 }
             @endphp
-            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{$product->original_product_img}}"
-            data-zoom-image="{{$product->original_product_img}}"/>
+            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}"
+            data-zoom-image="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}"/>
             <div id="gallery_01" class="mb-4">
                 @if (count($product->other_images) > 0)
                     @foreach ($product->other_images as $key => $img)
-                        <a href="javascript:void(0)" data-image="{{$img['original_product_img']}}" data-zoom-image="{{$img['original_product_img']}}" class="active">
-                            <img id="img_{{$key}}" src="{{$img['original_product_img']}}"/>
+                        <a href="javascript:void(0)" data-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" data-zoom-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" class="active">
+                            <img id="img_{{$key}}" src="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}"/>
                         </a>
                     @endforeach
                 @endif
