@@ -21,6 +21,8 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public $sections = ["hot_deals", "new_arrival"];
     public function index(Request $request)
     {
         $data  = [];
@@ -40,14 +42,19 @@ class ProductController extends Controller
             if ($request->store_id) {
                 $q->where('store_id', $request->store_id);
             }
+            if ($request->section) {
+                $q->where('section_type', $request->section);
+            }
 
             if ($request->search) {
                 $q->where('name', 'LIKE', '%'.$request->search.'%');
             }
         });
         $data['products'] = $productSql->paginate(100);
+        $data['sections'] = $this->sections;
         return view('admin.products.index', $data);
     }
+
 
     public function import(Request $request) {
         $data  = [];
@@ -59,8 +66,8 @@ class ProductController extends Controller
         ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
         ->get();
-        $data['products'] = []; 
-       
+        $data['products'] = [];
+        $data['sections'] = $this->sections;
         return view('admin.products.import', $data);
     }
     public function storeProduct($store_id) {
@@ -71,6 +78,7 @@ class ProductController extends Controller
                 $items = $response;
                 if (count($items['data']) > 0) {
                     foreach ($items['data'] as $item) {
+                        $item['section_type'] = "";
                         $item['percentage'] = 0;
                         $item['weight'] = 0.0;
                         $item['quantity'] = 0;
@@ -133,7 +141,7 @@ class ProductController extends Controller
                             'original_store_id' => $item['original_store_id'],
                             'original_product_id' => $item['original_product_id'],
                             'name' => $item['name'],
-                            'section_type' => 'hot_deals',
+                            'section_type' => $item['section_type'] ?? "hot_deals",
                             'original_product_url' => $item['original_product_url'],
                             'discount_type' => $discount_type,
                             'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
@@ -145,6 +153,7 @@ class ProductController extends Controller
                             'price' => $price,
                             'old_price' => $old_price ?? 0,
                             'original_product_img' => $item['original_product_img'],
+                            'other_images' => $item['images'],
                             'is_feature' => $item['is_feature'],
                             'is_new_arrival' => $item['is_new_arrival'],
                             'page_title' => $item['page_title'],

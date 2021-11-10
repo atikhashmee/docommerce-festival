@@ -37,6 +37,7 @@ class Product extends Model
         'weight',
         'quantity',
         'original_product_img',
+        'other_images',
         'is_feature',
         'is_new_arrival',
         'page_title',
@@ -69,6 +70,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    protected $casts = [
+        'other_images' => 'array',
+    ];
 
     
 }

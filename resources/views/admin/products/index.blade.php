@@ -21,6 +21,14 @@
                             @endforeach
                         @endif
                     </select>
+                    <select name="section" id="section" class="form-control mr-2">
+                        <option value="">Select Sections</option>
+                        @if (count($sections) > 0)
+                            @foreach ($sections as $section)
+                                <option>{{$section}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                     <select name="category_id" id="category_id" class="form-control mr-2">
                         <option value="">Select Category</option>
                         @if (count($categories) > 0)
@@ -61,6 +69,7 @@
                             <th>Stock</th>
                             <th>Weight</th>
                             <th>Order&nbsp;Quantity</th>
+                            <th>Section</th>
                             <th>Category</th>
                             <th>Store</th>
                             <th></th>
@@ -78,6 +87,7 @@
                                         </td>
                                         <td>৳{{ $item->price }}</td>
                                         <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->section_type }}</td>
                                         <td>{{ $item->weight }}</td>
                                         <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>

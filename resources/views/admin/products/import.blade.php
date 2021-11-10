@@ -32,6 +32,16 @@
                                 @endif
                             </select>
                         </div>
+                        <div class="form-group d-inline-block mr-2">
+                            <select name="section" id="section" class="form-control mr-2" @change="changeSectionAll($event)">
+                                <option value="">Select Sections</option>
+                                @if (count($sections) > 0)
+                                    @foreach ($sections as $section)
+                                        <option>{{$section}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                         
                         <button class="btn btn-primary" @click="importStoredData()" type="button">Save Changes</button>
                     </div>
@@ -65,13 +75,14 @@
                                     </div> --}}
                                 </div>
                             </th>
-                            <th>Store Product ID</th>
+                            <th>ID</th>
                             <th>Product</th>
                             <th>Stock</th>
                             <th>Weight</th>
                             <th>Price</th>
                             <th>Update Price</th>
                             <th>Category</th>
+                            <th>Section</th>
                         </tr>
                         </thead>
                             <tbody v-if="products.length > 0">
@@ -143,11 +154,21 @@
                                             @endif
                                         </select>
                                     </td>
+                                    <td>
+                                        <select v-model="product.section_type" name="section_type" id="section_type" class="form-control mr-2">
+                                            <option value="">Select Sections</option>
+                                            @if (count($sections) > 0)
+                                                @foreach ($sections as $section)
+                                                    <option>{{$section}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="8" class="text-center">
+                                    <td colspan="9" class="text-center">
                                         <h3>
                                             No Record Found
                                         </h3>
@@ -411,6 +432,14 @@
                     if (this.products.length > 0) {
                         this.products.forEach(element => {
                             element.category_id = category_id
+                        });
+                    }
+                },
+                changeSectionAll(evt) {
+                    let section_type = evt.currentTarget.value
+                    if (this.products.length > 0) {
+                        this.products.forEach(element => {
+                            element.section_type = section_type
                         });
                     }
                 },

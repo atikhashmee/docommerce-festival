@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('quantity');
             $table->enum('section_type', ['hot_deals', 'new_arrival']);
             $table->string('original_product_img')->nullable();
+            $table->text('other_images')->nullable()->comment('All images');
             $table->string('original_product_url')->nullable();
             $table->enum('discount_type', ['percentage', 'fixed']);
             $table->decimal('discount_amount', 10, 2);
