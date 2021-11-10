@@ -31,11 +31,11 @@
     ];
 @endphp
 
-<section class="w-100 stores-section py-5">
-    <div class="container-fluid">
+<section class="w-100 stores-section pt-5 pb-3">
+    <div class="container">
 
         <div class="row justify-content-center">
-            <div class="owl-carousel owl-theme stores-slide">
+            {{-- <div class="owl-carousel owl-theme stores-slide">
                 @if (count($stores) > 0)
                     @foreach ($stores as $store)
                         <div class="item">
@@ -45,17 +45,33 @@
                                 @else
                                     <img src="{{ $store->store_logo_url }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
                                 @endif
-                                {{-- <img src="{{$img}}" alt="{{$store->name}}" width="285" height="157" class="img-fluid mx-auto d-block brands-img mb-5"> --}}
+                                
                             </a>
                         </div>
                     @endforeach
                 @endif
-            </div>
+            </div> --}}
+
+            @if (count($stores) > 0)
+                @foreach ($stores as $store)
+                <div class="col-4 col-md-2">
+                    <a href="{{route('store_page', ['store_id' => $store->original_store_id])}}">
+                        @if ($store->img !=null && file_exists(public_path('storage/stores/'.$store->img)))
+                            <img src="{{ asset('storage/stores/'.$store->img) }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
+                        @else
+                            <img src="{{ $store->store_logo_url }}" alt="{{ $store->name }}" height="97" width="176" class="img-fluid mx-auto d-block brands-img mb-5">
+                        @endif
+                        
+                    </a>
+                </div>
+                @endforeach
+            @endif
+
         </div>
     </div>
 </section>
 
-<section class="product-heading w-100 py-3">
+{{-- <section class="product-heading w-100 py-3">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -65,4 +81,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
