@@ -77,6 +77,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            @php
+                $feature_imag = $product->original_product_img; 
+                if(count($product->other_images) > 0) {
+                    $feature_imag = $product->other_images[0]['original_product_img'];
+                }
+            @endphp
             <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{$product->original_product_img}}"
             data-zoom-image="{{$product->original_product_img}}"/>
             <div id="gallery_01" class="mb-4">
