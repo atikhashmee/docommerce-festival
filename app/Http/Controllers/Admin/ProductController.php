@@ -245,4 +245,110 @@ class ProductController extends Controller
         Product::whereIn('id', $ids)->delete();
         return response(['status'=> true, 'data' => 'Data is deleted']);
     }
+
+    public function edit(Request $request, $id) {
+        $festival = $request->festival;
+        $data['product'] = Product::with('variants')->where('id', $id)->first();
+        if (!$data['product']) {
+            return redirect()->back()->withError('Data not found');
+        }
+        $data['product']->percentage = $data['product']->discount_type == 'percentage' ? $data['product']->discount_amount : 0;      
+        $data['product']->fixed = $data['product']->discount_type == 'fixed' ? $data['product']->discount_amount : 0; 
+        $data['product']->new_price = 0;
+
+        if ($data['product']->discount_type == 'percentage') {
+            $data['product']->new_price =  $data['product']->old_price - ($data['product']->old_price * ($data['product']->discount_amount / 100));
+        } else {
+            $data['product']->new_price =  $data['product']->old_price - $data['product']->discount_amount;
+        }
+
+        if (count($data['product']->variants) > 0) {
+           foreach ($data['product']->variants as  &$ver) {
+                $ver->percentage =  $ver->discount_type == 'percentage' ?  $ver->discount_amount : 0;      
+                $ver->fixed      =  $ver->discount_type == 'fixed' ?  $ver->discount_amount : 0; 
+                $ver->new_price = 0;
+                if ($ver->discount_type == 'percentage') {
+                    $ver->new_price =  $ver->old_price - ($ver->old_price * ($ver->discount_amount / 100));
+                } else {
+                    $ver->new_price =  $ver->old_price - $ver->discount_amount;
+                }
+           }
+        }
+
+        $data['sections'] = $this->sections;
+        $data['categories'] = Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        ->where('category_festivals.festival_id', $festival->id)->get();
+        return view('admin.products.edit', $data);
+    }
+
+    public function update(Request $request, $id) {
+        try {
+            \DB::beginTransaction();
+            $item = json_decode( $request->product, true);
+            $discount_type = $item['percentage'] == 0 ? 'fixed' : 'percentage';
+            $old_price = $item['price'];
+            $price =  $item['price'];
+            if ($discount_type == 'fixed') {
+                $price -= $item['fixed'];
+            } else {
+                $price -= ($item['percentage'] / 100) * $item['price'] ;
+            }
+            $product = Product::where('id', $id)->update([
+                'section_type' => $item['section_type'] ?? "hot_deals",
+                'discount_type' => $discount_type,
+                'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
+                'short_description' => $item['short_description'],
+                'quantity' => $item['quantity'],
+                'weight' => $item['weight'],
+                'price' => $price,
+                'old_price' => $old_price ?? 0
+            ]);
+            if ($product) {
+                $dataArr = [];
+                if (count($item['variants']) > 0) {
+                    foreach ($item['variants'] as $variant) {
+                        ProductVariant::where([
+                            'store_id' => $item['original_store_id'], 
+                            'original_product_id' => $item['original_product_id'],
+                        ])->delete();
+                        $var_discount_type = $variant['percentage'] == 0 ? 'fixed' : 'percentage';
+                        $var_old_price = $variant['price'];
+                        $var_price =  $variant['price'];
+                        if ($var_discount_type == 'fixed') {
+                            $var_price -= $variant['fixed'];
+                        } else {
+                            $var_price -= ($variant['percentage'] / 100) * $variant['price'] ;
+                        }
+
+                        $dataArr[] = [
+                            'product_id' => $id,
+                            'original_product_id' => $item['original_product_id'],
+                            'festival_id' => $item['festival_id'],
+                            'store_id' => $item['store_id'],
+                            'name' => $variant['name'],
+                            'discount_type' => $var_discount_type,
+                            'discount_amount' => $variant['percentage'] == 0 ?  $variant['fixed'] : $variant['percentage'],
+                            'opt1_name' => $variant['opt1_name'],
+                            'opt2_name' => $variant['opt2_name'],
+                            'opt3_name' => $variant['opt3_name'],
+                            'opt1_value' => $variant['opt1_value'],
+                            'opt2_value' => $variant['opt2_value'],
+                            'opt3_value' => $variant['opt3_value'],
+                            'old_price' => $var_old_price ?? 0,
+                            'weight' => $variant['weight'],
+                            'price' =>  $var_price,
+                            'quantity' => $variant['quantity'],
+                            'barcode' => $variant['barcode'],
+                        ];
+                    }
+                    ProductVariant::insert($dataArr);
+                }
+                \DB::commit();
+                return response()->json(['status' => true, 'data'=> "Updated successfully"]);
+            }
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return response()->json(['status' => false, 'data'=> $e->getMessage()]);
+        }
+    }
 }

@@ -1,9 +1,9 @@
 <div class="productsDiv p-3 shadow-sm rounded">
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
     @if ($product->discount_type == 'fixed')
-        <div class="ribbon ribbon-top-left"><span>Save ৳{{$product->discount_amount}}</span></div>
+        <div class="ribbon ribbon-top-left"><span>Save ৳{{intval($product->discount_amount)}}</span></div>
     @else
-        <div class="ribbon ribbon-top-left"><span>Save {{$product->discount_amount}}%</span></div>
+        <div class="ribbon ribbon-top-left"><span>Save {{intval($product->discount_amount)}}%</span></div>
     @endif
 
     
@@ -11,8 +11,8 @@
         <h6 class="product-name mb-2">{{$product->name}}</h6>
     </a>
     <h6>
-        <span class="text-danger font-weight-bold">৳{{$product->price}}</span>
-        <small style="text-decoration: line-through;">৳{{$product->old_price}}</small>
+        <span class="text-danger font-weight-bold">৳{{intval($product->price)}}</span>
+        <small style="text-decoration: line-through;">৳{{intval($product->old_price)}}</small>
     </h6>
     @if ($product->variants_count > 0)
         <a href="javascript:void(0)" class="btn btn-warning p-d-switch btn-block mt-4 text-capitalize" data-product_id="{{$product->id}}">Add to cart</a>

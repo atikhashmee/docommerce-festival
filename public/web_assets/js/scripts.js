@@ -1,3 +1,6 @@
+const PER_KG_WEIGHT = 20
+const SHIPPING_CHARGE_PER_STORE = 60
+
 class StorageData{
     putData(data, name=null) {
         let keyName = name===null? 'cartItems':name;
@@ -21,6 +24,7 @@ function CartItem(product) {
     this.slug = product.slug || null;
     this.name = product.name ||  null;
     this.price = product.price || 0;
+    this.weight = product.weight || 0.0;
     this.selected_variant = product.selected_variant || null;
     this.quantity = product.quantity || 1;
     this.image = product.original_product_img || null;
@@ -28,6 +32,9 @@ function CartItem(product) {
     this.admin_id =  product.admin_id || null;
     this.original_store_id =  product.original_store_id || null;
     this.original_product_id = product.original_product_id || null;
+    if (product.selected_variant !== null) {
+        this.weight =  product.selected_variant.weight;
+    }
 }
 
 CartItem.prototype.totalPrice = function() {
@@ -70,7 +77,20 @@ function updateQuantity() {
 function renderCartItem() {
     let cartArr = storage.getData();
     let txt = '';
-    let totalPrice = cartArr.length > 0 ? cartArr.reduce((t, c)=> t+(Number(c.price) * Number(c.quantity)), 0) : 0;
+    let stores = [];
+    let subTotalPrice = cartArr.length > 0 ? cartArr.reduce((t, c)=> {
+        let additional_price = 0;
+        if (Number(c.weight) > 0) {
+            additional_price = Math.ceil(c.weight) * PER_KG_WEIGHT
+        }
+        stores[c.original_store_id] = SHIPPING_CHARGE_PER_STORE
+        return t+((Number(c.price) + Number(additional_price)) * Number(c.quantity))
+    }, 0) : 0;
+    let shippingCharge = stores.length > 0 ?  stores.reduce((t,c)=>t+c, 0)  : 0
+    let totalPrice = subTotalPrice;
+    if (shippingCharge > 0) {
+        totalPrice += shippingCharge
+    }
     let cartListPage = '';
     let checkoutPage = '';
     if (cartArr.length > 0) {
@@ -78,6 +98,9 @@ function renderCartItem() {
         let option1 = "" 
         let option2 = "" 
         let option3 = "" 
+        let weight = "" 
+        let weightFee = "" 
+        //variant specifies start
         if (element.selected_variant !== null) {
             if (element.selected_variant.opt1_name !== null) {
                 option1 = "("+element.selected_variant.opt1_name+" : "+element.selected_variant.opt1_value+")"
@@ -93,6 +116,16 @@ function renderCartItem() {
                 option3 = "("+element.selected_variant.opt3_name+" : "+element.selected_variant.opt3_value+")"
             }
         }
+        //variant specifies end
+
+        //weight calculation start
+        if (Number(element.weight) > 0) {
+            weight = "<strong>("+element.weight+"kg)</strong>"
+            weightFee = "(Weight Fee: <strong>৳"+(element.quantity * Math.ceil(element.weight) * PER_KG_WEIGHT)+"</strong>)"
+        }
+        //weight calculation end
+
+
         txt += `<li>
                 <div class="shopping-cart-img">
                     <a href="#"><img alt="product" src="${element.image}"></a>
@@ -111,7 +144,7 @@ function renderCartItem() {
                     <img src="${element.image}" alt="${element.name}" class="cart-product-img">
                 </td>
                 <td>
-                    <p class="product_name">${element.name} ${option1} ${option2} ${option3}</p>
+                    <p class="product_name">${element.name} ${option1} ${option2} ${option3} ${weight}</p>
                 </td>
                 <td>
                     <p class="product_price">৳${element.price}</p>
@@ -147,7 +180,8 @@ function renderCartItem() {
                     <img src="${element.image}" alt="${element.name}" class="checkout-product-img">
                 </td>
                 <td>
-                    <p class="product_name">${element.name} ${option1} ${option2} ${option3}</p>
+                    <p class="product_name">${element.name} ${option1} ${option2} ${option3} ${weight}</p>
+                    <p>${weightFee}</p>
                 </td>
                 <td>
                     <p class="product_price">৳${element.price}</p>
@@ -176,6 +210,12 @@ function renderCartItem() {
     let cart_sub_total_page = document.querySelector('#cart_sub_total_page');
     let cart_total_page = document.querySelector('#cart_total_page');
     let checkout_page_lists = document.querySelector('#checkout_page_lists');
+    let cart_shipping_page = document.querySelector('#cart_shipping_page');
+
+    if (cart_shipping_page) {
+        cart_shipping_page.innerHTML = shippingCharge;
+    }
+
     if (checkout_page_lists) {
         checkout_page_lists.innerHTML = checkoutPage;
     }
@@ -183,7 +223,7 @@ function renderCartItem() {
         cartPageView.innerHTML = cartListPage;
     }
     if (cart_sub_total_page) {
-        cart_sub_total_page.innerHTML = totalPrice;
+        cart_sub_total_page.innerHTML = subTotalPrice;
     }
     if (cart_total_page) {
         cart_total_page.innerHTML = totalPrice;
@@ -286,6 +326,7 @@ function validationErrors(errors) {
 function placeOrder() {
     let formD = new FormData(document.querySelector('#checkout_form'))
     formD.append('items', JSON.stringify(storage.getData()))
+    formD.append('cart_shipping_page', document.querySelector('#cart_shipping_page').innerHTML)
     fetch(baseUrl+'/place_order', {
         method: 'POST',
         headers: {

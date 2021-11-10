@@ -233,7 +233,7 @@ class IndexController extends Controller
                 'user_id'  => auth()->user()->id,
                 'sub_total' => $sub_total,
                 'discount_amount' => $discount,
-                'total_shippings_charge' => 0,
+                'total_shippings_charge' => $data['cart_shipping_page'] ?? 0,
                 'total_amount' => $total,
                 'total_product_cost' => 0,
                 'total_returned_amount' => 0,
@@ -258,11 +258,17 @@ class IndexController extends Controller
                     foreach ($cartItems as $cart) {
                         $variant_id = null;
                         $variant_detail = [];
+                        $additional_charge = 0;
                         if ($cart['selected_variant'] != null) {
                             $splitted_product_id = explode('_',  $cart['id']);
                             $cart['id'] = $splitted_product_id[0];
                             $variant_id = $splitted_product_id[1];
                             $variant_detail =  $cart['selected_variant'];
+                        }
+
+                        // weight calculate
+                        if ($cart['weight'] > 0) {
+                            $additional_charge = $cart['quantity'] * ceil(floatval($cart['weight']));
                         }
 
                         OrderDetail::create([
@@ -277,7 +283,8 @@ class IndexController extends Controller
                             'product_name' => $cart['name'],
                             'product_variant_details' => $variant_detail,
                             'product_unit_price' => $cart['price'],
-                            'additional_delivery_charge' => 0,
+                            'shipping_charge' => 60,
+                            'additional_delivery_charge' => $additional_charge,
                             'discount_amount' => 0,
                             'product_quantity' =>  $cart['quantity'],
                             'returned_quantity' => 0,

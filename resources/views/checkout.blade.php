@@ -158,6 +158,14 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            <p class="font-weight-bold">Shipping Charge(+)</p>
+                                        </td>
+                                        <td>
+                                            <p class="font-weight-bold">৳ <span id="cart_shipping_page">0</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <p class="font-weight-bold">Total</p>
                                         </td>
                                         <td>

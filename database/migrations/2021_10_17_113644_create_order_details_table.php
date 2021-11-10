@@ -26,6 +26,7 @@ class CreateOrderDetailsTable extends Migration
             $table->string('product_name');
             $table->text('product_variant_details')->nullable()->comment('variant json data');
             $table->decimal('product_unit_price', 10, 2);
+            $table->decimal('shipping_charge', 10, 2)->default(0.00);
             $table->decimal('additional_delivery_charge', 10, 2)->default(0.00)->comment('unit amount');
             $table->decimal('discount_amount', 10, 2)->default(0)->comment('unit discount amount');
             $table->unsignedInteger('product_quantity')->default(1);
