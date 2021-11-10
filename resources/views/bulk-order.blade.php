@@ -70,7 +70,7 @@
                             <input type="text" name="business_address" class="form-control" value="{{old('business_address')}}">
                         </div>
                         <small>(* Mark Fields are Mandatory)</small> <br>
-                        <button type="submit" class="btn btn-primary">Submit Your Order</button>
+                        <button type="submit" class="btn btn-success">Submit Your Order</button>
                     </form>
                 </div>
             </div>
