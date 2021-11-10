@@ -65,14 +65,17 @@ input[type=number]::-webkit-outer-spin-button {
                         @csrf
                           <div class="form-group">
                               <input type="hidden" name="mobile" value="{{$mobile}}">
-                              {{-- <input id="otp" type="number" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autofocus> --}}
+                              
+                              <input id="otp" type="hidden" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autofocus>
 
-                              <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
-                                <input class="m-2 text-center form-control rounded" autofocus type="text" id="first" maxlength="1" /> 
-                                <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" /> 
-                                <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" /> 
-                                <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" /> 
+                              <div id="otp2" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                                <input class="m-2 text-center form-control rounded" autofocus type="text" id="first" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" onblur="sOtp()" /> 
                               </div>
+
+                              <p id="hhh"></p>
 
                               @error('otp')
                                   <span class="invalid-feedback" role="alert">
@@ -81,7 +84,7 @@ input[type=number]::-webkit-outer-spin-button {
                               @enderror
                           </div>
                           <div class="form-group">
-                              <button type="submit" class="btn btn-success btn-block" name="login">Login</button>
+                              <button type="submit" class="btn btn-success btn-block login-btn" name="login">Login</button>
                           </div>
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
@@ -94,11 +97,11 @@ input[type=number]::-webkit-outer-spin-button {
                       </div>
                       
                     @else
-                      <h3 class="mb-3">Mobile</h3>
+                      <h3 class="mb-3">Mobile Number</h3>
                       <form method="POST" action="{{ route('otp.login') }}">
                         @csrf
                           <div class="form-group">
-                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="Email/Phone Number" autofocus>
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" required autocomplete="Email/Phone Number" autofocus placeholder="01xxxxxxxxx">
                               @error('mobile')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -158,8 +161,34 @@ input[type=number]::-webkit-outer-spin-button {
 document.addEventListener("DOMContentLoaded", function(event) {
 
 function OTPInput() {
-const inputs = document.querySelectorAll('#otp > *[id]');
-for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function(event) { if (event.key==="Backspace" ) { inputs[i].value='' ; if (i !==0) inputs[i - 1].focus(); } else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { return true; } else if (event.keyCode> 47 && event.keyCode < 58) { inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode> 64 && event.keyCode < 91) { inputs[i].value=String.fromCharCode(event.keyCode); if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); } } OTPInput(); });
+const inputs = document.querySelectorAll('#otp2 > *[id]');
+for (let i = 0; i < inputs.length; i++) { 
+  inputs[i].addEventListener('keydown', function(event) { 
+    if (event.key==="Backspace" ) { 
+      inputs[i].value='' ; 
+      if (i !==0) inputs[i - 1].focus(); } 
+      else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { 
+        return true; } 
+        else if (event.keyCode> 47 && event.keyCode < 58) { 
+          inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } 
+          else if (event.keyCode> 64 && event.keyCode < 91) { 
+            inputs[i].value=String.fromCharCode(event.keyCode);
+            if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); 
+          } 
+        } 
+      }); 
+    } 
+  } OTPInput(); 
+});
+
+function sOtp() {
+    var o1 = document.getElementById('first').value;
+    var o2 = document.getElementById('second').value;
+    var o3 = document.getElementById('third').value;
+    var o4 = document.getElementById('fourth').value;
+    var opt5 = (o1) + (o2) +(o3) + (o4);
+    document.getElementById('otp').value = opt5;
+} 
 </script>
 
 @endsection

@@ -5,9 +5,9 @@
     <li class="list-group-item">
         <a href="{{route('orders_page')}}">Orders</a>
     </li>
-    <li>
+    <li class="list-group-item">
         <a href="javascript:void(0)"  onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();" class="btn btn-outline-success btn-sm ml-3">Logout</a>
+            document.getElementById('logout-form').submit();">Logout</a>
     </li>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
