@@ -272,6 +272,12 @@ class IndexController extends Controller
                             $additional_charge = $cart['quantity'] * ceil(floatval($cart['weight']));
                         }
 
+                        //check stock
+                        $product = Product::where('id', $cart['id'])->first();
+                        if (intval($cart['quantity']) > $product->quantity ) {
+                            throw new \Exception($product->name." Stock does not meet given Quantity", 1);
+                        }
+
                         OrderDetail::create([
                             'order_id' => $order->id,
                             'original_store_id' => $cart['original_store_id'],
