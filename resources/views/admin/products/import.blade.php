@@ -89,7 +89,7 @@
                                 <tr v-for="product in products">
                                     <td><input name="ids[]" type="checkbox" class="massCheck" v-model="selectedProduct" @change="checkSpecific($event)" :value="product.original_product_id"></td>
                                     <td>
-                                        <h5>@{{ product.original_product_id }}</h5>
+                                        <h5>@{{ product.sequence_id }}</h5>
                                     </td>
                                     <td>  
                                         {{-- <img :src="product.original_product_img" class="rounded" height="50" width="50"> --}}
