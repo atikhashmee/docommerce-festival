@@ -16,8 +16,30 @@
     </div>
 </section>
 
+<style>
+.inputs input {
+    width: 40px;
+    height: 40px
+}
 
-<section class="w-100 products-section py-5">
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #813790
+}
+
+</style>
+
+
+<section class="w-100 products-section py-6">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -37,13 +59,24 @@
                       @if (isset($error))
                           <div class="alert alert-danger">{{$error}}</div>
                       @endif
-                    <h3 class="mb-3">OTP</h3>
+                    <h4 class="mb-3 text-center">Please enter the OTP to verify your number</h4>
                       
                       <form method="POST" action="{{ route('submit.otp') }}">
                         @csrf
                           <div class="form-group">
                               <input type="hidden" name="mobile" value="{{$mobile}}">
-                              <input id="otp" type="number" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autofocus>
+                              
+                              <input id="otp" type="hidden" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autofocus>
+
+                              <div id="otp2" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                                <input class="m-2 text-center form-control rounded" autofocus type="text" id="first" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" onblur="sOtp()" /> 
+                                <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" onblur="sOtp()" /> 
+                              </div>
+
+                              <p id="hhh"></p>
+
                               @error('otp')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -51,21 +84,24 @@
                               @enderror
                           </div>
                           <div class="form-group">
-                              <button type="submit" class="btn btn-success btn-block" name="login">Login</button>
+                              <button type="submit" class="btn btn-success btn-block login-btn" name="login">Login</button>
                           </div>
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
                         @csrf
                         <input  type="hidden" name="mobile" value="{{$mobile}}">
-                      </form> 
-                      <a href="javascript:void(0)" onclick="document.querySelector('#resend-otp').submit()">Resend OTP to {{$mobile}}</a> <br>
-                      <a href="{{route("login")}}">Change Mobile Number</a>
+                      </form>
+                      <div class="text-center">
+                        Didn't get the code? <a href="javascript:void(0)" onclick="document.querySelector('#resend-otp').submit()">Resend</a> <br>
+                        <a href="{{route("login")}}">Change Mobile Number</a>
+                      </div>
+                      
                     @else
-                      <h3 class="mb-3">Mobile</h3>
+                      <h3 class="mb-3">Mobile Number</h3>
                       <form method="POST" action="{{ route('otp.login') }}">
                         @csrf
                           <div class="form-group">
-                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="Email/Phone Number" autofocus>
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" required autocomplete="Email/Phone Number" autofocus placeholder="01xxxxxxxxx">
                               @error('mobile')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -117,65 +153,42 @@
     </div>
 </section>
 
-<section class="faq-section w-100 py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-center intro-h2">
-                    FAQ about DoCommerce festival 2021
-                </h3>
-            </div>
-        </div>
+@endsection
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="accordion mt-5" id="festivalFAQ">
-                    <div class="card">
-                      <div class="card-header" id="headingOne">
-                        <h2 class="mb-0">
-                          <button class="btn btn-block text-left faq-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Q1: When this festival will start?
-                          </button>
-                        </h2>
-                      </div>
-                  
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#festivalFAQ">
-                        <div class="card-body">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                          <button class="btn btn-block text-left faq-btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Q2: When can I view the discounted prices?
-                          </button>
-                        </h2>
-                      </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#festivalFAQ">
-                        <div class="card-body">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="card-header" id="headingThree">
-                        <h2 class="mb-0">
-                          <button class="btn btn-block text-left faq-btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Q3: How can I be sure that I get the maximum discounts?
-                          </button>
-                        </h2>
-                      </div>
-                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#festivalFAQ">
-                        <div class="card-body">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nesciunt exercitationem, a iure consequuntur accusamus ex eligendi autem quod blanditiis dolores aut laboriosam ut laborum sequi hic velit sint numquam.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
-    </div>
-</section>
+@section('scripts')
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+
+function OTPInput() {
+const inputs = document.querySelectorAll('#otp2 > *[id]');
+for (let i = 0; i < inputs.length; i++) { 
+  inputs[i].addEventListener('keydown', function(event) { 
+    if (event.key==="Backspace" ) { 
+      inputs[i].value='' ; 
+      if (i !==0) inputs[i - 1].focus(); } 
+      else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { 
+        return true; } 
+        else if (event.keyCode> 47 && event.keyCode < 58) { 
+          inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } 
+          else if (event.keyCode> 64 && event.keyCode < 91) { 
+            inputs[i].value=String.fromCharCode(event.keyCode);
+            if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); 
+          } 
+        } 
+      }); 
+    } 
+  } OTPInput(); 
+});
+
+function sOtp() {
+    var o1 = document.getElementById('first').value;
+    var o2 = document.getElementById('second').value;
+    var o3 = document.getElementById('third').value;
+    var o4 = document.getElementById('fourth').value;
+    var opt5 = (o1) + (o2) +(o3) + (o4);
+    document.getElementById('otp').value = opt5;
+} 
+</script>
+
 @endsection
