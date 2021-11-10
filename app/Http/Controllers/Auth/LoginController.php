@@ -49,7 +49,7 @@ class LoginController extends Controller
         ]);
         $data =  [];
         $data['otp']= $this->random_number(4);
-        $sb = new SendSMSService($request->mobile, $data['otp']);
+        $sb = new SendSMSService($request->mobile, "Your DoCommerce Festival login OTP is ".$data['otp'].". Happy shopping!");
         $sb->send();
         $request->session()->put($request->mobile, $data['otp']);
         $data['mobile'] =  $request->mobile;
