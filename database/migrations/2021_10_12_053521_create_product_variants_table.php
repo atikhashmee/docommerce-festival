@@ -30,6 +30,7 @@ class CreateProductVariantsTable extends Migration
             $table->string('opt3_value')->nullable();
             $table->decimal('old_price', 10, 2)->nullable();
             $table->decimal('price', 10, 2);
+            $table->decimal('weight', 10, 2)->default(00.00);
             $table->unsignedBigInteger('quantity');
             $table->string('barcode')->nullable();
             $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');

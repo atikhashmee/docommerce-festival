@@ -27,6 +27,7 @@ class ProductVariant extends Model
         'opt3_value',
         'old_price',
         'price',
+        'weight',
         'quantity',
         'barcode'
     ];

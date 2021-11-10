@@ -58,6 +58,8 @@
                             <th>#SL</th>
                             <th>Product</th>
                             <th>Price</th>
+                            <th>Stock</th>
+                            <th>Weight</th>
                             <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
                             <th>Store</th>
@@ -75,6 +77,8 @@
                                             <h5>{{ $item->name }}</h5>
                                         </td>
                                         <td>৳{{ $item->price }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->weight }}</td>
                                         <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>
                                         <td>  {{ $item->store->name ?? 'N/A' }}</td>
@@ -99,7 +103,7 @@
                         @else
                             <tbody>
                                 <tr>
-                                    <td colspan="6" class="text-center">
+                                    <td colspan="10" class="text-center">
                                         <h3>
                                             No Record Found
                                         </h3>
@@ -171,7 +175,7 @@
                     }
                 });
 
-                $(".massActionWrapper").attr('colspan', '6')
+                $(".massActionWrapper").attr('colspan', '10')
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
                 })

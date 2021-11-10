@@ -68,6 +68,7 @@
                             <th>Store Product ID</th>
                             <th>Product</th>
                             <th>Stock</th>
+                            <th>Weight</th>
                             <th>Price</th>
                             <th>Update Price</th>
                             <th>Category</th>
@@ -89,6 +90,14 @@
                                         </div> 
                                         <div v-else>
                                             <input type="number" class="form-control" v-model="product.quantity" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div v-if="product.variants.length > 0">
+                                            <a href="javascript:void(0)" @click="openModal(product)">Change Product Weight</a>
+                                        </div> 
+                                        <div v-else>
+                                            <input type="number" class="form-control" v-model="product.weight" placeholder="">
                                         </div>
                                     </td>
                                     <td> 
@@ -138,7 +147,7 @@
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="7" class="text-center">
+                                    <td colspan="8" class="text-center">
                                         <h3>
                                             No Record Found
                                         </h3>
@@ -176,6 +185,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Stock</th>
+                        <th>Weight</th>
                         <th>Update Price</th>
                     </tr>
                 </thead>
@@ -184,6 +194,7 @@
                         <td>@{{vr_p.product_name}}</td>
                         <td>@{{vr_p.product_price}}</td>
                         <td><input type="number" v-model="vr_p.quantity" class="form-control"></td>
+                        <td><input type="number" v-model="vr_p.weight" class="form-control"></td>
                         <td>
                             <table>
                                 <tr>
@@ -499,7 +510,7 @@
                 checkItem() {
                     if (this.selectedProduct.length  > 0) {
                         $('input[name="select_all"]').attr('checked', true);
-                        $(".massActionWrapper").attr('colspan', '6')
+                        $(".massActionWrapper").attr('colspan', '9')
                         $('table tr th').each(function(i, v) {
                             $(v).hide();
                         })

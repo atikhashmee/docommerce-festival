@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->boolean('is_new_arrival')->default(false);
             $table->decimal('price', 10, 2)->default(00.00);
             $table->decimal('old_price', 10, 2)->default(00.00);
+            $table->decimal('weight', 10, 2)->default(00.00);
             $table->unsignedBigInteger('quantity');
             $table->enum('section_type', ['hot_deals', 'new_arrival']);
             $table->string('original_product_img')->nullable();

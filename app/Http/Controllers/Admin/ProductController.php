@@ -72,12 +72,14 @@ class ProductController extends Controller
                 if (count($items['data']) > 0) {
                     foreach ($items['data'] as $item) {
                         $item['percentage'] = 0;
+                        $item['weight'] = 0.0;
                         $item['quantity'] = 0;
                         $item['fixed'] = 0;
                         $item['new_price'] = 0;
                         $item['category_id'] = "";
                         if (count($item['variants']) > 0) {
                             foreach ($item['variants'] as &$variant) {
+                                $variant['weight'] = 0.0;
                                 $variant['quantity'] = 0;
                                 $variant['percentage'] = 0;
                                 $variant['fixed'] = 0;
@@ -139,6 +141,7 @@ class ProductController extends Controller
                             'short_description' => $item['short_description'],
                             'admin_id' => $item['admin_id'],
                             'quantity' => $item['quantity'],
+                            'weight' => $item['weight'],
                             'price' => $price,
                             'old_price' => $old_price ?? 0,
                             'original_product_img' => $item['original_product_img'],
@@ -181,6 +184,7 @@ class ProductController extends Controller
                                     'opt2_value' => $variant['opt2_value'],
                                     'opt3_value' => $variant['opt3_value'],
                                     'old_price' => $var_old_price ?? 0,
+                                    'weight' => $variant['weight'],
                                     'price' =>  $var_price,
                                     'quantity' => $variant['quantity'],
                                     'barcode' => $variant['barcode'],
