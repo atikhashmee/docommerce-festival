@@ -85,10 +85,8 @@ function renderCartItem() {
     let stores = [];
     let subTotalPrice = cartArr.length > 0 ? cartArr.reduce((t, c)=> {
         let additional_price = 0;
-        if (Number(c.weight) > 0) {
-            additional_price = Math.ceil(c.weight) * PER_KG_WEIGHT
-        }
-        stores[c.original_store_id] = SHIPPING_CHARGE_PER_STORE
+        let totalKgs = (Number(Math.ceil(c.weight)) * Number(c.quantity))
+        stores[c.original_store_id] = SHIPPING_CHARGE_PER_STORE + ((totalKgs - 1) * PER_KG_WEIGHT)
         return t+((Number(c.price) + Number(additional_price)) * Number(c.quantity))
     }, 0) : 0;
     let shippingCharge = stores.length > 0 ?  stores.reduce((t,c)=>t+c, 0)  : 0
