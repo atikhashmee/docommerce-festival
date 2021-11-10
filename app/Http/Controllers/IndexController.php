@@ -273,10 +273,10 @@ class IndexController extends Controller
                         }
 
                         //check stock
-                        $product = Product::where('id', $cart['id'])->first();
-                        if (intval($cart['quantity']) > $product->quantity ) {
-                            throw new \Exception($product->name." Stock does not meet given Quantity", 1);
-                        }
+                        // $product = Product::where('id', $cart['id'])->first();
+                        // if (intval($cart['quantity']) > $product->quantity ) {
+                        //     throw new \Exception($product->name." Stock does not meet given Quantity", 1);
+                        // }
 
                         $detailed = OrderDetail::create([
                             'order_id' => $order->id,
@@ -303,10 +303,10 @@ class IndexController extends Controller
                             'merchant_commission' => 0,
                             'product_cost' => 0,
                         ]);
-                        if ($detailed) {
-                            $product->quantity -= $cart['quantity'];
-                            $product->save();
-                        }
+                        // if ($detailed) {
+                        //     $product->quantity -= $cart['quantity'];
+                        //     $product->save();
+                        // }
                     }
                 }
             }

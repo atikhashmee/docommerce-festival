@@ -1,4 +1,5 @@
-<div class="productsDiv p-3 shadow-sm rounded @if(intval($product->stock_quantity) == 0) outOfStock @endif ">
+<div class="productsDiv p-3 shadow-sm rounded">
+    {{-- @if(intval($product->stock_quantity) == 0) outOfStock @endif --}}
     <a href="{{route('detail_page', ['slug' => $product->slug])}}" title="{{$product->name}}">
     @if ($product->discount_type == 'fixed')
         <div class="ribbon ribbon-top-left"><span>Save ৳{{intval($product->discount_amount)}}</span></div>
@@ -17,11 +18,12 @@
     @if ($product->variants_count > 0)
         <a href="javascript:void(0)" class="btn btn-warning p-d-switch btn-block mt-4 text-capitalize" data-product_id="{{$product->id}}">Add to cart</a>
     @else
-        @if (intval($product->stock_quantity) > 0)
+    <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
+        {{-- @if (intval($product->stock_quantity) > 0)
             <a href="javascript:void(0)"  onclick="addToCart({{$product}})" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
         @else
             <a href="{{route('detail_page', ['slug' => $product->slug])}}" class="btn btn-warning addcart-btn btn-block mt-4 text-capitalize">Add to cart</a>
-        @endif
+        @endif --}}
     @endif
     <div class="wish-zoom">
         <a href="javascript:void(0)" class="p-d-switch" data-product_id="{{$product->id}}">
