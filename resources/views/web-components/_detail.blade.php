@@ -109,6 +109,7 @@
                     @endif
                 @endif
             </h6>
+            <span class="badge badge-danger p-2"><span>Stockout</span></span>
             @if (count($product->show_variants) > 0)
                 <div class="options pt-3 variant_data">
                     @foreach ($product->show_variants as $name => $item)
