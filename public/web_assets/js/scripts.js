@@ -32,7 +32,7 @@ function CartItem(product) {
     this.admin_id =  product.admin_id || null;
     this.original_store_id =  product.original_store_id || null;
     this.original_product_id = product.original_product_id || null;
-    if (product.selected_variant !== null) {
+    if (this.selected_variant !== null) {
         this.weight =  product.selected_variant.weight;
     }
 }
