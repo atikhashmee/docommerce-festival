@@ -70,23 +70,115 @@ class IndexController extends Controller
         return view('home', $data);
     }
 
-    public function storeData($store_id)
+    public function storeData(Request $request, $store_id)
     {
-        $festival = request()->festival; 
+        $festival = $request->festival; 
         $data = [];
         $data['store'] = Store::where('original_store_id', $store_id)->first();
-        $data['exclusives'] = Product::where('original_store_id', $store_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
+        $exclusives = Product::where('original_store_id', $store_id)
+        ->where('festival_id', $festival->id)
+        ->where(function($q)  {
+            if (isset(request()->price_range) && !empty(request()->price_range)) {
+                $q->whereBetween('products.price', explode(',', request()->price_range));
+            }
+            $q->where("name", "LIKE", "%".request()->search."%");
+            $q->orWhere("slug", "LIKE", "%".request()->search."%");
+        });
+        if ($request->sort_letter) {
+            if ($request->sort_letter == "a-z") {
+                $exclusives->orderBy('name', 'ASC');
+            } else {
+                $exclusives->orderBy('name', 'DESC');
+            }
+        } 
+
+        if ($request->sort_price) {
+            if ($request->sort_price == "low-high") {
+                $exclusives->orderBy('price', 'ASC');
+            } else {
+                $exclusives->orderBy('price', 'DESC');
+            }
+        } 
+        
+        $data['max_price'] = $exclusives->get()->max('price');
+        $exclusives->take(1)->limit(10);
+        $data['exclusives'] = $exclusives->get();     
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
         return view('products', $data);
     }
 
-    public function categoryData($category_id) {
-        $festival = request()->festival; 
+    public function categoryData(Request $request, $category_id) {
+        $festival = $request->festival; 
         $data = [];
         $data['category'] = Category::where('id', $category_id)->first();
-        $data['exclusives'] = Product::withCount('variants')->where('category_id', $category_id)->where('festival_id', $festival->id)->take(1)->limit(10)->get();        
+        $exclusives = Product::withCount('variants')
+        ->where('category_id', $category_id)
+        ->where('festival_id', $festival->id)
+        ->where(function($q)  {
+            if (isset(request()->price_range) && !empty(request()->price_range)) {
+                $q->whereBetween('products.price', explode(',', request()->price_range));
+            }
+            $q->where("name", "LIKE", "%".request()->search."%");
+            $q->orWhere("slug", "LIKE", "%".request()->search."%");
+        });
+
+        if ($request->sort_letter) {
+            if ($request->sort_letter == "a-z") {
+                $exclusives->orderBy('name', 'ASC');
+            } else {
+                $exclusives->orderBy('name', 'DESC');
+            }
+        } 
+
+        if ($request->sort_price) {
+            if ($request->sort_price == "low-high") {
+                $exclusives->orderBy('price', 'ASC');
+            } else {
+                $exclusives->orderBy('price', 'DESC');
+            }
+        } 
+
+        $data['max_price'] = $exclusives->get()->max('price');
+        $exclusives->take(1)->limit(10);
+        $data['exclusives'] = $exclusives->get();         
+        $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
+        ->where('category_festivals.festival_id', $festival->id)->get();
+        return view('products', $data);
+    }
+
+    public function products(Request $request) {
+        $festival = $request->festival; 
+        $data = [];
+        $exclusives = Product::withCount('variants')
+        ->where('festival_id', $festival->id)
+        ->where(function($q) use($request) {
+            if (isset(request()->price_range) && !empty(request()->price_range)) {
+                $q->whereBetween('products.price', explode(',', request()->price_range));
+            }
+            $q->where("name", "LIKE", "%".$request->search."%");
+            $q->orWhere("slug", "LIKE", "%".$request->search."%");
+        });
+        if ($request->sort_letter) {
+            if ($request->sort_letter == "a-z") {
+                $exclusives->orderBy('name', 'ASC');
+            } else {
+                $exclusives->orderBy('name', 'DESC');
+            }
+        } 
+
+        if ($request->sort_price) {
+            if ($request->sort_price == "low-high") {
+                $exclusives->orderBy('price', 'ASC');
+            } else {
+                $exclusives->orderBy('price', 'DESC');
+            }
+        } 
+        $data['max_price'] = $exclusives->get()->max('price');
+        $exclusives->take(1)->limit(10);
+        $data['exclusives'] = $exclusives->get();    
         $data['categories']  = Category::select('categories.*', 'TP.total_products')->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
         ->leftJoin(\DB::raw('(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) TP'), 'TP.category_id', '=', 'categories.id')
         ->where('category_festivals.festival_id', $festival->id)->get();
@@ -405,4 +497,6 @@ class IndexController extends Controller
             return $item;
         });
     }
+
+    
 }

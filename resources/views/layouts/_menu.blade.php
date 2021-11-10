@@ -6,11 +6,11 @@
                 <div class="float-left float-md-right p-0 py-md-2">
                     <ul class="nav cart-notification-ul align-items-center">
                         <li class="nav-item mx-1">
-                            <form class="form-inline my-2 my-lg-0 product-search">
+                            <form class="form-inline my-2 my-lg-0 product-search" method="GET" action="{{route('products_page')}}">
                                 <div class="input-group ml-auto top-search">
-                                    <input type="text" class="form-control" aria-label="I am looking for..." placeholder="I am looking for...">
+                                    <input type="text" class="form-control" name="search" aria-label="I am looking for..." placeholder="I am looking for...">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" type="button"><i class="fas fa-search"></i></button>
+                                        <button type="submit" class="btn btn-success" type="button"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
                             </form>
