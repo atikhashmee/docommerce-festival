@@ -69,7 +69,7 @@
                             <th>Stock</th>
                             <th>Section</th>
                             <th>Weight</th>
-                            <th>Order&nbsp;Quantity</th>>
+                            <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
                             <th>Store</th>
                             <th></th>
@@ -83,7 +83,7 @@
                                         <td>{{ $item->id }}</td>
                                         <td>  
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
-                                            <h5>{{ $item->name }}</h5>
+                                            <h5> <span style="border: 1px solid #d3d3d3; padding:3px">{{ $item->original_product_sequence_id }}</span> {{ $item->name }}</h5>
                                         </td>
                                         <td>৳{{ $item->price }}</td>
                                         <td>{{ $item->quantity }}</td>
@@ -132,11 +132,6 @@
                 </div>
             </div>
         </div>
-        <form method="POST" id="bulk-trash-or-destroy" action="#" accept-charset="UTF-8" class="data-form non-validate">
-            @csrf
-            @method('delete')
-            <input type="hidden" name="type">
-        </form>
     </section>
 @endsection
 
@@ -207,14 +202,13 @@
         }
 
         function deleteAll() {
+            alert('')
             let formD = new FormData();
             formD.append('product_ids', JSON.stringify(selectedIds));
             fetch(`{{route("admin.products.deteletAll")}}`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'no-pagination' : 'no-pagination'
                 },
                 body: formD
             }).then(res=>res.json())

@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('festival_id');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('original_product_sequence_id')->default(0);
             $table->unsignedBigInteger('original_product_id');
             $table->unsignedBigInteger('original_store_id');
             $table->unsignedBigInteger('admin_id')->nullable();

@@ -142,6 +142,7 @@ class ProductController extends Controller
                             'category_id' => $item['category_id'],
                             'store_id' => $store->id,
                             'original_store_id' => $item['original_store_id'],
+                            'original_product_sequence_id' => $item['sequence_id'],
                             'original_product_id' => $item['original_product_id'],
                             'name' => $item['name'],
                             'section_type' => $item['section_type'] ?? "hot_deals",
