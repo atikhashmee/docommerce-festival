@@ -47,7 +47,7 @@
     @endif
     @if(Route::currentRouteName() == 'index_page')
         @include('layouts._index')
-    @elseif(in_array(Route::currentRouteName(), ['store_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'detail_page', 'category_page', 'privacy-policy'])) 
+    @elseif(in_array(Route::currentRouteName(), ['products_page', 'store_page', 'cart_view_page', 'checkout_page', 'login', 'register', 'order_completed', 'orders_page', 'detail_page', 'category_page', 'privacy-policy'])) 
         <section class="w-100 header text-center">
             <a href="{{route('index_page')}}"><img src="{{asset('web_assets/images/top-banner-inner.jpg')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-none d-md-block">
             <img src="{{asset('web_assets/images/top-banner-2.jpg')}}" alt="DoCommerce 11-11 Festival" class="img-fluid mx-auto festive-logo d-block d-md-none"></a>
