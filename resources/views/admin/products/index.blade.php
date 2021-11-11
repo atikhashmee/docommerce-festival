@@ -68,7 +68,7 @@
                             <th>Price</th>
                             <th>Stock</th>
                             <th>Section</th>
-                            <th>Weight</th>
+                            {{-- <th>Weight</th> --}}
                             <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
                             <th>Store</th>
@@ -88,7 +88,7 @@
                                         <td>৳{{ $item->price }}</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->section_type }}</td>
-                                        <td>{{ $item->weight }}</td>
+                                        {{-- <td>{{ $item->weight }}</td> --}}
                                         <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>
                                         <td>  {{ $item->store->name ?? 'N/A' }}</td>
@@ -113,7 +113,7 @@
                         @else
                             <tbody>
                                 <tr>
-                                    <td colspan="10" class="text-center">
+                                    <td colspan="9" class="text-center">
                                         <h3>
                                             No Record Found
                                         </h3>
@@ -180,7 +180,7 @@
                     }
                 });
 
-                $(".massActionWrapper").attr('colspan', '10')
+                $(".massActionWrapper").attr('colspan', '9')
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
                 })
@@ -202,21 +202,22 @@
         }
 
         function deleteAll() {
-            alert('')
-            let formD = new FormData();
-            formD.append('product_ids', JSON.stringify(selectedIds));
-            fetch(`{{route("admin.products.deteletAll")}}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN' : `{{csrf_token()}}`,
-                },
-                body: formD
-            }).then(res=>res.json())
-            .then( res => {
-                if (res.status) {
-                    window.location.reload()
-                }
-            })
+            if (confirm('Are you sure?')) {
+                let formD = new FormData();
+                formD.append('product_ids', JSON.stringify(selectedIds));
+                fetch(`{{route("admin.products.deteletAll")}}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                    },
+                    body: formD
+                }).then(res=>res.json())
+                .then( res => {
+                    if (res.status) {
+                        window.location.reload()
+                    }
+                })
+            }
         }
     </script>
 @endsection

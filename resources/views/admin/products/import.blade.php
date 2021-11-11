@@ -10,16 +10,30 @@
             <a href="{{route('admin.products.index')}}" class="btn btn-primary btn-sec"><i class="fas fa-angle-double-left"></i> Back</a>
         </div>
         <div class="card">
+           
             <form action="{{route('admin.product.import')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
                 <div class="">
-                    <div class="d-flex align-items-start" v-if="products.length > 0">
+                    <div class="d-flex justify-content-center align-items-start" v-if="selectedProduct.length > 0">
+                        <div class="dropdown all-check">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span id="count">@{{selectedProduct.length}}</span> Items Selected
+                            </button>
+                            {{-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
+                            </div> --}}
+                        </div>
                         <div class="form-group custom-price-group d-inline-block">
                             <label for="">Fixed(1.00)</label>
                             <input type="number" value="0" id="fixed_all" @keyup="changePriceAll($event, 'fixed')">
                         </div>
+                        <div>  Or</div>
                         <div class="form-group custom-price-group d-inline-block">
                             <label for="">Percentage(%)</label>
                             <input type="number" value="0" id="percent_all" @keyup="changePriceAll($event, 'percen')">
+                        </div>
+                        <div class="form-group custom-price-group d-inline-block">
+                            <label for="">Stock</label>
+                            <input type="number" value="0" id="stock_all" @keyup="changePriceAll($event, 'stock')">
                         </div>
                         <div class="form-group d-inline-block mr-2">
                             <!-- <label for="">Category</label> -->
@@ -66,19 +80,11 @@
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
                                        data-placement="top" title="Select All"></i>
                                 </button>
-                                <div class="dropdown all-check d-none">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="count">@{{selectedProduct.length}}</span> Items Selected
-                                    </button>
-                                    {{-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
-                                    </div> --}}
-                                </div>
                             </th>
                             <th>ID</th>
                             <th>Product</th>
                             <th>Stock</th>
-                            <th>Weight</th>
+                            {{-- <th>Weight</th> --}}
                             <th>Price</th>
                             <th>Update Price</th>
                             <th>Category</th>
@@ -100,17 +106,17 @@
                                             <a href="javascript:void(0)" @click="openModal(product)">Change Product Quantity</a>
                                         </div> 
                                         <div v-else>
-                                            <input type="number" class="form-control" v-model="product.quantity" placeholder="">
+                                            <input type="number" class="form-control" :readonly="product.checked ? false : true" v-model="product.quantity" placeholder="">
                                         </div>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <div v-if="product.variants.length > 0">
                                             <a href="javascript:void(0)" @click="openModal(product)">Change Product Weight</a>
                                         </div> 
                                         <div v-else>
                                             <input type="number" class="form-control" v-model="product.weight" placeholder="">
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td> 
                                         <span v-if="product.variants.length > 0">
                                             <a href="javascript:void(0)" @click="openModal(product)">Change Product Price</a>
@@ -126,13 +132,13 @@
                                                 <tr>
                                                     <td>Percentage (%)</td>
                                                     <td>
-                                                        <input type="number" class="form-control" v-model="product.percentage"  @keyup="changePrice(product, 'percen')" placeholder="">
+                                                        <input type="number" class="form-control" :readonly="product.checked ? false : true" v-model="product.percentage"  @keyup="changePrice(product, 'percen')" placeholder="">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Fixed</td>
                                                     <td>
-                                                        <input type="number" class="form-control" v-model="product.fixed"  @keyup="changePrice(product, 'fixed')" placeholder="">
+                                                        <input type="number" class="form-control" :readonly="product.checked ? false : true" v-model="product.fixed"   @keyup="changePrice(product, 'fixed')" placeholder="">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -145,7 +151,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <select  v-model="product.category_id" class="form-control">
+                                        <select  v-model="product.category_id" class="form-control" :disabled="product.checked ? false : true">
                                             <option value="">Select Category</option>
                                             @if (count($categories) > 0)
                                                 @foreach ($categories as $category)
@@ -155,7 +161,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select v-model="product.section_type" name="section_type" id="section_type" class="form-control mr-2">
+                                        <select v-model="product.section_type" name="section_type" id="section_type" class="form-control mr-2" :disabled="product.checked ? false : true">
                                             <option value="">Select Sections</option>
                                             @if (count($sections) > 0)
                                                 @foreach ($sections as $section)
@@ -199,6 +205,10 @@
                     <label for="">Percentage(%)</label>
                     <input type="number" value="0" id="percent_all_var" @keyup="changePriceAll($event, 'percen', true)">
                 </div>
+                <div class="form-group custom-price-group">
+                    <label for="">Stock</label>
+                    <input type="number" value="0" id="stock_all_var" @keyup="changePriceAll($event, 'stock', true)">
+                </div>
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -206,7 +216,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Weight</th>
+                        {{-- <th>Weight</th> --}}
                         <th>Update Price</th>
                     </tr>
                 </thead>
@@ -215,7 +225,7 @@
                         <td>@{{vr_p.product_name}}</td>
                         <td>@{{vr_p.product_price}}</td>
                         <td><input type="number" v-model="vr_p.quantity" class="form-control"></td>
-                        <td><input type="number" v-model="vr_p.weight" class="form-control"></td>
+                        {{-- <td><input type="number" v-model="vr_p.weight" class="form-control"></td> --}}
                         <td>
                             <table>
                                 <tr>
@@ -317,7 +327,6 @@
                         
                     }
                     this.checkItem()
-                    console.log(this.selectedProduct, 'asdf');
                 },
                 changePrice(prod, type, isVariant=false) {
                     if (isVariant) {
@@ -382,6 +391,8 @@
                                     if (dataPrice > 0) {
                                         item.new_price =  Number(dataPrice).toFixed(2)
                                     }
+                                } else if (type === 'stock') {
+                                    item.quantity = rateValue
                                 }
                             }) 
                         }
@@ -403,6 +414,8 @@
                                     if (dataPrice > 0) {
                                         element.new_price =  Number(dataPrice).toFixed(2)
                                     }
+                                } else if (type === 'stock') {
+                                    element.quantity = rateValue
                                 }
                                 if (element.variants.length > 0) {
                                     element.variants = element.variants.map(varnt => {
@@ -419,6 +432,8 @@
                                             if (dataPrice > 0) {
                                                 varnt.new_price =  Number(dataPrice).toFixed(2)
                                             }
+                                        } else if (type === 'stock') {
+                                            varnt.quantity = rateValue
                                         }
                                         return varnt;
                                     })
@@ -485,6 +500,7 @@
                         obj.fixed = item.fixed
                         obj.new_price = item.new_price
                         obj.id = item.id
+                        obj.quantity = item.quantity
                         allVarinats.push(obj)
                     })
                     if (allVarinats.length > 0) {
@@ -497,6 +513,7 @@
                                 percentage: item.percentage,
                                 new_price : item.new_price,
                                 fixed : item.fixed,
+                                quantity : item.quantity
                             }
                             if (item.opt1_value !== null) {
                                 var_product.product_name += '('+item.opt1_value+')'
@@ -539,21 +556,20 @@
                 checkItem() {
                     if (this.selectedProduct.length  > 0) {
                         $('input[name="select_all"]').attr('checked', true);
-                        $(".massActionWrapper").attr('colspan', '9')
-                        $('table tr th').each(function(i, v) {
-                            $(v).hide();
-                        })
-                        $('table tr th:eq(0)').show()
-                        $(".all-check").removeClass('d-none');
-
                     } else {
                         $('input[name="select_all"]').attr('checked', false);
-                        $(".massActionWrapper").attr('colspan', '0')
-                        $('table tr th').each(function(i, v) {
-                            $(v).show();
-                        })
-                        $(".all-check").addClass('d-none');
                     }
+                    
+                    //check enabled according to condition
+                    this.products = this.products.map(item => {
+                        let objdata = this.selectedProduct.find(did => did == item.original_product_id)
+                        if (objdata !== undefined) {
+                            item.checked = true
+                        } else {
+                            item.checked = false
+                        }
+                        return item;
+                    })
                 },
                 checkAll() {
                     if ($('input[name="select_all"]').prop('checked')) {

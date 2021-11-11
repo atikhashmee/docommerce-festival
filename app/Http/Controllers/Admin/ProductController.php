@@ -84,6 +84,7 @@ class ProductController extends Controller
                         $item['quantity'] = 0;
                         $item['fixed'] = 0;
                         $item['new_price'] = 0;
+                        $item['checked'] = false;
                         $item['category_id'] = "";
                         if (count($item['variants']) > 0) {
                             foreach ($item['variants'] as &$variant) {
