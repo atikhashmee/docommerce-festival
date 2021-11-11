@@ -226,6 +226,9 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 .product-menu, .product-menu .navbar-light.bg-light .navbar-nav .nav-link {
     color: rgba(0,0,0,.9);
     font-weight: 700;
+}
+
+.product-menu .navbar-light.bg-light .navbar-nav .nav-link {
     background: #fff;
     padding: 10px 15px;
     border-radius: 4px;
