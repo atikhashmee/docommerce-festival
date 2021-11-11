@@ -73,7 +73,7 @@ class ProductController extends Controller
     public function storeProduct($store_id) {
         $productCollect = [];
         if ($store_id) {
-            $response = Http::get(env("REMOTE_BASE_URL").'/api/festival/get-products/'.$store_id);
+            $response = Http::withoutVerifying()->get(env("REMOTE_BASE_URL").'/api/festival/get-products/'.$store_id);
             if ($response->ok()) {
                 $items = $response;
                 if (count($items['data']) > 0) {
@@ -145,7 +145,7 @@ class ProductController extends Controller
                             'original_product_sequence_id' => $item['sequence_id'],
                             'original_product_id' => $item['original_product_id'],
                             'name' => $item['name'],
-                            'section_type' => $item['section_type'] ?? "hot_deals",
+                            'section_type' => $item['section_type'] !=="" ? $item['section_type']: "hot_deals",
                             'original_product_url' => $item['original_product_url'],
                             'discount_type' => $discount_type,
                             'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
@@ -186,7 +186,7 @@ class ProductController extends Controller
                                     'product_id' => $product->id,
                                     'original_product_id' => $product->original_product_id,
                                     'festival_id' => $data['festival_id'],
-                                    'store_id' => $data['store_id'],
+                                    'store_id' => $store->id,
                                     'name' => $variant['name'],
                                     'discount_type' => $var_discount_type,
                                     'discount_amount' => $variant['percentage'] == 0 ?  $variant['fixed'] : $variant['percentage'],

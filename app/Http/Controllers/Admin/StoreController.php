@@ -25,7 +25,7 @@ class StoreController extends Controller
     protected $data = [];
 
     public function syncStoreData() {
-        $response = Http::get(env("REMOTE_BASE_URL").'/api/festival/get-stores');
+        $response = Http::withoutVerifying()->get(env("REMOTE_BASE_URL").'/api/festival/get-stores');
         if ($response->ok()) {
             $items = $response->collect();
             if (count($items['data']) > 0) {
