@@ -12,8 +12,8 @@ class OrderController extends Controller
 {
     public function index(Request $request) {
         $data = [];
-        $sql = Order::select('orders.*')->with(['orderDetails', 'orderDetails.store']);
-
+        $sql = Order::select('orders.*', "ODS.store_names");
+        $sql->leftJoin(\DB::raw("(SELECT GROUP_CONCAT(stores.name) as store_names, order_id FROM order_details INNER JOIN stores ON stores.original_store_id = order_details.original_store_id  GROUP BY order_id) AS ODS"), "ODS.order_id", "=", "orders.id");
         if (isset($request->search_key)) {
             $sql->where('orders.id', 'LIKE', '%' . $request->search_key . '%');
             // $sql->orWhere('products.id', 'LIKE', '%' . $request->search_key . '%');
@@ -38,8 +38,9 @@ class OrderController extends Controller
             $q->select('order_addresses.*', 'global_states.name as state_name', 'global_districts.name as district_name');
             $q->leftJoin('global_states', 'global_states.id', '=', 'order_addresses.state_id');
             $q->leftJoin('global_districts', 'global_districts.id', '=', 'order_addresses.district_id');
-        }])
-        ->where('orders.id', $id)
+        }]);
+        $order->leftJoin(\DB::raw("(SELECT GROUP_CONCAT(stores.name) as store_names, GROUP_CONCAT(stores.store_address) as store_address, order_id FROM order_details INNER JOIN stores ON stores.original_store_id = order_details.original_store_id  GROUP BY order_id) AS ODS"), "ODS.order_id", "=", "orders.id");
+        $order->where('orders.id', $id)
         ->first();
         $data['order'] = $order;
         return view('admin.orders.show', $data);
@@ -47,14 +48,19 @@ class OrderController extends Controller
 
     public function changeStatus($order_id) {
         $data = [];
-        $order = Order::select('orders.*')->with(['orderDetails', 'orderDetails.store', 'address' => function($q){
+        $order = Order::select('orders.*', "ODS.store_info")->with(['orderDetails', 'orderDetails.store', 'address' => function($q){
             $q->select('order_addresses.*', 'global_states.name as state_name', 'global_districts.name as district_name');
             $q->leftJoin('global_states', 'global_states.id', '=', 'order_addresses.state_id');
             $q->leftJoin('global_districts', 'global_districts.id', '=', 'order_addresses.district_id');
-        }])
-        ->where('orders.id', $order_id)
+        }]);
+        $order->leftJoin(\DB::raw("(SELECT DISTINCT GROUP_CONCAT(DISTINCT CONCAT(stores.name,'-',stores.store_address) SEPARATOR ';') as store_info, order_id FROM order_details INNER JOIN stores ON stores.original_store_id = order_details.original_store_id GROUP BY order_id) AS ODS"), "ODS.order_id", "=", "orders.id");
+        
+        $data['order'] = $order->where('orders.id', $order_id)
         ->first();
-        $data['order'] = $order;
+        $data['stores'] = array_map(function($q) {
+            list($store_name, $address)  = explode('-', $q);
+            return [$store_name, $address];
+        }, explode(';', $data['order']->store_info));
         return view('admin.orders.change-status', $data);
     }
 

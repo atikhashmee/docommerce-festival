@@ -102,7 +102,7 @@
                                         <td>  {{ $order->created_at }} </td>
                                         <td>  {{ $order->user->name }} </td>
                                         <td>  Cash-on                  </td>
-                                        <td> {{ $order->orderDetails[0]->store->name ?? 'N/A'  }}</td>
+                                        <td> {{ implode(',', array_unique(explode(',', $order->store_names))) }}</td>
                                         <td>  {{ $order->status  }}</td>
                                         <td>  ৳{{ $order->total_final_amount  }}</td>
                                         <td>
