@@ -228,6 +228,12 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     font-weight: 700;
 }
 
+.product-menu .navbar-light.bg-light .navbar-nav .nav-link {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
 .product-search .form-control {
     max-width: 80%;
     min-width: 300px;
