@@ -31,7 +31,6 @@
                 </div>
             </div>
             <div class="row">
-                
                  <div class="col-6 col-md-3 mb-4">
                     <div class="productsDiv p-3 shadow-sm rounded">
                         <a href="#"  title="American Garden Original BBQ Sauce">

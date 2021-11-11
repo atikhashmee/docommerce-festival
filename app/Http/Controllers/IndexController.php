@@ -22,8 +22,8 @@ class IndexController extends Controller
         $festival = request()->festival; 
         $data = [];
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')->where('store_festivals.festival_id', $festival->id)->get();
-        $hot_deals = Product::withCount('variants')->where('section_type', 'LIKE', '%"hot_deal":"1", "hot_deal_home":"1"%')->get();
-        $exclusives = Product::withCount('variants')->where('section_type', 'LIKE', '%"exclusive":"1", "exclusive_home":"1"%')->get();
+        $hot_deals = Product::withCount('variants')->where('section_type', 'LIKE', '%"hot_deal":"1"%')->inRandomOrder()->limit(12)->get();
+        $exclusives = Product::withCount('variants')->where('section_type', 'LIKE', '%"exclusive":"1"%')->inRandomOrder()->limit(12)->get();
         $data['hot_deals'] = $this->processedProductData($hot_deals);
         $data['exclusives'] = $this->processedProductData($exclusives);
         return view('index', $data);
@@ -34,6 +34,8 @@ class IndexController extends Controller
         $data = [];
         $product  = Product::with('variants', 'category', 'store')->where('slug', $slug)->first();
         $data['product'] =  $this->processedProductDetails($product);
+        $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->limit(4)->get();
+        $data['store_other_products'] = $this->processedProductData($store_other_products);
         return view('product_detail', $data);
     }
 
