@@ -24,8 +24,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>Product</th>
+                                    <th style="width: 150px;"></th>
+                                    <th style="width: 350px;">Product</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
