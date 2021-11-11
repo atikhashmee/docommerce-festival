@@ -60,7 +60,7 @@
     
                             <hr> --}}
     
-                            <h4 class="mb-4">Sort by name</h4>
+                            {{-- <h4 class="mb-4">Sort by name</h4>
                             <ul class="list_brand">
                                 <li>
                                     <div class="custome-checkbox">
@@ -75,7 +75,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <hr>
+                            <hr> --}}
                             <h4 class="mb-4">Sort by price</h4>
                             <ul class="list_brand">
                                 <li>

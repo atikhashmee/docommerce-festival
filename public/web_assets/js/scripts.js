@@ -374,7 +374,7 @@ function updatePrice() {
         let itemSelected = [];
         if (typeof options[0]!=='undefined') {
             if (item.opt1_value !== null) {
-                if (options[0] === item.opt1_value) {
+                if (options[0] == item.opt1_value) {
                     itemSelected.push(1);
                 }
             }
@@ -382,7 +382,7 @@ function updatePrice() {
 
         if (typeof options[1]!=='undefined') {
             if (item.opt2_value !== null) {
-                if (options[1] === item.opt2_value) {
+                if (options[1] == item.opt2_value) {
                     itemSelected.push(1);
                 }
             }
@@ -390,7 +390,7 @@ function updatePrice() {
 
         if (typeof options[2]!=='undefined') {
             if (item.opt3_value !== null) {
-                if (options[2] === item.opt3_value) {
+                if (options[2] == item.opt3_value) {
                     itemSelected.push(1);
                 }
             }

@@ -82,7 +82,7 @@ class IndexController extends Controller
         if ($request->sort_letter) {
             if ($request->sort_letter == "a-z") {
                 $q->orderBy('name', 'ASC');
-            } else {
+            } else if ($request->sort_letter == "z-a") {
                 $q->orderBy('name', 'DESC');
             }
         } 
@@ -90,10 +90,14 @@ class IndexController extends Controller
         if ($request->sort_price) {
             if ($request->sort_price == "low-high") {
                 $q->orderBy('price', 'ASC');
-            } else {
+            } else if ($request->sort_price == "high-low") {
                 $q->orderBy('price', 'DESC');
             }
         }
+        if ($request->sort_letter==null && $request->sort_price == null) {
+            $q->orderBy('name', 'ASC');
+        }
+
         return $q;
     }
 
