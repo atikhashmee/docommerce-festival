@@ -2,36 +2,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ url('/') }}">
+                <a href="https://docommerce.com/" target="_blank">
                     <img src="{{asset('web_assets/images/footer-logo.png')}}" alt="Docommerce 11-11 Festival" class="img-fluid d-block mx-auto mx-md-0">
                 </a>
                 
             </div>
 
-            <div class="col-md-2 text-center">
-                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
-                    <li><a href="{{ route('privacy-policy') }}">Privacy Policies</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 text-center">
-                
-                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
-                    <li><a href="{{ url('/#faq') }}">FAQ</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 text-center">
-                
-                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
-                    <li><a href="{{route('login')}}">Track Order</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 text-center">
-                
-                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
-                    <li>Contact: <a href="tel:01745408181">01745408181</a></li>
+            <div class="col-md-8 text-center text-md-right">
+                <ul class="m-0 mt-2 mt-md-2 p-0 list-inline footer-quick-links">
+                    <li class="list-inline-item"><a href="{{ route('privacy-policy') }}"><span class="px-2">&#9673;</span> Privacy Policies</a></li>
+                    <li class="list-inline-item"><a href="{{ url('/#faq') }}"><span class="px-2">&#9673;</span> FAQ</a></li>
+                    <li class="list-inline-item"><a href="{{route('login')}}"><span class="px-2">&#9673;</span> Track Order</a></li>
+                    <li class="list-inline-item"><span class="px-2">|</span> Contact: <a href="tel:01745408181">01745408181</a></li>
                 </ul>
             </div>
             
