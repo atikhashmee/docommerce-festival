@@ -396,8 +396,14 @@ function updatePrice() {
             }
         }
         if (options.length === itemSelected.length) {
-            document.querySelector('#product_price').innerHTML = item.price;
-            document.querySelector('#product_old_price').innerHTML = item.old_price;
+            let price = document.querySelector('#product_price')
+            if (price) {
+                price.innerHTML = item.price;
+            }
+            let old_price =  document.querySelector('#product_old_price');
+            if (old_price) {
+                old_price.innerHTML = item.old_price;
+            }
             var vaData = document.querySelector('#variants_data');
             if (vaData) {
                 vaData = JSON.parse(vaData.value);

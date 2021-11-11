@@ -76,7 +76,7 @@ class IndexController extends Controller
         $festival = $request->festival; 
         $data = [];
         $data['store'] = Store::where('original_store_id', $store_id)->first();
-        $exclusives = Product::where('original_store_id', $store_id)
+        $exclusives = Product::withCount('variants')->where('original_store_id', $store_id)
         ->where('festival_id', $festival->id)
         ->where(function($q)  {
             if (isset(request()->price_range) && !empty(request()->price_range)) {
