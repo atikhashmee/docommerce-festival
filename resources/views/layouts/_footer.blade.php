@@ -1,20 +1,36 @@
 <footer class="w-100">
     <div class="container">
         <div class="row">
-            {{-- <div class="col-md-6">
+            <div class="col-md-4">
                 <a href="{{ url('/') }}">
-                    <img src="{{asset('web_assets/images/footer-logo.png')}}" alt="Docommerce 11-11 Festival" loading="lazy" class="img-fluid d-block mx-auto mx-md-0">
+                    <img src="{{asset('web_assets/images/footer-logo.png')}}" alt="Docommerce 11-11 Festival" class="img-fluid d-block mx-auto mx-md-0">
                 </a>
                 
-            </div> --}}
+            </div>
 
-            <div class="col-md-12 text-center text-md-right">
-                <h5 class="footer-header mt-5 mt-md-0">Quick Links</h5>
-                <ul class="m-0 mt-2 mt-md-4 p-0 footer-quick-links">
-                    
+            <div class="col-md-2 text-center">
+                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
                     <li><a href="{{ route('privacy-policy') }}">Privacy Policies</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-2 text-center">
+                
+                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
                     <li><a href="{{ url('/#faq') }}">FAQ</a></li>
-                    <li><a href="{{route('login')}}" class="btn btn-sm btn-outline-light my-2">Track Order</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-2 text-center">
+                
+                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
+                    <li><a href="{{route('login')}}">Track Order</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-2 text-center">
+                
+                <ul class="m-0 mt-2 mt-md-0 p-0 footer-quick-links">
                     <li>Contact: <a href="tel:01745408181">01745408181</a></li>
                 </ul>
             </div>
