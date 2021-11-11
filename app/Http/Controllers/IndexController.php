@@ -24,8 +24,8 @@ class IndexController extends Controller
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')->where('store_festivals.festival_id', $festival->id)->get();
         $hot_deals = Product::withCount('variants')->where('section_type', 'LIKE', '%"hot_deal":"1"%')->inRandomOrder()->limit(12)->get();
         $exclusives = Product::withCount('variants')->where('section_type', 'LIKE', '%"exclusive":"1"%')->inRandomOrder()->limit(12)->get();
-        $data['hot_deals'] = $this->processedProductData($hot_deals);
-        $data['exclusives'] = $this->processedProductData($exclusives);
+        $data['hot_deals'] = $this->processedProductDataNoPage($hot_deals);
+        $data['exclusives'] = $this->processedProductDataNoPage($exclusives);
         return view('index', $data);
     }
 
@@ -35,7 +35,7 @@ class IndexController extends Controller
         $product  = Product::with('variants', 'category', 'store')->where('slug', $slug)->first();
         $data['product'] =  $this->processedProductDetails($product);
         $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->inRandomOrder()->limit(4)->get();
-        $data['store_other_products'] = $this->processedProductData($store_other_products);
+        $data['store_other_products'] = $this->processedProductDataNoPage($store_other_products);
         return view('product_detail', $data);
     }
 
@@ -414,6 +414,87 @@ class IndexController extends Controller
     }
 
     public function processedProductData(Collection $arrData)
+    {
+        $arrData->map(function($item) {
+            $item->original_product_img = "https://zipgrip.delivery".strstr($item->original_product_img, '/storage');
+            $variants = [];
+            $smallest_variant = null;
+            if (count($item->variants)>0) {
+                $item->raw_variants = $item->variants->map(function($item) {
+                    $vc = new \stdclass;
+                    $vc->id  = $item->id;
+                    $vc->name = $item->name;
+                    $vc->opt1_value = $item->opt1_value;
+                    $vc->opt2_value = $item->opt2_value;
+                    $vc->opt3_value = $item->opt3_value;
+                    $vc->old_price = $item->old_price;
+                    $vc->discount_type = $item->discount_type;
+                    $vc->discount_amount = $item->discount_amount;
+                    $vc->price = $item->price;
+                    return $vc;
+                });
+
+                $price = 0;
+                foreach ($item->variants as $variant) {
+                    if ($variant->opt1_name != null && $variant->opt1_value !=null) {
+                        $opt1 = new \stdclass;
+                        $opt1->value = $variant->opt1_value;
+                        $opt1->id = $variant->id;
+                        $opt1->price = $variant->price;
+                        $opt1->old_price = $variant->old_price;
+                        $variants[$variant->opt1_name][$variant->opt1_value] = $opt1;
+                    }
+
+                    if ($variant->opt2_name != null && $variant->opt2_value != null) {
+                        $opt2 = new \stdclass;
+                        $opt2->value = $variant->opt2_value;
+                        $opt2->id = $variant->id;
+                        $opt2->price = $variant->price;
+                        $opt2->old_price = $variant->old_price;
+                        $variants[$variant->opt2_name][$variant->opt2_value] = $opt2;
+                    }
+                    if ($variant->opt3_name != null && $variant->opt3_value != null) {
+                        $opt3 = new \stdclass;
+                        $opt3->value = $variant->opt3_value;
+                        $opt3->id = $variant->id;
+                        $opt3->price = $variant->price;
+                        $opt3->old_price = $variant->old_price;
+                        $variants[$variant->opt3_name][$variant->opt3_value] = $opt3;
+                    }
+
+                    if (isset($variant->price)) {
+                        if ($variant->price < $price || $price ==0) {
+                            $price = $variant->price;
+                            $smv = new \stdclass;
+                            $smv->opt1_value = $variant->opt1_value;
+                            $smv->opt2_value = $variant->opt2_value;
+                            $smv->opt3_value = $variant->opt3_value;
+                            $smv->discount_type = $variant->discount_type;
+                            $smv->discount_amount = $variant->discount_amount;
+                            $smv->id = $variant->id;
+                            $smv->price = $variant->price;
+                            $smv->old_price = $variant->old_price;
+                            $smallest_variant = $smv;
+                        }
+                    }
+                }
+
+                if ($smallest_variant!=null) {
+                    $item->price = $smallest_variant->price;
+                    $item->old_price = $smallest_variant->old_price;
+                    $item->discount_type = $smallest_variant->discount_type;
+                    $item->discount_amount = $smallest_variant->discount_amount;
+                }
+            }
+            $item->variants = $variants;
+            $item->smallest_variant = $smallest_variant;
+            $item->stock_quantity = $item->quantity;
+            $item->quantity = 1;
+            return $item;
+        });
+    }
+
+    public function processedProductDataNoPage(Collection $arrData)
     {
         return $arrData->map(function($item) {
             $item->original_product_img = "https://zipgrip.delivery".strstr($item->original_product_img, '/storage');
