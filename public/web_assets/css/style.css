@@ -1196,4 +1196,24 @@ footer .container {
 50%{opacity: .5;}
 100%{opacity: 1;}
 }
+
+.page-link {
+    color: #231f20;
+    border: 1px solid #d4a9df;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #231f20;
+    background-color: #d4a9df;
+    border-color: #d4a9df;
+}
+
+.page-link:is(:hover, :focus) {
+    z-index: 2;
+    color: #231f20;
+    text-decoration: none;
+    background-color: #f4e8f6;
+    border-color: #d4a9df;
+}
   
