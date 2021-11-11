@@ -234,6 +234,12 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     border-radius: 4px;
 }
 
+.product-menu .dropdown-menu {
+    top: 94%;
+    max-height: 350px;
+    overflow: auto;
+}
+
 .product-search .form-control {
     max-width: 80%;
     min-width: 300px;

@@ -14,6 +14,10 @@
     .productsDiv {
         margin-bottom: 25px;
     }
+
+    .product-menu .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
     
     .w-150 {
         width: 120px !important;
