@@ -34,7 +34,7 @@ class IndexController extends Controller
         $data = [];
         $product  = Product::with('variants', 'category', 'store')->where('slug', $slug)->first();
         $data['product'] =  $this->processedProductDetails($product);
-        $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->limit(4)->get();
+        $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->inRandomOrder()->limit(4)->get();
         $data['store_other_products'] = $this->processedProductData($store_other_products);
         return view('product_detail', $data);
     }

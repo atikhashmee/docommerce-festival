@@ -26,11 +26,22 @@
                 <div class="col-md-12">
     
                     <h3 class="product-section-heading mb-5">
-                        Other store products
+                        {{$product->store->name}} Others Products
                     </h3>
                 </div>
             </div>
             <div class="row">
+                @if (count($store_other_products) > 0)
+                    @foreach ($store_other_products as $product)
+                        <div class="col-6 col-md-3 mb-4">
+                            @component('web-components._product', compact('product'))
+                                
+                            @endcomponent
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            {{-- <div class="row">
                  <div class="col-6 col-md-3 mb-4">
                     <div class="productsDiv p-3 shadow-sm rounded">
                         <a href="#"  title="American Garden Original BBQ Sauce">
@@ -85,7 +96,7 @@
                     </div>
                  </div>
                    
-            </div>
+            </div> --}}
         </div>
     </section>
     
