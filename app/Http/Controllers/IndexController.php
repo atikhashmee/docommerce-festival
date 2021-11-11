@@ -210,7 +210,6 @@ class IndexController extends Controller
             'district_id' => 'required',
             'address_line_1' => 'required',
             'zip_code' => 'required',
-            'phone' => 'required',
             'payment_option' => 'required|in:cash_on',
         ]);
         $cartItems = json_decode($request->items, true);

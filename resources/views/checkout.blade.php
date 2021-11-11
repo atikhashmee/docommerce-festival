@@ -69,51 +69,61 @@
                                 <input type="text" name="name"  placeholder="Name *" class="form-control"></div>
                             </div>
                             <div class="col-md-6">
-                            <div class="form-group state_id_group">
-                                <div class="custom_select ">
-                                    <select name="state_id" id="state_id" class="form-control">
-                                        <option value="">Select Region</option>
-                                        @if (count($states) > 0)
-                                            @foreach ($states as $state)
-                                                <option value="{{ $state->id }}" @if($state->id == 6) selected @else disabled @endif>{{ $state->name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="form-group city_group">
-                                <div class="custom_select ">
-                                    <select name="district_id" id="district_id" class="form-control">
-                                        <option value="">Select District</option>
-                                    </select>
-                                </div>
-                                <small class="text-danger">(* Current festival is only delivered to Dhaka)</small>
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="address_line_1"  placeholder="Address *" class="form-control"></div>
-                                </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="address_line_2" placeholder="Address line2" class="form-control"></div>
-                                </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="zip_code"  placeholder="Postcode / ZIP *" class="form-control"></div>
-                                </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="phone"  placeholder="Phone *" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="email"  placeholder="Email address" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="address_line_1"  placeholder="Address *" class="form-control">
+                                </div>
+                            </div>
+                           
+                            <input type="hidden" name="state_id" id="state_id" value="6">
+                            {{-- <div class="col-md-6">
+                                <div class="form-group state_id_group">
+                                    <div class="custom_select ">
+                                        <select name="state_id" id="state_id" class="form-control">
+                                            <option value="">Select Region</option>
+                                            @if (count($states) > 0)
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}" @if($state->id == 6) selected @else disabled @endif>{{ $state->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group city_group">
+                                    <div class="custom_select ">
+                                        <select name="district_id" id="district_id" class="form-control">
+                                            <option value="">Select District</option>
+                                        </select>
+                                    </div>
+                                    <small class="text-danger"><b>(Current festival is only delivered to Dhaka)</b></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="zip_code"  placeholder="Postcode / ZIP *" class="form-control">
+                                </div>
+                            </div>
+                          
+                            <input type="hidden" name="address_line_2" id="address_line_2" value="">
+                            {{-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="address_line_2" placeholder="Address line2" class="form-control">
+                                </div>
+                            </div> --}}
+                            <input type="hidden" name="phone" id="phone" value="">
+                            {{-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone"  placeholder="Phone *" class="form-control">
+                                </div>
+                            </div> --}}
+                            
                             {{-- <div class="col-md-6 col-sm-12 col-xm-12"><a href="javascript:void(0)" class="btn btn-outline-secondary change-address-btn">Change address</a></div> --}}
                         </div>
                     </div>
