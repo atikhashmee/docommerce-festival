@@ -120,7 +120,7 @@
                         <div class="each-variant-row">
                             <span class="mr-1">{{$name}}</span>
                             @foreach ($item as $prop => $val)
-                                <button type="button" onclick="changeVariant(this)" data-item="{{ $prop }}" class="btn btn-info btn-sm mr-1">{{$prop}}</button>
+                                <button type="button" onclick="changeVariant(this)" data-item="{{ $prop }}" class="btn btn-outline-info btn-sm mr-1">{{$prop}}</button>
                             @endforeach
                         </div>
                     @endforeach
