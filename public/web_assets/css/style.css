@@ -256,6 +256,11 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     margin-top: 7px;
 }
 
+#cart_items_short {
+    max-height: 360px;
+    overflow: auto;
+}
+
 .cart-dropdown-wrap {
     position: absolute;
     right: 0;
@@ -292,9 +297,9 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
 
 .cart-dropdown-wrap ul li .shopping-cart-img {
     -webkit-box-flex: 0;
-    -ms-flex: 0 0 80px;
-    flex: 0 0 80px;
-    margin-right: 20px;
+    -ms-flex: 0 0 70px;
+    flex: 0 0 70px;
+    margin-right: 18px;
 }
 
 .cart-dropdown-wrap ul li .shopping-cart-img a {
@@ -338,6 +343,7 @@ canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container
     -ms-flex-pack: end;
     justify-content: flex-end;
     margin: 6px 0 0;
+    padding-right: 5px;
 }
 .cart-dropdown-wrap ul li .shopping-cart-delete a {
     font-size: 18px;
