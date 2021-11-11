@@ -105,7 +105,7 @@ class IndexController extends Controller
 
         $exclusives = Product::withCount('variants')->where('original_store_id', $store_id);
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(12);     
+        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(24);     
         $this->processedProductData($exclusivesData->getCollection());
         $data['exclusives'] = $exclusivesData;
 
@@ -122,7 +122,7 @@ class IndexController extends Controller
 
         $exclusives = Product::withCount('variants')->where('category_id', $category_id);
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(12);   
+        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(24);   
         $this->processedProductData($exclusivesData->getCollection());   
         $data['exclusives'] = $exclusivesData;
 
@@ -150,7 +150,7 @@ class IndexController extends Controller
 
 
         $data['max_price'] = $exclusives->get()->max('price');
-        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(12);   
+        $exclusivesData = $this->dataQuery($exclusives, $request)->paginate(24);   
         $this->processedProductData($exclusivesData->getCollection());   
         $data['exclusives'] = $exclusivesData; 
 
