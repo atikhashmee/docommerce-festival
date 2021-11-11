@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <h3 class="product-section-heading mb-5">
                     Hot Deals
-                    <a href="{{ route('products_page') }}" class="float-right">
+                    <a href="{{ route('products_page') }}?section=hot_deals" class="float-right">
                         See more <i class="fas fa-angle-right"></i>
                     </a>
                 </h3>
@@ -52,7 +52,7 @@
                 <h3 class="product-section-heading mb-5">
                     Exclusive products
 
-                    <a href="{{ route('products_page') }}" class="float-right">
+                    <a href="{{ route('products_page') }}?section=exclusive" class="float-right">
                         See more <i class="fas fa-angle-right"></i>
                     </a>
                 </h3>

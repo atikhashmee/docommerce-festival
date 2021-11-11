@@ -155,7 +155,6 @@
                             @endforeach
                         @endif
                     </div> --}}
-
                     <div class="row pt-3 pb-5">
                         <div class="col-md-12">
                             <a href="https://docommerce.com/pricing" target="_blank">
