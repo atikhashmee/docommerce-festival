@@ -114,6 +114,7 @@
             {{-- @if (intval($product->stock_quantity) == 0)
                 <span class="badge badge-danger p-2"><span>Stockout</span></span>
             @endif --}}
+            {!! $product->short_description !!}
             @if (count($product->show_variants) > 0)
                 <div class="options pt-3 variant_data">
                     @foreach ($product->show_variants as $name => $item)
