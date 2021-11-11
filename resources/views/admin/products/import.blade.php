@@ -14,7 +14,7 @@
             <form action="{{route('admin.product.import')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
                 <div class="">
                     <div class="d-flex justify-content-center align-items-start" v-if="selectedProduct.length > 0">
-                        <div class="dropdown all-check">
+                        <div class="dropdown all-check mr-2">
                             <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span id="count">@{{selectedProduct.length}}</span> Items Selected
                             </button>
@@ -22,15 +22,18 @@
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="attachToFestival()">Attach to festival</a>
                             </div> --}}
                         </div>
-                        <div class="form-group custom-price-group d-inline-block">
+                        
+                        <div class="form-group custom-price-group orPrice d-inline-block">
                             <label for="">Fixed(1.00)</label>
                             <input type="number" value="0" id="fixed_all" @keyup="changePriceAll($event, 'fixed')">
                         </div>
-                        <div>  Or</div>
-                        <div class="form-group custom-price-group d-inline-block">
+                        <div class="orDiv">Or</div>
+                        <div class="form-group custom-price-group orPrice d-inline-block">
                             <label for="">Percentage(%)</label>
                             <input type="number" value="0" id="percent_all" @keyup="changePriceAll($event, 'percen')">
                         </div>
+                        
+                        
                         <div class="form-group custom-price-group d-inline-block">
                             <label for="">Stock</label>
                             <input type="number" value="0" id="stock_all" @keyup="changePriceAll($event, 'stock')">
@@ -282,7 +285,7 @@
             background: #fff;
             padding: 0px 10px;
             margin-right: 10px;
-            width: 120px;
+            width: 102px;
         }
         .custom-price-group label{
             margin: 0 auto;
@@ -295,6 +298,31 @@
             border: none;
             width: 100%;
         }
+        .orDiv {
+            padding-right: 10px;
+            position: relative;
+            text-transform: uppercase;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+
+        .orPrice {
+            border: 2px solid #813790;
+        }
+
+        @media (max-width: 1370px) {
+            #store_id {
+            width:85%;
+            margin-left: 14%;
+            }
+
+            .form-group {
+                max-width: 145px;
+            }
+        }
+
+        
+
     </style>
 @endsection
 @section('scripts')

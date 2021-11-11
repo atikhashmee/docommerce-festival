@@ -19,7 +19,7 @@
 </section>
  
  <div class="main_content">
-     <div class="section py-5">
+     <div class="section py-6">
          <div class="container">
              <div class="row">
                 <div class="col-md-3 mb-4">
