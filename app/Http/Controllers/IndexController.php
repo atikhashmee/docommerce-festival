@@ -21,18 +21,11 @@ class IndexController extends Controller
     public function index() {
         $festival = request()->festival; 
         $data = [];
-        $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
-        ->where('store_festivals.festival_id', $festival->id)->get();
-        $hot_deals = Product::withCount('variants')
-        ->where('section_type', 'LIKE', '%"hot_deal":"1", "hot_deal_home":"1"%')
-        ->paginate(12);
-        $exclusives = Product::withCount('variants')
-        ->where('section_type', 'LIKE', '%"exclusive":"1", "exclusive_home":"1"%')
-        ->paginate(12);
-        $this->processedProductData($hot_deals->getCollection());
-        $this->processedProductData($exclusives->getCollection());
-        $data['hot_deals'] = $hot_deals;
-        $data['exclusives'] = $exclusives;
+        $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')->where('store_festivals.festival_id', $festival->id)->get();
+        $hot_deals = Product::withCount('variants')->where('section_type', 'LIKE', '%"hot_deal":"1", "hot_deal_home":"1"%')->get();
+        $exclusives = Product::withCount('variants')->where('section_type', 'LIKE', '%"exclusive":"1", "exclusive_home":"1"%')->get();
+        $data['hot_deals'] = $this->processedProductData($hot_deals);
+        $data['exclusives'] = $this->processedProductData($exclusives);
         return view('index', $data);
     }
 
@@ -420,9 +413,8 @@ class IndexController extends Controller
 
     public function processedProductData(Collection $arrData)
     {
-        $arrData->map(function($item) {
+        return $arrData->map(function($item) {
             $item->original_product_img = "https://zipgrip.delivery".strstr($item->original_product_img, '/storage');
-
             $variants = [];
             $smallest_variant = null;
             if (count($item->variants)>0) {
