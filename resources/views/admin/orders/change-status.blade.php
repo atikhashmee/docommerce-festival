@@ -24,6 +24,7 @@
                             <strong class="order-line-height">SubTotal : </strong> ৳{{ $order->sub_total}}<br>
                             <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  ৳{{ $order->discount_amount }}<br>
                             <strong class="order-line-height">Total&nbsp;Amount : </strong> ৳{{ $order->total_amount }}<br>
+                            <strong class="order-line-height">User : </strong> {{ $order->user->phone_number }}<br>
                         </p>
                     </div>
                     <div class="col-md-4">
