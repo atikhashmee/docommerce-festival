@@ -112,8 +112,8 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{{route("admin.orders.show", ['order' => $order->id])}}">Detail</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Confirmed', {{ $order->id }})">Confirm</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatus('Canceled', {{ $order->id }})">Cancel</a>
+                                                    <a class="dropdown-item @if($order->status == 'Confirmed') disabled @endif" href="javascript:void(0)" @if($order->status != 'Confirmed') onclick="changeStatus('Confirmed', {{ $order->id }})" @endif >Confirm</a>
+                                                    <a class="dropdown-item @if($order->status == 'Canceled') disabled @endif" href="javascript:void(0)" @if($order->status != 'Canceled') onclick="changeStatus('Canceled', {{ $order->id }})" @endif>Cancel</a>
                                                 </div>
                                             </div>
                                         </td>
