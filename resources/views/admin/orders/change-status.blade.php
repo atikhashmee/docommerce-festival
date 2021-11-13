@@ -19,7 +19,7 @@
                                 $total_amount = $order->total_amount
                             @endphp
                             <strong class="order-line-height">Order&nbsp;ID : </strong> {{ strtotime($order->order_number) }} <br>
-                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{ date('d M Y, H:i', strtotime($order->created_at)) }} <br>
+                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{dateFormat($order->created_at, 1) }} <br>
                             <strong class="order-line-height">Order&nbsp;Status : </strong> {{ $order->status }}<br>
                             <strong class="order-line-height">SubTotal : </strong> ৳{{ $order->sub_total}}<br>
                             <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  ৳{{ $order->discount_amount }}<br>
