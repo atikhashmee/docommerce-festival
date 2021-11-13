@@ -373,55 +373,59 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $db_products = Product::whereIn('id', $products_ids)->get();
-        $total_updated_products = 0;
-        if (count($db_products) > 0) {
-            $original_product_ids = $db_products->map(function($qq){return $qq->original_product_id;})->toArray();
-            $response = Http::post(env("REMOTE_BASE_URL").'/api/festival/get-products-by-id', [
-                'product_ids' => json_encode($original_product_ids),
-                
-            ]);
-
-            if ($response->ok()) {
-                if ($response->successful()) {
-                    $data = $response->json();
-                    if (count($data['data']) > 0) {
-                        foreach ($data['data'] as $key => $product) {
-                            if ( count($db_products) > 0) {
-                                foreach ($db_products as $db_product) {
-                                    if ($product['original_product_id'] == $db_product->original_product_id && $product['original_store_id'] == $db_product->original_store_id) {
-                                     
-                                        if (in_array('slug', $request->column)) {
-                                            $db_product->slug = $product['slug'];
+        try {
+            $db_products = Product::whereIn('id', $products_ids)->get();
+            $total_updated_products = 0;
+            if (count($db_products) > 0) {
+                $original_product_ids = $db_products->map(function($qq){return $qq->original_product_id;})->toArray();
+                $response = Http::withoutVerifying()->post(env("REMOTE_BASE_URL").'/api/festival/get-products-by-id', [
+                    'product_ids' => json_encode($original_product_ids),
+                    
+                ]);
+    
+                if ($response->ok()) {
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        if (count($data['data']) > 0) {
+                            foreach ($data['data'] as $key => $product) {
+                                if ( count($db_products) > 0) {
+                                    foreach ($db_products as $db_product) {
+                                        if ($product['original_product_id'] == $db_product->original_product_id && $product['original_store_id'] == $db_product->original_store_id) {
+                                         
+                                            if (in_array('slug', $request->column)) {
+                                                $db_product->slug = $product['slug'];
+                                            }
+    
+                                            if (in_array('name', $request->column)) {
+                                                $db_product->name = $product['name'];
+                                            }
+                                            
+                                            if (in_array('description', $request->column)) {
+                                                $db_product->short_description = $product['short_description'];
+                                            }
+    
+                                            if (in_array('images', $request->column)) {
+                                                $db_product->other_images = $product['images'];
+                                                $db_product->original_product_img = $product['original_product_img'];
+                                            }
+    
+                                            if (in_array('price', $request->column)) {
+                                                $db_product->price = $product['price'];
+                                                $db_product->old_price = $product['old_price'] ?? 0;
+                                            }
+                                            $db_product->save();
+                                            $total_updated_products++;
                                         }
-
-                                        if (in_array('name', $request->column)) {
-                                            $db_product->name = $product['name'];
-                                        }
-                                        
-                                        if (in_array('description', $request->column)) {
-                                            $db_product->short_description = $product['short_description'];
-                                        }
-
-                                        if (in_array('images', $request->column)) {
-                                            $db_product->other_images = $product['images'];
-                                            $db_product->original_product_img = $product['original_product_img'];
-                                        }
-
-                                        if (in_array('price', $request->column)) {
-                                            $db_product->price = $product['price'];
-                                            $db_product->old_price = $product['old_price'];
-                                        }
-                                        $db_product->save();
-                                        $total_updated_products++;
                                     }
                                 }
                             }
                         }
-                    }
-                } 
+                    } 
+                }
             }
+            return redirect()->back()->withSuccess($total_updated_products." Products have been updated");
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
         }
-        return redirect()->back()->withSuccess($total_updated_products." Products have been updated");
     }
 }
