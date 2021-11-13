@@ -51,35 +51,38 @@
                     </div>
                     <div class="col-md-4">
                         <h2>Stores</h2>
-                        <div style="overflow-y: scroll">
+                        <div style="overflow-y: scroll; max-height: 400px;">
                             @if (count($stores) > 0)
-                                @foreach($stores as $storeData) 
-                                    <p>{{$storeData[0]}}</p>
-                                    <hr>
-                                    <address>
-                                        @php
-                                            $store = $storeData[1] ?? null;
-                                        @endphp
-                                        @if(!empty($store))
-                                            <strong class="order-line-height">Address : </strong>
-                                            @if (isset($store['address_line_1']))
-                                                {{$store['address_line_1']}}
-                                                <br>
+                                @foreach($stores as $storeData)
+                                    <div class="storeAddress mt-4 p-3 bg-light shadow-sm">
+                                        <p class="font-weight-bold;">{{$storeData[0]}}</p>
+                                        <hr>
+                                        <address class="mb-0">
+                                            @php
+                                                $store = $storeData[1] ?? null;
+                                            @endphp
+                                            @if(!empty($store))
+                                                <strong class="order-line-height">Address : </strong>
+                                                @if (isset($store['address_line_1']))
+                                                    {{$store['address_line_1']}}
+                                                    <br>
+                                                @endif
+                                                @if (isset($store['address_line_2']))
+                                                    {{$store['address_line_2']}}
+                                                    <br>
+                                                @endif
+                                                @if (isset($store['hotline_number']))
+                                                    {{$store['hotline_number']}}
+                                                    <br>
+                                                @endif
+                                                @if (isset($store['email']))
+                                                    {{$store['email']}}
+                                                    <br>
+                                                @endif
                                             @endif
-                                            @if (isset($store['address_line_2']))
-                                                {{$store['address_line_2']}}
-                                                <br>
-                                            @endif
-                                            @if (isset($store['hotline_number']))
-                                                {{$store['hotline_number']}}
-                                                <br>
-                                            @endif
-                                            @if (isset($store['email']))
-                                                {{$store['email']}}
-                                                <br>
-                                            @endif
-                                        @endif
-                                    </address>
+                                        </address>
+                                    </div>
+                                    
                                 @endforeach
                             @endif
                         </div>
