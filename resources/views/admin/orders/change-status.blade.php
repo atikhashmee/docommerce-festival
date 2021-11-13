@@ -19,11 +19,11 @@
                                 $total_amount = $order->total_amount
                             @endphp
                             <strong class="order-line-height">Order&nbsp;ID : </strong> {{ strtotime($order->order_number) }} <br>
-                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{dateFormat($order->created_at, 1) }} <br>
+                            <strong class="order-line-height">Order&nbsp;Date : </strong> {{ dateFormat($order->created_at, 1) }} <br>
                             <strong class="order-line-height">Order&nbsp;Status : </strong> {{ $order->status }}<br>
                             <strong class="order-line-height">SubTotal : </strong> ৳{{ $order->sub_total}}<br>
                             <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  ৳{{ $order->discount_amount }}<br>
-                            <strong class="order-line-height">Total&nbsp;Amount : </strong> ৳{{ $order->total_amount }}<br>
+                            <strong class="order-line-height">Total&nbsp;Amount : </strong> ৳{{ $order->total_amount + $order->total_shippings_charge }}<br>
                             <strong class="order-line-height">User : </strong> {{ $order->user->phone_number }}<br>
                         </p>
                     </div>
@@ -116,8 +116,8 @@
                                         @foreach($order->orderDetails as $key => $detail)
                                           @php
                                               
-                                              $subtotal = $detail->product_unit_price * $detail->quantity;
-                                              $supplier_total = 0;
+                                              $subtotal = $detail->product_unit_price * $detail->product_quantity;
+                                              $subtotal_total += $subtotal;
                                           @endphp
                                            <tbody>
                                                <tr>
@@ -168,18 +168,18 @@
                                         @endforeach
                                     @endif
                                     <tr>
-                                        <td colspan="8" class="text-right">
+                                        <td colspan="9" class="text-right">
                                             Total: ৳{{$subtotal_total}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="8" class="text-right">
+                                        <td colspan="9" class="text-right">
                                             Shipping charge: (+) ৳{{$order->total_shippings_charge}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="8" class="text-right">
-                                            Total Payable: ৳{{$subtotal_total+$order->total_shippings_charge}}
+                                        <td colspan="9" class="text-right">
+                                            Total Payable: ৳{{($subtotal_total+$order->total_shippings_charge)}}
                                         </td>
                                     </tr>
                                 </table>

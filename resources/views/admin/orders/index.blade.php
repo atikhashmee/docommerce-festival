@@ -99,7 +99,7 @@
                                             {{-- <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}"> --}}
                                         </td>
                                         <td>  {{ strtotime($order->order_number) }} </td>
-                                        <td>  {{ $order->created_at }} </td>
+                                        <td>{{ dateFormat($order->created_at, 1) }} </td>
                                         <td>  {{ $order->user->name }} </td>
                                         <td>  Cash-on                  </td>
                                         <td> {{ implode(',', array_unique(explode(',', $order->store_names))) }}</td>
