@@ -410,11 +410,29 @@ class ProductController extends Controller
                                             }
     
                                             if (in_array('price', $request->column)) {
-                                                $db_product->old_price = $product['price'];
-                                                if ($db_product->discount_type == 'fixed') {
-                                                    $db_product->price = $db_product->old_price - $db_product->discount_amount;
-                                                } else if ($db_product->discount_type == 'percentage') {
-                                                    $db_product->price = $db_product->old_price - (($db_product->discount_amount / 100) * $db_product->old_price);
+                                                if (count($db_product->variants) > 0) {
+                                                    foreach ($db_product->variants as $key => $variant) {
+                                                        if (count($product['variants']) > 0) {
+                                                            foreach ($product['variants'] as $pvar) {
+                                                                if ($product['original_product_id'] == $db_product->original_product_id && $db_product->store_id == $variant->store_id) {
+                                                                    $variant->old_price = $pvar['price'];
+                                                                    if ($variant->discount_type == 'fixed') {
+                                                                        $variant->price = $variant->old_price - $variant->discount_amount;
+                                                                    } else if ($variant->discount_type == 'percentage') {
+                                                                        $variant->price = $variant->old_price - (($variant->discount_amount / 100) * $variant->old_price);
+                                                                    }
+                                                                }
+                                                            }
+                                                            $variant->save();
+                                                        }
+                                                    }
+                                                } else {
+                                                    $db_product->old_price = $product['price'];
+                                                    if ($db_product->discount_type == 'fixed') {
+                                                        $db_product->price = $db_product->old_price - $db_product->discount_amount;
+                                                    } else if ($db_product->discount_type == 'percentage') {
+                                                        $db_product->price = $db_product->old_price - (($db_product->discount_amount / 100) * $db_product->old_price);
+                                                    }
                                                 }
                                             }
                                             $db_product->save();
