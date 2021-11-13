@@ -136,7 +136,7 @@ class ProductController extends Controller
                         if ($discount_type == 'fixed') {
                             $price -= $item['fixed'];
                         } else {
-                            $price -= ($item['percentage'] / 100) * $item['price'] ;
+                            $price -= ($item['percentage'] / 100) * $item['price'];
                         }
                         $product = Product::updateOrCreate([
                             'original_store_id' => $item['original_store_id'],
@@ -410,8 +410,12 @@ class ProductController extends Controller
                                             }
     
                                             if (in_array('price', $request->column)) {
-                                                $db_product->price = $product['price'];
-                                                $db_product->old_price = $product['old_price'] ?? 0;
+                                                $db_product->old_price = $product['price'];
+                                                if ($db_product->discount_type == 'fixed') {
+                                                    $db_product->price = $db_product->old_price - $db_product->discount_amount;
+                                                } else if ($db_product->discount_type == 'percentage') {
+                                                    $db_product->price = $db_product->old_price - (($db_product->discount_amount / 100) * $db_product->old_price);
+                                                }
                                             }
                                             $db_product->save();
                                             $total_updated_products++;
