@@ -25,8 +25,12 @@
             <div class="row">
                 <div class="col-md-12">
     
-                    <h3 class="product-section-heading mb-5">
+                    <h3 class="product-section-heading storeNameDiv mb-5">
                         {{$product->store->name}} Others Products
+
+                        <a href="#" class="float-right" target="_blank">
+                            View all products <i class="fas fa-angle-right"></i>
+                        </a>
                     </h3>
                 </div>
             </div>

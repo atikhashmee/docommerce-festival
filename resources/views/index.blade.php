@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-6 col-md-4">
-                <img src="{{asset('web_assets/images/gifts.png')}}" alt="gifts" class="img-fluid d-block mx-auto pb-5">
+                <img src="{{asset('web_assets/images/cash-deilvery.png')}}" alt="Cash on delivery" class="img-fluid d-block mx-auto pb-5">
             </div>
 
             <div class="col-6 col-md-4">
