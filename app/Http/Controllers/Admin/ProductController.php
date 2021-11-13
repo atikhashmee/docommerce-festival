@@ -27,11 +27,14 @@ class ProductController extends Controller
     {
         $data  = [];
         $festival = $request->festival;
-        $data['stores'] = Store::select('stores.*')
+        $data['stores'] = Store::select('stores.*', \DB::raw("IFNULL(P.total_products, 0) as total_products"))
         ->join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
+        ->leftJoin(\DB::raw("(SELECT COUNT(id) as total_products, original_store_id FROM products GROUP BY original_store_id) as P"), "P.original_store_id", "=", "stores.original_store_id")
         ->where('store_festivals.festival_id', auth()->guard('admin')->user()->festival_id)
         ->get();
-        $data['categories'] = Category::join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        $data['categories'] = Category::select("categories.*", \DB::raw("IFNULL(C.total_products, 0) as total_products"))
+        ->join('category_festivals', 'category_festivals.category_id', '=', 'categories.id')
+        ->leftJoin(\DB::raw("(SELECT COUNT(id) as total_products, category_id FROM products GROUP BY category_id) as C"), "C.category_id", "=", "categories.id")
         ->where('category_festivals.festival_id', $festival->id)->get(); 
         $productSql = Product::select('*');
         $productSql->where(function($q) use($request) {
@@ -42,9 +45,9 @@ class ProductController extends Controller
             if ($request->store_id) {
                 $q->where('store_id', $request->store_id);
             }
-            if ($request->section) {
-                $q->where('section_type', $request->section);
-            }
+            // if ($request->section) {
+            //     $q->where('section_type', $request->section);
+            // }
 
             if ($request->search) {
                 $q->where('name', 'LIKE', '%'.$request->search.'%');
@@ -355,5 +358,70 @@ class ProductController extends Controller
             \DB::rollback();
             return response()->json(['status' => false, 'data'=> $e->getMessage()]);
         }
+    }
+
+    public function productUpdateSync(Request $request) {
+        $products_ids = json_decode($request->selected_products, true);
+        $products_ids = array_filter($products_ids, function($q){return $q!=null;});
+        $requestData = $request->all();
+        $requestData['selected_products'] = $products_ids;
+        $validator = Validator::make($requestData, [
+            'selected_products' => 'required|array',
+            'column'  => 'required|array',
+            'column.*'=> 'required|in:name,slug,description,images,price',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $db_products = Product::whereIn('id', $products_ids)->get();
+        $total_updated_products = 0;
+        if (count($db_products) > 0) {
+            $original_product_ids = $db_products->map(function($qq){return $qq->original_product_id;})->toArray();
+            $response = Http::post(env("REMOTE_BASE_URL").'/api/festival/get-products-by-id', [
+                'product_ids' => json_encode($original_product_ids),
+                
+            ]);
+
+            if ($response->ok()) {
+                if ($response->successful()) {
+                    $data = $response->json();
+                    if (count($data['data']) > 0) {
+                        foreach ($data['data'] as $key => $product) {
+                            if ( count($db_products) > 0) {
+                                foreach ($db_products as $db_product) {
+                                    if ($product['original_product_id'] == $db_product->original_product_id && $product['original_store_id'] == $db_product->original_store_id) {
+                                     
+                                        if (in_array('slug', $request->column)) {
+                                            $db_product->slug = $product['slug'];
+                                        }
+
+                                        if (in_array('name', $request->column)) {
+                                            $db_product->name = $product['name'];
+                                        }
+                                        
+                                        if (in_array('description', $request->column)) {
+                                            $db_product->short_description = $product['short_description'];
+                                        }
+
+                                        if (in_array('images', $request->column)) {
+                                            $db_product->other_images = $product['images'];
+                                            $db_product->original_product_img = $product['original_product_img'];
+                                        }
+
+                                        if (in_array('price', $request->column)) {
+                                            $db_product->price = $product['price'];
+                                            $db_product->old_price = $product['old_price'];
+                                        }
+                                        $db_product->save();
+                                        $total_updated_products++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
+        }
+        return redirect()->back()->withSuccess($total_updated_products." Products have been updated");
     }
 }

@@ -6,6 +6,19 @@
 
 @section('content')
     <section class="container-fluid" id="festivalTableContainer">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">
+                    <li>{{ $error }}</li>
+                </div>
+            @endforeach
+        @endif
         <div class="d-flex flex-row flex-row-reverse mb-4">
             <a href="{{route('admin.product.import')}}" class="btn btn-secondary"><i class="fas fa-upload"></i> Import</a>
         </div>
@@ -17,23 +30,23 @@
                         <option value="">Select Store</option>
                         @if (count($stores) > 0)
                             @foreach ($stores as $store)
-                                <option value="{{$store->id}}">{{$store->name ?? 'No Name'}} ({{$store->store_domain}}) </option>
+                                <option value="{{$store->id}}" @if(Request::get('store_id')!=null && Request::get('store_id') == $store->id) selected @endif> ({{$store->original_store_id}}) {{$store->name ?? 'No Name'}} ({{$store->store_domain}})  ({{ $store->total_products }}) </option>
                             @endforeach
                         @endif
                     </select>
-                    <select name="section" id="section" class="form-control mr-2">
+                    {{-- <select name="section" id="section" class="form-control mr-2">
                         <option value="">Select Sections</option>
                         @if (count($sections) > 0)
                             @foreach ($sections as $section)
                                 <option>{{$section}}</option>
                             @endforeach
                         @endif
-                    </select>
-                    <select name="category_id" id="category_id" class="form-control mr-2">
+                    </select> --}}
+                    <select name="category_id" id="category_id" class="form-control mr-2" >
                         <option value="">Select Category</option>
                         @if (count($categories) > 0)
                             @foreach ($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name ?? 'No Name'}}</option>
+                                <option value="{{$category->id}}" @if(Request::get('category_id')!=null && Request::get('category_id') == $category->id) selected @endif>{{$category->name ?? 'No Name'}} ({{ $store->total_products }}) </option>
                             @endforeach
                         @endif
                     </select>
@@ -60,6 +73,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="updateSync()">Update Sync</a>
                                     </div>
                                 </div>
                             </th>
@@ -67,7 +81,7 @@
                             <th>Product</th>
                             <th>Price</th>
                             <th>Stock</th>
-                            <th>Section</th>
+                            {{-- <th>Section</th> --}}
                             {{-- <th>Weight</th> --}}
                             <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
@@ -87,7 +101,7 @@
                                         </td>
                                         <td>৳{{ $item->price }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->section_type }}</td>
+                                        {{-- <td>{{ $item->section_type }}</td> --}}
                                         {{-- <td>{{ $item->weight }}</td> --}}
                                         <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>
@@ -134,7 +148,50 @@
         </div>
     </section>
 @endsection
-
+@section('modals')
+<div class="modal fade" id="update_sync_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form action="{{ route('admin.products.syncAll') }}" method="POST">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            @csrf
+            <input type="hidden" name="selected_products" id="selected_products">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chose Syncable Column</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                    <div class="form-group">
+                        <input type="checkbox" name="column[]" id="name" value="name">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="column[]" id="slug" value="slug">
+                        <label for="slug">Slug</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="column[]" id="description" value="description">
+                        <label for="description">Description</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="column[]" id="images" value="images">
+                        <label for="images">Images</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="column[]" id="price" value="price">
+                        <label for="price">Price</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+@endsection
 @section('styles')
     <style>
         th > .sort {
@@ -218,6 +275,11 @@
                     }
                 })
             }
+        }
+
+        function updateSync() {
+            $("#selected_products").val(JSON.stringify(selectedIds))
+            $("#update_sync_modal").modal('show')
         }
     </script>
 @endsection
