@@ -78,13 +78,13 @@
     <div class="row">
         <div class="col-md-6">
             @php
-                $feature_imag = $product->original_product_img; 
+                $feature_imag = $product->original_product_img;
                 if(count($product->other_images) > 0) {
                     $feature_imag = $product->other_images[0]['original_product_img'];
                 }
             @endphp
-            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}"
-            data-zoom-image="{{ "https://zipgrip.delivery".strstr($product->original_product_img, '/storage') }}"/>
+            <img id="zoom_01" class="img-fluid d-block mx-auto" src="{{ "https://zipgrip.delivery".strstr($feature_imag, '/storage') }}"
+            data-zoom-image="{{ "https://zipgrip.delivery".strstr($feature_imag, '/storage') }}"/>
             <div id="gallery_01" class="mb-4 text-center">
                 @if (count($product->other_images) > 0)
                     @foreach ($product->other_images as $key => $img)
