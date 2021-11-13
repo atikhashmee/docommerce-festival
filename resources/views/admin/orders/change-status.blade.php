@@ -50,45 +50,39 @@
                         </address>
                     </div>
                     <div class="col-md-4">
-                        <h2>Store Address</h2>
-                        @if (count($stores) > 0)
-                            @foreach($stores as $store) 
-                                <p>{{$store[0]}}</p>
-                                <address>
-                                    @php
-                                        $store = $order->orderDetails[0]->store ?? null;
-                                    @endphp
-                                    @if(!empty($store))
-                                        <strong class="order-line-height">ID  : </strong> {{ $store->id }} <br>
-                                        <strong class="order-line-height">Name  : </strong> {{ $store->name }} <br>
-                                        <strong class="order-line-height">Address : </strong>
+                        <h2>Stores</h2>
+                        <div style="overflow-y: scroll">
+                            @if (count($stores) > 0)
+                                @foreach($stores as $storeData) 
+                                    <p>{{$storeData[0]}}</p>
+                                    <hr>
+                                    <address>
                                         @php
-                                            $adrs = $store->store_address;
+                                            $store = $storeData[1] ?? null;
                                         @endphp
-                                        @if ($adrs['address_line_1'])
-                                            {{$adrs['address_line_1']}}
-                                            <br>
+                                        @if(!empty($store))
+                                            <strong class="order-line-height">Address : </strong>
+                                            @if (isset($store['address_line_1']))
+                                                {{$store['address_line_1']}}
+                                                <br>
+                                            @endif
+                                            @if (isset($store['address_line_2']))
+                                                {{$store['address_line_2']}}
+                                                <br>
+                                            @endif
+                                            @if (isset($store['hotline_number']))
+                                                {{$store['hotline_number']}}
+                                                <br>
+                                            @endif
+                                            @if (isset($store['email']))
+                                                {{$store['email']}}
+                                                <br>
+                                            @endif
                                         @endif
-                                        @if ($adrs['address_line_2'])
-                                            {{$adrs['address_line_2']}}
-                                            <br>
-                                        @endif
-                                        @if ($adrs['hotline_number'])
-                                            {{$adrs['hotline_number']}}
-                                            <br>
-                                        @endif
-                                        @if ($adrs['email'])
-                                            {{$adrs['email']}}
-                                            <br>
-                                        @endif
-                                    @else
-                                        {{ __('web.billing_address_message') }}<br>
-                                        <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
-                                    @endif
-                                </address>
-                            @endforeach
-                        @endif
-                      
+                                    </address>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                    
                 </div>
@@ -111,6 +105,9 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
+                                    @php
+                                        $subtotal_total = 0;
+                                    @endphp
                                     @if(!empty($order->orderDetails))
                                         @foreach($order->orderDetails as $key => $detail)
                                           @php
@@ -166,6 +163,21 @@
                                            </tbody>
                                         @endforeach
                                     @endif
+                                    <tr>
+                                        <td colspan="8" class="text-right">
+                                            Total: ৳{{$subtotal_total}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="text-right">
+                                            Shipping charge: (+) ৳{{$order->total_shippings_charge}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="text-right">
+                                            Total Payable: ৳{{$subtotal_total+$order->total_shippings_charge}}
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

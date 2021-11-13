@@ -53,13 +53,11 @@ class OrderController extends Controller
             $q->leftJoin('global_states', 'global_states.id', '=', 'order_addresses.state_id');
             $q->leftJoin('global_districts', 'global_districts.id', '=', 'order_addresses.district_id');
         }]);
-        $order->leftJoin(\DB::raw("(SELECT DISTINCT GROUP_CONCAT(DISTINCT CONCAT(stores.name,'-',stores.store_address) SEPARATOR ';') as store_info, order_id FROM order_details INNER JOIN stores ON stores.original_store_id = order_details.original_store_id GROUP BY order_id) AS ODS"), "ODS.order_id", "=", "orders.id");
-        
-        $data['order'] = $order->where('orders.id', $order_id)
-        ->first();
+        $order->leftJoin(\DB::raw("(SELECT GROUP_CONCAT(DISTINCT CONCAT(stores.name,'|',stores.store_address) SEPARATOR ';') as store_info, order_id FROM order_details INNER JOIN stores ON stores.original_store_id = order_details.original_store_id GROUP BY order_id) AS ODS"), "ODS.order_id", "=", "orders.id");
+        $data['order'] = $order->where('orders.id', $order_id)->first();
         $data['stores'] = array_map(function($q) {
-            list($store_name, $address)  = explode('-', $q);
-            return [$store_name, $address];
+            list($store_name, $address)  = explode('|', $q);
+            return [$store_name, json_decode($address, true)];
         }, explode(';', $data['order']->store_info));
         return view('admin.orders.change-status', $data);
     }
