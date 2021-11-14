@@ -198,6 +198,46 @@ function sOtp() {
     var opt5 = (o1) + (o2) +(o3) + (o4);
     document.getElementById('otp').value = opt5;
 } 
+let set_at_time = null
+@if (isset($set_at)) 
+    set_at_time = `{{$set_at}}`
+@endif
+
+if (set_at_time!=null) {
+    //code copied from w3schools
+    // var countDownDate = new Date(set_at_time).getTime();
+    // // Update the count down every 1 second
+    // var x = setInterval(function() {
+    //     // Get today's date and time
+    //     var now = new Date().getTime();
+    //     // Find the distance between now and the count down date
+    //     var distance = countDownDate - now;
+    //     // Time calculations for days, hours, minutes and seconds
+    //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    //     // Display the result in the element with id="demo"
+    //     console.log(days + "d " + hours + "h "+ minutes + "m " + seconds + "s ");
+    //     // If the count down is finished, write some text
+    //     if (distance < 0) {
+    //         clearInterval(x);
+    //         console.log("EXPIRED");
+    //     }
+    // }, 1000);
+
+    setTimeout(function(){
+        var endTime = set_at_time;
+        var curTime = parseInt(Date.now() / 1000)
+        var seconds = curTime - endTime;
+        var minutes = Math.floor((seconds / 60) / 1000);
+        console.log(minutes + " minutes left.", endTime, curTime);
+    }, 1000);
+}
+
+
+
 </script>
 
 @endsection

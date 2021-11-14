@@ -41,13 +41,13 @@
                                     {{ $shipping->district_name }}
                                 {{ $shipping->state_name.', '. $shipping->zip_code?$shipping->zip_code.',':'' }}
                                 {{ $shipping->country_name }} <br>
-                                <strong class="order-line-height">Phone Number : </strong>{{ $shipping->phone }} <br>
+                                <strong class="order-line-height">Phone Number : </strong>{{ $order->user->phone_number }} <br>
                                 <strong class="order-line-height">Email : </strong>{{ $shipping->email }} <br>
                             @else
                                 {{ __('web.billing_address_message') }}<br>
                                 <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
                             @endif
-                            <strong class="order-line-height">User : </strong> {{ $order->user->phone_number }}<br>
+                            <strong class="order-line-height">Customer Name : </strong> {{ $order->user->name }}<br>
                         </address>
                     </div>
                     <div class="col-md-4">

@@ -33,6 +33,9 @@ class IndexController extends Controller
     {
         $data = [];
         $product  = Product::with('variants', 'category', 'store')->where('slug', $slug)->first();
+        if (!$product) {
+            abort(404);
+        }
         $data['product'] =  $this->processedProductDetails($product);
         $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->inRandomOrder()->limit(4)->get();
         $data['store_other_products'] = $this->processedProductDataNoPage($store_other_products);

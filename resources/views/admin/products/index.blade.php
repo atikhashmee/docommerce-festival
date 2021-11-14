@@ -102,7 +102,7 @@
                                         <td>{{ $item->id }}</td>
                                         <td>  
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
-                                            <h5> <span style="border: 1px solid #d3d3d3; padding:3px">{{ $item->original_product_sequence_id }}</span> {{ $item->name }}</h5>
+                                            <h5> <span style="border: 1px solid #d3d3d3; padding:3px">{{ $item->original_product_sequence_id }}</span> <a target="_blank" href="{{route("detail_page", ["slug" => $item->slug])}}">{{ $item->name }}</a> </h5>
                                         </td>
                                         <td>৳{{ $item->price }}</td>
                                         <td>{{ $item->quantity }}</td>

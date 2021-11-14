@@ -69,7 +69,8 @@ class LoginController extends Controller
                     return redirect()->back()->withError("Next Request will be available after 5 minuets");
                 } else {
                     $data['mobile'] =  $request->mobile;
-                    $data['error'] =  "Next Request will be available after 5 minuets";
+                    $data['error']  =  "Next Request will be available after 5 minuets";
+                    $data['set_at']  = strtotime($otp_number['set_at']);
                     return view('auth.login', $data);
                 }
             }
@@ -83,6 +84,7 @@ class LoginController extends Controller
         $request->session()->put($request->mobile, $session_data);
         
         $data['mobile'] =  $request->mobile;
+        $data['set_at'] =  strtotime($session_data['set_at']);
         return view('auth.login', $data);
     }
     public function submitOtp(Request $request) {
