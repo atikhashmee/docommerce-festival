@@ -98,7 +98,7 @@
                             <tbody>
                                 @foreach ($products as $item)
                                     <tr>
-                                        <td><input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$item->id}}"></td>
+                                        <td><input name="ids[]" type="checkbox" class="massCheck" onchange="checkSpecific(this, {{$item}})" value="{{$item->id}}"></td>
                                         <td>{{ $item->id }}</td>
                                         <td>  
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
@@ -241,6 +241,14 @@
                 });
             } else {
                 selectedIds = [];
+            }
+            checkItem();
+        }
+        function checkSpecific(evt, obj) {
+            if ($(evt).prop('checked')) {
+                selectedIds[$(evt).val()] = $(evt).val();
+            } else {
+                selectedIds = selectedIds.filter(iv => iv != $(evt).val())
             }
             checkItem();
         }
