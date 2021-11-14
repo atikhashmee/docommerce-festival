@@ -67,7 +67,7 @@
                         <tr>
                             <th class="massActionWrapper">
                                 <button type="button" class="btn btn-xs btn-default checkbox-toggle p-0"
-                                        onclick="checkAll()">
+                                        onchange="checkAll()">
                                     <input type="checkbox" name="select_all" class="hidden">
                                     <i id="check-all-icon" class="fa fa-square-o" data-toggle="tooltip"
                                        data-placement="top" title="Select All"></i>
@@ -98,7 +98,7 @@
                             <tbody>
                                 @foreach ($products as $item)
                                     <tr>
-                                        <td><input name="ids[]" type="checkbox" class="massCheck" onchange="checkSpecific(this, {{$item}})" value="{{$item->id}}"></td>
+                                        <td><input name="ids[]" type="checkbox" class="massCheck" onchange="checkSpecific(this)" value="{{$item->id}}"></td>
                                         <td>{{ $item->id }}</td>
                                         <td>  
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
@@ -245,7 +245,7 @@
             }
             checkItem();
         }
-        function checkSpecific(evt, obj) {
+        function checkSpecific(evt) {
             if ($(evt).prop('checked')) {
                 selectedIds[$(evt).val()] = $(evt).val();
             } else {
@@ -255,14 +255,17 @@
         }
         function checkItem() {
             if (selectedIds.length  > 0) {
+                let totalCount = 0;
                 $('input[name="select_all"]').attr('checked', true);
                 $("input[name='ids[]']").each(function (indexInArray, valueOfElement) { 
                     if (selectedIds[$(valueOfElement).val()] !== undefined) {
                         $(valueOfElement).attr('checked', true)
+                        totalCount++;
                     }
                 });
 
                 $(".massActionWrapper").attr('colspan', '9')
+                $("#count").text(totalCount)
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
                 })
@@ -271,8 +274,8 @@
 
             } else {
                 $('input[name="select_all"]').attr('checked', false);
-                $("input[name='ids[]']").each(function (indexInArray, valueOfElement) { 
-                        $(valueOfElement).attr('checked', false)
+                $("input[name='ids[]']").each(function (indexInArray, valueOfElement) {
+                    $(valueOfElement).attr('checked', false)
                 });
 
                 $(".massActionWrapper").attr('colspan', '0')
