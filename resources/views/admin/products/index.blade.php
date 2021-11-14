@@ -104,7 +104,13 @@
                                             {{-- <img src="{{ $item->original_product_img }}" class="rounded" height="50" width="50"> --}}
                                             <h5> <span style="border: 1px solid #d3d3d3; padding:3px">{{ $item->original_product_sequence_id }}</span> <a target="_blank" href="{{route("detail_page", ["slug" => $item->slug])}}">{{ $item->name }}</a> </h5>
                                         </td>
-                                        <td>৳{{ $item->price }}</td>
+                                        <td>
+                                            <div class="price">
+                                                <span>৳{{ $item->price }}</span>  
+                                                <span style="color:#100f0f61" class="discount">({{ $item->discount_type=='fixed'?"৳":"" }}{{ $item->discount_amount }}{{ $item->discount_type=='percentage' ?"%":"" }} off)</span> 
+                                            </div>
+                                            <div class="original_price" style="color:#100f0f61"> ৳{{ $item->old_price }} </div>
+                                        </td>
                                         <td>{{ $item->quantity }}</td>
                                         {{-- <td>{{ $item->section_type }}</td> --}}
                                         {{-- <td>{{ $item->weight }}</td> --}}

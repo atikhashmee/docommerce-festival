@@ -98,14 +98,15 @@ input[type=number]::-webkit-outer-spin-button {
                               <button type="submit" class="btn btn-success btn-block login-btn" name="login">Login</button>
                           </div>
 
-                          <div class="countdown"></div>
+                          {{-- <div class="countdown"></div> --}}
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
                         @csrf
                         <input  type="hidden" name="mobile" value="{{$mobile}}">
                       </form>
                       <div class="text-center">
-                        Didn't get the code? <a href="javascript:void(0)" onclick="document.querySelector('#resend-otp').submit()">Resend</a> <br>
+                          <span id="resend_code_link">Didn't get the code? <a href="javascript:void(0)" onclick="document.querySelector('#resend-otp').submit()">Resend</a></span>
+                        <br>
                         <a href="{{route("login")}}">Change Mobile Number</a>
                       </div>
                       
@@ -216,61 +217,34 @@ let set_at_time = null
     set_at_time = `{{$set_at}}`
 @endif
 
-if (set_at_time!=null) {
-    //code copied from w3schools
-    // var countDownDate = new Date(set_at_time).getTime();
-    // // Update the count down every 1 second
-    // var x = setInterval(function() {
-    //     // Get today's date and time
-    //     var now = new Date().getTime();
-    //     // Find the distance between now and the count down date
-    //     var distance = countDownDate - now;
-    //     // Time calculations for days, hours, minutes and seconds
-    //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    //     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+// if (set_at_time!=null) {
+//     $("#resend_code_link").hide();
+//     var timer2 = 5 - Number(set_at_time.split('.')[0])+":"+set_at_time.split('.')[1] ?? 0;
+//     var interval = setInterval(function() {
+//         var timer = timer2.split(':');
+//         //by parsing integer, I avoid all extra string processing
+//         var minutes = parseInt(timer[0], 10);
+//         var seconds = parseInt(timer[1], 10);
+//         --seconds;
+//         minutes = (seconds < 0) ? --minutes : minutes;
+//         if (minutes < 0) {
+//             $("#resend_code_link").show();
+//             set_at_time = null
+//             $(".countdown").hide();
+//             clearInterval(interval);
 
-    //     // Display the result in the element with id="demo"
-    //     console.log(days + "d " + hours + "h "+ minutes + "m " + seconds + "s ");
-    //     // If the count down is finished, write some text
-    //     if (distance < 0) {
-    //         clearInterval(x);
-    //         console.log("EXPIRED");
-    //     }
-    // }, 1000);
-
-    setTimeout(function(){
-        var endTime = set_at_time;
-        var curTime = parseInt(Date.now() / 1000)
-        var seconds = curTime - endTime;
-        var minutes = Math.floor((seconds / 60) / 1000);
-        console.log(minutes + " minutes left.", endTime, curTime);
-    }, 1000);
-}
+//         }
+//         seconds = (seconds < 0) ? 59 : seconds;
+//         seconds = (seconds < 10) ? '0' + seconds : seconds;
+//         //minutes = (minutes < 10) ?  minutes : minutes;
+//         $('.countdown').html('Resend code after ' + minutes + ':' + seconds + ' minutes');
+//         timer2 = minutes + ':' + seconds;
+//     }, 1000);
+// }
 
 
 
 </script>
 
-<script>
-    var timer2 = "5:01";
-    var interval = setInterval(function() {
-    
-    
-      var timer = timer2.split(':');
-      //by parsing integer, I avoid all extra string processing
-      var minutes = parseInt(timer[0], 10);
-      var seconds = parseInt(timer[1], 10);
-      --seconds;
-      minutes = (seconds < 0) ? --minutes : minutes;
-      if (minutes < 0) clearInterval(interval);
-      seconds = (seconds < 0) ? 59 : seconds;
-      seconds = (seconds < 10) ? '0' + seconds : seconds;
-      //minutes = (minutes < 10) ?  minutes : minutes;
-      $('.countdown').html('Resend code after ' + minutes + ':' + seconds + ' minutes');
-      timer2 = minutes + ':' + seconds;
-    }, 1000);
-    </script>
 
 @endsection
