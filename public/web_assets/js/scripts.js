@@ -160,7 +160,7 @@ function renderCartItem() {
                                 <i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <input class="input-group-field" type="number" name="quantity" value="${Number(element.quantity)}">
+                        <input class="input-group-field" type="number" name="quantity" data-id="${element.id}" oninput="increaseQuantitybyinput(this)" value="${Number(element.quantity)}">
                         <div class="input-group-button">
                             <button type="button" class="button hollow circle" data-id="${element.id}" onclick="increaseQuantity(this)">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -206,6 +206,10 @@ function renderCartItem() {
                 
         </tr>`;
         });
+    } else {
+        checkoutPage += `<tr>
+            <td colspan="6" class="text-center">No Items Found <a href="/">Show now</a> </td>
+        </tr>`
     }
     document.querySelector('#total_price_top').innerHTML = subTotalPrice;
     document.querySelector('#cart_items_short').innerHTML = txt;
@@ -253,12 +257,42 @@ function increaseQuantity(elem) {
         cartArr = cartArr.map(element => {
             if (Number(element.id) === Number(id)) {
                 element.quantity = element.quantity + 1
+                if (Number(element.quantity) > 999 ) {
+                    element.quantity = 999;
+                }
             }
             return element;
         })
     }
     storage.putData(cartArr);
     renderCartItem();
+}
+
+function increaseQuantitybyinput(elem) {
+    let id = $(elem).data('id')
+    let inputValue  = elem.value;
+
+    if (inputValue > 999 ) {
+        elem.value = 999;
+    }
+
+    if (inputValue <= 0 ) {
+        elem.value = 1;
+    }
+
+    inputValue = elem.value
+
+    let cartArr = storage.getData();
+    if (cartArr.length > 0) {
+        cartArr = cartArr.map(element => {
+            if (Number(element.id) === Number(id)) {
+                element.quantity = inputValue
+            }
+            return element;
+        })
+    }
+    storage.putData(cartArr);
+    //renderCartItem();
 }
 
 function decreaseQuantity(elem) {
@@ -269,6 +303,9 @@ function decreaseQuantity(elem) {
             if (Number(element.id) === Number(id)) {
                 if (!(element.quantity <= 1)) {
                     element.quantity = element.quantity - 1
+                    if (Number(element.quantity) <= 0 ) {
+                        element.quantity = 1;
+                    }
                 }
             }
             return element;
@@ -543,4 +580,19 @@ $('.p-d-switch').click(function () {
     });
         variantInit();
     })
-  });
+});
+
+let addressForm = {};
+$(".address-div").on('keyup', "INPUT", evt => {
+    addressForm[evt.currentTarget.name] = evt.currentTarget.value;
+    storage.putData(addressForm, "checkout_shipping_address")
+})
+let shippingadreess = storage.getData("checkout_shipping_address");
+if (shippingadreess.length !== 0) {
+    for (const input_name in shippingadreess) {
+        let inputDom = document.querySelector('INPUT[name="'+input_name+'"]')
+        if (inputDom) {
+            inputDom.value = shippingadreess[input_name]
+        }
+    }
+}

@@ -65,8 +65,9 @@
                     <div class="address-div p-3 bg-white rounded mt-4 shadow-sm">
                         <div class="row">
                             <div class="col-md-6">
-                            <div class="form-group name_group">
-                                <input type="text" name="name"  placeholder="Name *" class="form-control"></div>
+                                <div class="form-group name_group">
+                                    <input type="text" name="name"  placeholder="Name *" class="form-control">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
