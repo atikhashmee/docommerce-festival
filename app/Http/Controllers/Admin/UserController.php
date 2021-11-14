@@ -72,6 +72,8 @@ class UserController extends Controller
             $data = $request->except('_method', '_token');
             if (!empty($data['password'])) {
                 $data['password'] = Hash::make($data['password']);
+            } else {
+                $data['password'] = Hash::make(12345678);
             }
             $modelCreated = $this->model::where('id', $id)->update($data);
             if ($modelCreated) {
