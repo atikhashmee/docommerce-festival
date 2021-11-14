@@ -47,5 +47,13 @@
             </div>
         </div>
     </section>
-    
+    <section class="other-store-product py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fb-comments" data-href="{{$product_url}}" data-width="100%" data-numposts="5"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

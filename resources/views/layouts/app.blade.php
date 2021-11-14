@@ -28,6 +28,8 @@
     </script>
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="9Zbdft3c"></script>
     <!-- loader div start -->
     <div class="loader-div">
 		<div class="loader"></div>
