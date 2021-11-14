@@ -33,7 +33,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="#">
                     <img src="https://zipgrip.delivery/storage/58/product/thumb/1636625682-roots-111.jpg" alt="Men Shoes" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Men Shoes</h6>
+                        <h6 class="product-name mb-0 text-center">Men Shoes</h6>
                     </a>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="#">
                     <img src="https://zipgrip.delivery/storage/4/product/thumb/1636520569-max-121.jpg" alt="Travel Bag" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Travel Bag</h6>
+                        <h6 class="product-name mb-0 text-center">Travel Bag</h6>
                     </a>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="#">
                     <img src="https://zipgrip.delivery/storage/73/product/thumb/1636631706-prince-34.jpg" alt="Winter Collection" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Winter Collection</h6>
+                        <h6 class="product-name mb-0 text-center">Winter Collection</h6>
                     </a>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="#">
                     <img src="https://zipgrip.delivery/storage/57/product/thumb/1636365039-on-hand-100-authentic-enchanteur-perfumed-body-lotion-500ml.jpg" alt="Skin Care" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Skin Care</h6>
+                        <h6 class="product-name mb-0 text-center">Skin Care</h6>
                     </a>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="#">
                     <img src="https://zipgrip.delivery/storage/73/product/thumb/1636630300-prince-12.jpg" alt="Kids Clothes" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Kids Clothes</h6>
+                        <h6 class="product-name mb-0 text-center">Kids Clothes</h6>
                     </a>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="productsDiv p-2 shadow-sm rounded">
                     <a href="https://festival.docommerce.com/category/3">
                     <img src="https://zipgrip.delivery/storage/74/product/thumb/1636707717-img-2169.jpg" alt="Saree" class="img-fluid d-block mx-auto rounded mb-2">
-                        <h6 class="product-name mb-0">Saree</h6>
+                        <h6 class="product-name mb-0 text-center">Saree</h6>
                     </a>
                 </div>
             </div>
