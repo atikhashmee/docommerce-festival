@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Store;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -49,6 +50,16 @@ class OrderDetail extends Model
     public function store()
     {
         return $this->belongsTo(Store::class, 'original_store_id');
+    }
+
+    /**
+     * Get the product that owns the OrderDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     protected $casts = [

@@ -124,7 +124,7 @@
                                                    <td>{{ $detail->id }}</td>
                                                    <td>
                                                        <div>
-                                                           {{ $detail->product_name }}
+                                                           <a target="_blank" href="{{route('detail_page', ['slug' => $detail->product->slug])}}">{{ $detail->product_name }}</a>
                                                            <br>
                                                            @if(!empty($detail->product_variant_details))
                                                            @if($detail->product_variant_details['opt1_name'] != null)
