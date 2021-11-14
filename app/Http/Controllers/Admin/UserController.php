@@ -51,6 +51,11 @@ class UserController extends Controller
         }
     }
 
+    public function indexQuery(Request $request, $query)
+    {
+        return $query->orderBy('id', 'DESC');
+    }
+
     public function update(Request $request, $id)
     {
         if (property_exists($this->model, 'rules')) {

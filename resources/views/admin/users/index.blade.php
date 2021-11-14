@@ -85,6 +85,13 @@
                                     <i class="fa fa-arrow-down" aria-hidden="true"></i>
                                 </span>
                             </th>
+                            <th data-sort="created_at">
+                                Registered At
+                                <span class="sort">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
+                            </th>
                             <th></th>
                         </tr>
                         </thead>
@@ -101,13 +108,13 @@
                                         <td>  {{ $item->name }}</td>
                                         <td>  {{ $item->email }}</td>
                                         <td>  {{ $item->phone_number }}</td>
+                                        <td>  {{ dateFormat($item->created_at, 1) }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Detail</a>
                                                     <a class="dropdown-item" href="{{route('admin.users.edit', ['user' => $item->id])}}">Edit</a>
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="return confirm('Are you sure?')?document.querySelector('#delete_action{{$item->id}}').submit():null; ">Delete</a>
                                                     <form method="POST" id="delete_action{{$item->id}}" action="{{route('admin.users.destroy', ['user' => $item])}}">

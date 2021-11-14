@@ -51,7 +51,7 @@
                         <option value="">Select Category</option>
                         @if (count($categories) > 0)
                             @foreach ($categories as $category)
-                                <option value="{{$category->id}}" @if(Request::get('category_id')!=null && Request::get('category_id') == $category->id) selected @endif>{{$category->name ?? 'No Name'}} ({{ $store->total_products }}) </option>
+                                <option value="{{$category->id}}" @if(Request::get('category_id')!=null && Request::get('category_id') == $category->id) selected @endif>{{$category->name ?? 'No Name'}} ({{ $category->total_products }}) </option>
                             @endforeach
                         @endif
                     </select>

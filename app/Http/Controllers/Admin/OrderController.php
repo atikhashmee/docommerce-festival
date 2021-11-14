@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\OrderDetail;
+use Illuminate\Http\Request;
+use App\Services\SendSMSService;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -71,7 +72,7 @@ class OrderController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'data'=> $validator->errors()]);
         }
-        
+
         try {
             $updated = OrderDetail::where('id', $data['detail_id'])->update(['status' => $data['status']]);
             if ($updated) {
@@ -90,11 +91,15 @@ class OrderController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'data'=> $validator->errors()]);
         }
-
+        
         try {
-            $updated = Order::where('id', $data['order_id'])->update(['status' => $data['status']]);
-            if ($updated) {
+            $order = Order::where('id', $data['order_id'])->first();
+            $sms = "Thanks for ordering on DoCommerce 11-11 Festival 2021. Your order number is: ".strtotime($order->order_number).". Your products will be delivered within 72 hours. Happy Shopping!";
+            $order->status = $data['status'];
+            if ($order->save()) {
                 if ($data['status'] == 'Confirmed') {
+                    $sb = new SendSMSService($order->user->phone_number, $sms);
+                    $sb->send();
                     OrderDetail::where('order_id', $data['order_id'])->update(['status' => 'In Progress']);
                 }
                 return response()->json(['status' => true, 'data'=> 'Successfully Updated']);
