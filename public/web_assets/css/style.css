@@ -674,6 +674,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#963fa7', end
     visibility: visible;
     opacity: 1;
 }
+
+.zoomWindowContainer div {
+    margin-left: 15px;
+}
 /* faq-section */
 
 .faq-section {
@@ -1221,5 +1225,13 @@ footer .container {
     text-decoration: none;
     background-color: #f4e8f6;
     border-color: #d4a9df;
+}
+
+.descriptionDiv{
+    border:1px solid #ebebeb;
+}
+
+.description-heading {
+    border-bottom: 1px solid #c1c1c1;
 }
   

@@ -88,7 +88,7 @@
             <div id="gallery_01" class="mb-4 text-center">
                 @if (count($product->other_images) > 0)
                     @foreach ($product->other_images as $key => $img)
-                        <a href="javascript:void(0)" data-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" data-zoom-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" class="active">
+                        <a href="javascript:void(0)" data-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" data-zoom-image="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}" class="@if($key == 0)active @endif">
                             <img id="img_{{$key}}" src="{{ "https://zipgrip.delivery".strstr($img['original_product_img'], '/storage') }}"/>
                         </a>
                     @endforeach
