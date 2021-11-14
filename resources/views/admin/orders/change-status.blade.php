@@ -24,7 +24,6 @@
                             <strong class="order-line-height">SubTotal : </strong> ৳{{ $order->sub_total}}<br>
                             <strong class="order-line-height">Discount&nbsp;Amount : </strong> (-)  ৳{{ $order->discount_amount }}<br>
                             <strong class="order-line-height">Total&nbsp;Amount : </strong> ৳{{ $order->total_amount + $order->total_shippings_charge }}<br>
-                            <strong class="order-line-height">User : </strong> {{ $order->user->phone_number }}<br>
                         </p>
                     </div>
                     <div class="col-md-4">
@@ -48,6 +47,7 @@
                                 {{ __('web.billing_address_message') }}<br>
                                 <a href="{{ route('user.address') }}">{{ __('web.edit_address') }}</a>
                             @endif
+                            <strong class="order-line-height">User : </strong> {{ $order->user->phone_number }}<br>
                         </address>
                     </div>
                     <div class="col-md-4">
