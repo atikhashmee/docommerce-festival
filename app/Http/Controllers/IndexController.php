@@ -36,6 +36,7 @@ class IndexController extends Controller
         $data['product'] =  $this->processedProductDetails($product);
         $store_other_products = Product::withCount('variants')->where('original_store_id', $product->original_store_id)->inRandomOrder()->limit(4)->get();
         $data['store_other_products'] = $this->processedProductDataNoPage($store_other_products);
+        $data['product_url'] = url("products/".$slug);
         return view('product_detail', $data);
     }
 
