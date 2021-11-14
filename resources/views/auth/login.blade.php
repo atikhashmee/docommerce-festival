@@ -36,6 +36,17 @@ input[type=number]::-webkit-outer-spin-button {
     border: 2px solid #813790
 }
 
+.countdown {
+    padding: 0.375rem .75rem;
+    border-radius: .25rem!important;
+    color: #cf0000;
+    border: 1px solid #ffbdbd;
+    font-size: 1rem;
+    max-width: 280px;
+    text-align: center;
+    margin:15px auto;
+}
+
 </style>
 
 
@@ -86,6 +97,8 @@ input[type=number]::-webkit-outer-spin-button {
                           <div class="form-group">
                               <button type="submit" class="btn btn-success btn-block login-btn" name="login">Login</button>
                           </div>
+
+                          <div class="countdown"></div>
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
                         @csrf
@@ -239,5 +252,25 @@ if (set_at_time!=null) {
 
 
 </script>
+
+<script>
+    var timer2 = "5:01";
+    var interval = setInterval(function() {
+    
+    
+      var timer = timer2.split(':');
+      //by parsing integer, I avoid all extra string processing
+      var minutes = parseInt(timer[0], 10);
+      var seconds = parseInt(timer[1], 10);
+      --seconds;
+      minutes = (seconds < 0) ? --minutes : minutes;
+      if (minutes < 0) clearInterval(interval);
+      seconds = (seconds < 0) ? 59 : seconds;
+      seconds = (seconds < 10) ? '0' + seconds : seconds;
+      //minutes = (minutes < 10) ?  minutes : minutes;
+      $('.countdown').html('Resend code after ' + minutes + ':' + seconds + ' minutes');
+      timer2 = minutes + ':' + seconds;
+    }, 1000);
+    </script>
 
 @endsection
