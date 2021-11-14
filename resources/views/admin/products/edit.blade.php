@@ -22,8 +22,12 @@
                                     <input type="text" readonly class="form-control" :value="product.slug">
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Short Description</label>
+                                    <textarea class="form-control summernote" id="short_description" cols="30" rows="10" ></textarea>
+                                </div>
+                                <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea class="form-control" cols="30" rows="10" v-html="product.short_description"></textarea>
+                                    <textarea class="form-control summernote" id="description" cols="30" rows="10" ></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Section</label>
@@ -154,6 +158,7 @@
 @endsection
 
 @section('styles')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         /* For Firefox */
         input[type='number'] {
@@ -187,6 +192,7 @@
     </style>
 @endsection
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script>
         let app = new Vue({
@@ -197,6 +203,8 @@
                 selectedProduct: [],
             }, 
             mounted() {
+                $('#short_description').summernote('code', this.product.short_description);
+                $('#description').summernote('code', this.product.description);
                 console.log(this.product);
             },
             updated() {
@@ -270,6 +278,16 @@
 
             }
         })
+        $(document).ready(function() {
+            $('.summernote').summernote();
+            $('#short_description').on('summernote.change', function(we, contents, $editable) {
+                app.product.short_description = contents
+            })
+            $('#description').on('summernote.change', function(we, contents, $editable) {
+                app.product.description = contents
+            })
+        });
+
     </script>
 @endsection
 

@@ -307,6 +307,7 @@ class ProductController extends Controller
                 'discount_type' => $discount_type,
                 'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
                 'short_description' => $item['short_description'],
+                'description' => $item['description'],
                 'quantity' => $item['quantity'],
                 'weight' => $item['weight'],
                 'price' => $price,
