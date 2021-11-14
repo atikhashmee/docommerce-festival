@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
             $table->boolean('is_feature')->default(false);
             $table->boolean('is_new_arrival')->default(false);
             $table->decimal('price', 10, 2)->default(00.00);

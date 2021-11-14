@@ -155,6 +155,7 @@ class ProductController extends Controller
                             'discount_amount' => $item['percentage'] == 0 ?  $item['fixed'] : $item['percentage'],
                             'slug' => $item['slug'],
                             'short_description' => $item['short_description'],
+                            'description' => $item['description'],
                             'admin_id' => $item['admin_id'],
                             'quantity' => $item['quantity'],
                             'weight' => $item['weight'],
@@ -368,7 +369,7 @@ class ProductController extends Controller
         $validator = Validator::make($requestData, [
             'selected_products' => 'required|array',
             'column'  => 'required|array',
-            'column.*'=> 'required|in:name,slug,description,images,price',
+            'column.*'=> 'required|in:name,slug,short_description,description,images,price',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -400,8 +401,12 @@ class ProductController extends Controller
                                                 $db_product->name = $product['name'];
                                             }
                                             
-                                            if (in_array('description', $request->column)) {
+                                            if (in_array('short_description', $request->column)) {
                                                 $db_product->short_description = $product['short_description'];
+                                            }
+
+                                            if (in_array('description', $request->column)) {
+                                                $db_product->description = $product['description'];
                                             }
     
                                             if (in_array('images', $request->column)) {

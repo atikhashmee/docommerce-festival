@@ -20,23 +20,24 @@
         @include('web-components._detail')
     </section>
 
-    <section class="other-store-product py-3 py-md-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="descriptionDiv p-3 shadow-sm rounded">
-                        <h5 class="m-0 pb-3 mb-3 description-heading">
-                            Description
-                        </h5>
-                        <p class="m-0">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quo sunt laudantium, saepe tempora laboriosam. Ducimus dolorum culpa maxime iure, officiis animi distinctio explicabo illum. Voluptate animi temporibus et quae!<br><br>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias architecto saepe cum id laboriosam tempore nemo nihil quasi repellat sint ipsum enim harum, voluptatem, modi debitis! Culpa est asperiores at.
-                        </p>
+    @if (isset($product) && $product->description!=null)
+        <section class="other-store-product py-3 py-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="descriptionDiv p-3 shadow-sm rounded">
+                            <h5 class="m-0 pb-3 mb-3 description-heading">
+                                Description
+                            </h5>
+                            <p class="m-0">
+                                {!! $product->description !!}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section class="other-store-product py-5">
         <div class="container">

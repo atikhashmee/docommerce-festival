@@ -180,6 +180,10 @@
                                         <label for="slug">Slug</label>
                                     </div>
                                     <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="short_description" value="short_description">
+                                        <label for="short_description">Short Description</label>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="checkbox" name="column[]" id="description" value="description">
                                         <label for="description">Description</label>
                                     </div>
@@ -256,10 +260,10 @@
         function checkItem() {
             if (selectedIds.length  > 0) {
                 let totalCount = 0;
-                $('input[name="select_all"]').attr('checked', true);
+                $('input[name="select_all"]').prop('checked', true);
                 $("input[name='ids[]']").each(function (indexInArray, valueOfElement) { 
                     if (selectedIds[$(valueOfElement).val()] !== undefined) {
-                        $(valueOfElement).attr('checked', true)
+                        $(valueOfElement).prop('checked', true)
                         totalCount++;
                     }
                 });
@@ -273,9 +277,9 @@
                 $(".all-check").removeClass('d-none');
 
             } else {
-                $('input[name="select_all"]').attr('checked', false);
+                $('input[name="select_all"]').prop('checked', false);
                 $("input[name='ids[]']").each(function (indexInArray, valueOfElement) {
-                    $(valueOfElement).attr('checked', false)
+                    $(valueOfElement).prop('checked', false)
                 });
 
                 $(".massActionWrapper").attr('colspan', '0')

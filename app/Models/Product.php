@@ -32,6 +32,7 @@ class Product extends Model
         'discount_amount',
         'slug',
         'short_description',
+        'description',
         'admin_id',
         'price',
         'old_price',
