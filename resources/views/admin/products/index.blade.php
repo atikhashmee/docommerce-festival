@@ -155,46 +155,57 @@
 @endsection
 @section('modals')
 <div class="modal fade" id="update_sync_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form action="{{ route('admin.products.syncAll') }}" method="POST">
+    
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            @csrf
-            <input type="hidden" name="selected_products" id="selected_products">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Chose Syncable Column</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Chose Syncable Column</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('admin.products.syncAll') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="selected_products" id="selected_products">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="name" value="name">
+                                        <label for="name">Name</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="slug" value="slug">
+                                        <label for="slug">Slug</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="description" value="description">
+                                        <label for="description">Description</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="images" value="images">
+                                        <label for="images">Images</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="column[]" id="price" value="price">
+                                        <label for="price">Price</label>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
-                <div class="modal-body d-flex justify-content-around">
-                    <div class="form-group">
-                        <input type="checkbox" name="column[]" id="name" value="name">
-                        <label for="name">Name</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="column[]" id="slug" value="slug">
-                        <label for="slug">Slug</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="column[]" id="description" value="description">
-                        <label for="description">Description</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="column[]" id="images" value="images">
-                        <label for="images">Images</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="column[]" id="price" value="price">
-                        <label for="price">Price</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
+            
         </div>
-    </form>
+    
   </div>
 @endsection
 @section('styles')
