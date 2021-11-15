@@ -95,7 +95,7 @@
                                 @foreach ($orders as $key => $order)
                                     <tr>
                                         <td>
-                                            {{++$key}}
+                                            {{$serial--}}
                                             {{-- <input name="ids[]" type="checkbox" class="massCheck" @change="checkSpecific" value="{{$order->id}}"> --}}
                                         </td>
                                         <td>  {{ strtotime($order->order_number) }} </td>
