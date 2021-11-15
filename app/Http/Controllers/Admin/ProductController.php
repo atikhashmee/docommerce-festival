@@ -45,9 +45,20 @@ class ProductController extends Controller
             if ($request->store_id) {
                 $q->where('store_id', $request->store_id);
             }
-            // if ($request->section) {
-            //     $q->where('section_type', $request->section);
-            // }
+            if ($request->type) {
+                if ($request->type == 'hot_deal') {
+                    $q->where('section_type', '{"hot_deal":"1", "exclusive":"0"}');
+                } elseif ($request->type == 'exclusive') {
+                    $q->where('section_type', '{"hot_deal":"0", "exclusive":"1"}');
+                } elseif ($request->type == 'hot_exclusive') {
+                    $q->where('section_type', '{"hot_deal":"1", "exclusive":"1"}');
+                } elseif ($request->type == 'no_hot_exclusive') {
+                    $q->where(function($r) {
+                        $r->whereNull('section_type');
+                        $r->orWhere('section_type', '{"hot_deal":"0", "exclusive":"0"}');
+                    });
+                }
+            }
 
             if ($request->search) {
                 $q->where('name', 'LIKE', '%'.$request->search.'%');

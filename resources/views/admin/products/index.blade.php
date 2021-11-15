@@ -30,7 +30,19 @@
         <div class="card">
             <form action="{{route('admin.products.index')}}" method="GET" id="filter_form" class="card-header d-flex justify-content-between">
                 <div class="d-flex"></div>
-                <div class="search-form d-flex">
+                <div class="search-form d-flex">                                        
+                    <select name="type" id="type" class="form-control mr-2">
+                        <option value="">Select Type</option>
+                        @foreach([
+                            'hot_deal' => 'Hot Deal', 
+                            'exclusive' => 'Exclusive', 
+                            'hot_exclusive' => 'Hot Deal & Exclusive',
+                            'no_hot_exclusive' => 'No Deal'
+                            ] as $typK => $typV)
+                            <option value="{{ $typK }}" {{ Request::get('type') == $typK ? 'selected' : '' }}>{{ $typV }}</option>
+                        @endforeach
+                    </select>
+
                     <select name="store_id" id="store_id" class="form-control mr-2">
                         <option value="">Select Store</option>
                         @if (count($stores) > 0)
@@ -57,6 +69,7 @@
                     </select>
                     <input placeholder="Product Names" name="search" type="search" class="form-control">
                     <button class="btn btn-success" id="searchButton"><i aria-hidden="true" class="fa fa-search"></i></button>
+                    <a class="btn btn-warning ml-2" href="{{route('admin.products.index')}}"><i aria-hidden="true" class="fa fa-times"></i></a>
                 </div>
             </form>
         
