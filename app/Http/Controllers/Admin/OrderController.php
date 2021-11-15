@@ -30,6 +30,8 @@ class OrderController extends Controller
         }
         $sql->orderBy("id", "DESC");
         $data['orders'] = $sql->paginate(50);
+
+        $data['serial'] = pagiSerial($data['orders'], 50);
         return view('admin.orders.index', $data);
     }
 

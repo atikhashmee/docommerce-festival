@@ -20,3 +20,12 @@ if ( ! function_exists('dateFormat')) {
     }
 }
 
+if ( ! function_exists('pagiSerial')) {
+    function pagiSerial($data, $perPage)
+    {
+        $page = request()->page ?? 1;
+        $start = $perPage * ($page-1);
+        return $data->total() - $start;
+    }
+}
+
