@@ -46,10 +46,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     margin:15px auto;
 }
-
 </style>
-
-
 <section class="w-100 products-section py-6">
     <div class="container">
         <div class="row justify-content-center">
@@ -98,7 +95,7 @@ input[type=number]::-webkit-outer-spin-button {
                               <button type="submit" class="btn btn-success btn-block login-btn" name="login">Login</button>
                           </div>
 
-                          {{-- <div class="countdown"></div> --}}
+                        <div class="countdown"></div>
                       </form> 
                       <form method="POST" id="resend-otp" action="{{ route('otp.login') }}">
                         @csrf
@@ -212,35 +209,35 @@ function sOtp() {
     var opt5 = (o1) + (o2) +(o3) + (o4);
     document.getElementById('otp').value = opt5;
 } 
+
+
 let set_at_time = null
 @if (isset($set_at)) 
     set_at_time = `{{$set_at}}`
 @endif
 
-// if (set_at_time!=null) {
-//     $("#resend_code_link").hide();
-//     var timer2 = 5 - Number(set_at_time.split('.')[0])+":"+set_at_time.split('.')[1] ?? 0;
-//     var interval = setInterval(function() {
-//         var timer = timer2.split(':');
-//         //by parsing integer, I avoid all extra string processing
-//         var minutes = parseInt(timer[0], 10);
-//         var seconds = parseInt(timer[1], 10);
-//         --seconds;
-//         minutes = (seconds < 0) ? --minutes : minutes;
-//         if (minutes < 0) {
-//             $("#resend_code_link").show();
-//             set_at_time = null
-//             $(".countdown").hide();
-//             clearInterval(interval);
+if (set_at_time!=null) {
+    $("#resend_code_link").hide();
+    var timer2 = set_at_time;
+    var interval = setInterval(function() {
+        var timer = timer2.split(':');
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) {
+            $("#resend_code_link").show();
+            set_at_time = null
+            $(".countdown").hide();
+            clearInterval(interval);
 
-//         }
-//         seconds = (seconds < 0) ? 59 : seconds;
-//         seconds = (seconds < 10) ? '0' + seconds : seconds;
-//         //minutes = (minutes < 10) ?  minutes : minutes;
-//         $('.countdown').html('Resend code after ' + minutes + ':' + seconds + ' minutes');
-//         timer2 = minutes + ':' + seconds;
-//     }, 1000);
-// }
+        }
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        $('.countdown').html('Resend code after ' + minutes + ':' + seconds + ' minutes');
+        timer2 = minutes + ':' + seconds;
+    }, 1000);
+}
 
 
 
