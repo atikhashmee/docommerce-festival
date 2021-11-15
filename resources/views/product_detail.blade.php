@@ -66,6 +66,7 @@
             </div>
         </div>
     </section>
+    @include('web-components._faq')
     <section class="other-store-product py-5">
         <div class="container">
             <div class="row">
