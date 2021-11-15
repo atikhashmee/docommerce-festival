@@ -253,8 +253,6 @@ class ProductController extends Controller
         $ids = json_decode($request->product_ids, true);
         $ids = collect($ids)->filter(function($item) {return $item != null;})->toArray();
 
-        //UPDATE `products` SET `` ='{"hot_deal":"1", "":"0"}' WHERE `original_store_id` = 43 AND `original_product_sequence_id` IN(52,49);
-
         if ($request->type == 'hot_deal') {
             Product::whereIn('id', $ids)->update(['section_type' => '{"hot_deal":"1", "exclusive":"0"}']);
         } elseif ($request->type == 'exclusive') {
