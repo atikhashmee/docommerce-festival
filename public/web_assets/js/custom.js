@@ -1,5 +1,7 @@
 $(window).on('load', function () {
-  $('.loader-div').hide();
+  if (window.location.pathname != '/checkout') {
+    $('.loader-div').hide();
+  }
 })
 
 // =========================

@@ -365,6 +365,7 @@ function validationErrors(errors) {
 
 
 function placeOrder() {
+    $('.loader-div').show();
     let formD = new FormData(document.querySelector('#checkout_form'))
     formD.append('items', JSON.stringify(storage.getData()))
     formD.append('cart_shipping_page', document.querySelector('#cart_shipping_page').innerHTML)
@@ -376,6 +377,7 @@ function placeOrder() {
         body: formD
     }).then(res=>res.json())
     .then(res=>{
+        $('.loader-div').hide();
         if (res.status) {
             let successDom = document.querySelector('#success_msg');
             successDom.classList.remove('d-none');
@@ -583,11 +585,16 @@ $('.p-d-switch').click(function () {
 });
 
 let addressForm = {};
+let shippingadreess = storage.getData("checkout_shipping_address");
 $(".address-div").on('keyup', "INPUT", evt => {
+    if (shippingadreess.length !== 0) {
+        addressForm = {...shippingadreess}
+    }
     addressForm[evt.currentTarget.name] = evt.currentTarget.value;
+    console.log(addressForm);
     storage.putData(addressForm, "checkout_shipping_address")
 })
-let shippingadreess = storage.getData("checkout_shipping_address");
+
 if (shippingadreess.length !== 0) {
     for (const input_name in shippingadreess) {
         let inputDom = document.querySelector('INPUT[name="'+input_name+'"]')

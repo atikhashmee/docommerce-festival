@@ -190,7 +190,7 @@
                     @guest
                         <a href="{{route('login')}}" class="btn btn-success mt-4 float-right">Place Order</a>
                     @else
-                        <button type="button" onclick="placeOrder()" class="btn btn-success mt-4 float-right">Place Order</button>
+                        <button type="button" id="place-order-btn" onclick="placeOrder()" class="btn btn-success mt-4 float-right">Place Order</button>
                     @endguest
                     <div id="error_msg" class="text-danger d-none"></div>
                     <div id="success_msg" class="text-success d-none"></div>
@@ -204,6 +204,20 @@
 @section('scripts')
 <script>
     getDistrict(<?=json_encode($districts)?>)
+    let previousURL =  `{{url()->previous()}}`
+    let previousURLVerified = `{{url('request-otp')}}`;
+    $(document).ready(function () {
+        if (previousURLVerified===previousURL) {
+            setInterval(() => {
+                $('.loader-div').show();
+            }, 100);
+            setTimeout(() => {
+                $("#place-order-btn").click();  
+            }, 2000);
+        } else {
+            $('.loader-div').hide();
+        }
+    });
 </script>
 
 @endsection
