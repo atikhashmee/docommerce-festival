@@ -61,16 +61,19 @@ class LoginController extends Controller
         //check for validitty
         $otp_number = $request->session()->get($request->mobile);
         if ($otp_number) {
-            $to_time = strtotime(now());
-            $from_time = strtotime($otp_number['set_at']);
-            $calculated_time = round(abs($to_time - $from_time) / 60,2);
-            if ($calculated_time < 5) {
+            $date_for    = $otp_number['set_at'];
+            $fiveMinuets = date('Y-m-d h:i:s', strtotime('+5 minutes', strtotime($date_for)));
+            $nowTime     = date('Y-m-d h:i:s');
+            $date1       = date_create($fiveMinuets);
+            $date2       = date_create($nowTime);
+            $diff        = date_diff($date1,$date2);
+            if ($diff->invert == 1) {
                 if (\Route::current()->getName() == 'login') {
                     return redirect()->back()->withError("Next Request will be available after 5 minuets");
                 } else {
                     $data['mobile'] =  $request->mobile;
                     $data['error']  =  "Next Request will be available after 5 minuets";
-                    $data['set_at']  = $calculated_time;
+                    $data['set_at']  = $diff->i.":".$diff->s;
                     return view('auth.login', $data);
                 }
             }
@@ -84,7 +87,7 @@ class LoginController extends Controller
         $request->session()->put($request->mobile, $session_data);
         
         $data['mobile'] =  $request->mobile;
-        $data['set_at'] =  5.00;
+        $data['set_at'] =  "5:00";
         return view('auth.login', $data);
     }
     public function submitOtp(Request $request) {
@@ -92,10 +95,13 @@ class LoginController extends Controller
         if ($otp_number['otp'] != $request->otp) {
             $data['mobile'] =  $request->mobile;
             $data['error'] =  'Otp Invalid';
-            $to_time = strtotime(now());
-            $from_time = strtotime($otp_number['set_at']);
-            $calculated_time = round(abs($to_time - $from_time) / 60,2);
-            $data['set_at']  = $calculated_time;
+            $date_for    = $otp_number['set_at'];
+            $fiveMinuets = date('Y-m-d h:i:s', strtotime('+5 minutes', strtotime($date_for)));
+            $nowTime     = date('Y-m-d h:i:s');
+            $date1       = date_create($fiveMinuets);
+            $date2       = date_create($nowTime);
+            $diff        = date_diff($date1,$date2);
+            $data['set_at']  = $diff->i.":".$diff->s;
             return view('auth.login', $data);
         }
         $this->createOrLogin($request->mobile);
