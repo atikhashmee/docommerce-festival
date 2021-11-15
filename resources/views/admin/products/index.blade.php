@@ -80,6 +80,7 @@
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('hot_deal')">Make Hot Deal All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('exclusive')">Make Exclusive All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('hot_exclusive')">Make Hot Deal & Exclusive All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('remove_hot_exclusive')">Remove Hot Deal & Exclusive All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="updateSync()">Update Sync</a>
                                     </div>
@@ -94,6 +95,7 @@
                             <th>Order&nbsp;Quantity</th>
                             <th>Category</th>
                             <th>Store</th>
+                            <th>Hot/Exclusive</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -120,6 +122,15 @@
                                         <td>0</td>
                                         <td>  {{ $item->category->name ?? 'N/A' }}</td>
                                         <td>  {{ $item->store->name ?? 'N/A' }}</td>
+                                        <td>
+                                            @if ($item->section_type == '{"hot_deal":"1", "exclusive":"0"}')
+                                                <label class="badge badge-danger">Hot Deal</label>
+                                            @elseif ($item->section_type == '{"hot_deal":"0", "exclusive":"1"}')
+                                                <label class="badge badge-warning">Exclusive</label>
+                                            @elseif ($item->section_type == '{"hot_deal":"1", "exclusive":"1"}')
+                                                <label class="badge badge-success">Hot & Exclusive</label>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
