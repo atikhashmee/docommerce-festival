@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
             Route::get('products/{id}/edit', [App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('product.edit');
             Route::get('products/import', [App\Http\Controllers\Admin\ProductController::class, 'import'])->name('product.import');
             Route::post('products/bulk/delete-all', [App\Http\Controllers\Admin\ProductController::class, 'bulkDelete'])->name('products.deteletAll');
+            Route::post('products/bulk/change-all', [App\Http\Controllers\Admin\ProductController::class, 'bulkChange'])->name('products.changeAll');
             Route::post('products/update/sync-all', [App\Http\Controllers\Admin\ProductController::class, 'productUpdateSync'])->name('products.syncAll');
             Route::resource('products', ProductController::class)->only('index', 'destroy');
         });

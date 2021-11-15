@@ -77,6 +77,9 @@
                                         <span id="count"></span> Items Selected
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('hot_deal')">Make Hot Deal All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('exclusive')">Make Exclusive All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('hot_exclusive')">Make Hot Deal & Exclusive All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="updateSync()">Update Sync</a>
                                     </div>
@@ -293,6 +296,26 @@
                     $(v).show();
                 })
                 $(".all-check").addClass('d-none');
+            }
+        }
+
+        function changeAll(type) {
+            if (confirm('Are you sure?')) {
+                let formD = new FormData();
+                formD.append('type', type);
+                formD.append('product_ids', JSON.stringify(selectedIds));
+                fetch(`{{route("admin.products.changeAll")}}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN' : `{{csrf_token()}}`,
+                    },
+                    body: formD
+                }).then(res=>res.json())
+                .then( res => {
+                    if (res.status) {
+                        window.location.reload()
+                    }
+                })
             }
         }
 
