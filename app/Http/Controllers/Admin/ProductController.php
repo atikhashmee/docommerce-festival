@@ -272,6 +272,8 @@ class ProductController extends Controller
             Product::whereIn('id', $ids)->update(['section_type' => '{"hot_deal":"1", "exclusive":"1"}']);
         } elseif ($request->type == 'remove_hot_exclusive') {
             Product::whereIn('id', $ids)->update(['section_type' => '{"hot_deal":"0", "exclusive":"0"}']);
+        } elseif ($request->type == 'assign_category') {
+            Product::whereIn('id', $ids)->update(['category_id' => $request->category_id]);
         }
         return response(['status'=> true, 'data' => 'Data is updated']);
     }

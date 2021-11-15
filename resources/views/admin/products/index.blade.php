@@ -94,8 +94,9 @@
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('exclusive')">Make Exclusive All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('hot_exclusive')">Make Hot Deal & Exclusive All</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="changeAll('remove_hot_exclusive')">Remove Hot Deal & Exclusive All</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="assignCategory()">Assign Category</a>
                                         <a class="dropdown-item" href="javascript:void(0)" onclick="updateSync()">Update Sync</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="deleteAll()">Delete All</a>
                                     </div>
                                 </div>
                             </th>
@@ -187,64 +188,86 @@
     </section>
 @endsection
 @section('modals')
-<div class="modal fade" id="update_sync_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Chose Syncable Column</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('admin.products.syncAll') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="selected_products" id="selected_products">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="name" value="name">
-                                        <label for="name">Name</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="slug" value="slug">
-                                        <label for="slug">Slug</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="short_description" value="short_description">
-                                        <label for="short_description">Short Description</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="description" value="description">
-                                        <label for="description">Description</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="images" value="images">
-                                        <label for="images">Images</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="checkbox" name="column[]" id="price" value="price">
-                                        <label for="price">Price</label>
-                                    </div>
-                                </div>
-                            </div> 
-                            
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                    </div>
-                </div>
-            
+<div class="modal fade" id="update_sync_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">    
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Chose Syncable Column</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.products.syncAll') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="selected_products" id="selected_products">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="name" value="name">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="slug" value="slug">
+                                <label for="slug">Slug</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="short_description" value="short_description">
+                                <label for="short_description">Short Description</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="description" value="description">
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="images" value="images">
+                                <label for="images">Images</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="column[]" id="price" value="price">
+                                <label for="price">Price</label>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </form>
+            </div>
         </div>
-    
-  </div>
+    </div>
+</div>
+<div class="modal fade" id="assign_category_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">    
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Assign Category</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <select name="category_id" id="assign_category_id" class="form-control mr-2" >
+                    <option value="">Select Category</option>
+                    @if (count($categories) > 0)
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name ?? 'No Name'}}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="saveChangesAssignCategory()" class="btn btn-primary">Save changes</button>
+            </div> 
+        </div>
+    </div>
+</div>
 @endsection
 @section('styles')
     <style>
@@ -301,7 +324,7 @@
                     }
                 });
 
-                $(".massActionWrapper").attr('colspan', '9')
+                $(".massActionWrapper").attr('colspan', '10')
                 $("#count").text(totalCount)
                 $('table tr th').each(function(i, v) {
                     $(v).hide();
@@ -323,11 +346,14 @@
             }
         }
 
-        function changeAll(type) {
+        function changeAll(type, optns={}) {
             if (confirm('Are you sure?')) {
                 let formD = new FormData();
                 formD.append('type', type);
                 formD.append('product_ids', JSON.stringify(selectedIds));
+                if ('category_id' in optns) {
+                    formD.append('category_id', optns.category_id);
+                }
                 fetch(`{{route("admin.products.changeAll")}}`, {
                     method: 'POST',
                     headers: {
@@ -361,11 +387,27 @@
                 })
             }
         }
+    
+        function saveChangesAssignCategory() {
+            if ($("#assign_category_id").val() == "") {
+                alert('Select a category please');
+                return;
+            }
+            changeAll('assign_category', {category_id: $("#assign_category_id").val()});
+        }
+
+        function assignCategory() {
+            $("#assign_category_modal").modal('show')
+        }
 
         function updateSync() {
             $("#selected_products").val(JSON.stringify(selectedIds))
             $("#update_sync_modal").modal('show')
         }
+
+        $('#assign_category_modal').on('hidden.bs.modal', function (e) {
+            $("#assign_category_id").val("")
+        });
     </script>
 @endsection
 
