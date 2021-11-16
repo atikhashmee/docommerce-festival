@@ -23,6 +23,7 @@ class IndexController extends Controller
         $data = [];
         $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
         ->where('store_festivals.festival_id', $festival->id)
+        ->orderBy(DB::raw('store_festivals.sort > 0'), 'DESC')
         ->orderBy('store_festivals.sort', 'ASC')
         ->get();
 
