@@ -77,8 +77,8 @@
                                             {{ $item->attached_store_id == null ? "No" : "Yes" }}
                                         </td>
                                         <td>  
-                                            @if ($item->img !=null && file_exists(public_path('storage/stores/'.$item->img)))
-                                                <img src="{{ asset('storage/stores/'.$item->img) }}" alt="{{ $item->name }}" height="97" width="176">
+                                            @if ($item->upload_image !=null && file_exists(public_path('storage/stores/'.$item->upload_image)))
+                                                <img src="{{ asset('storage/stores/'.$item->upload_image) }}" alt="{{ $item->name }}" height="97" width="176">
                                             @else
                                                 <img src="{{ $item->store_logo_url }}" alt="{{ $item->name }}" height="97" width="176">
                                             @endif

@@ -42,8 +42,8 @@
                                         <td>{{ $item->festival != null ? $item->festival->name : '-' }}</td>
                                         @if ($item->store != null)
                                             <td>  
-                                                @if ($item->upload_image !=null && file_exists(public_path('storage/stores/'.$item->upload_image)))
-                                                    <img src="{{ asset('storage/stores/'.$item->upload_image) }}" alt="{{ $item->name }}" height="97" width="176">
+                                                @if ($item->img !=null && file_exists(public_path('storage/stores/'.$item->img)))
+                                                    <img src="{{ asset('storage/stores/'.$item->img) }}" alt="{{ $item->name }}" height="97" width="176">
                                                 @else
                                                     <img src="{{ $item->store->store_logo_url }}" alt="{{ $item->store->name }}" height="97" width="176">
                                                 @endif
