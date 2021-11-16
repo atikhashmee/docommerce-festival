@@ -21,7 +21,11 @@ class IndexController extends Controller
     public function index() {
         $festival = request()->festival; 
         $data = [];
-        $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')->where('store_festivals.festival_id', $festival->id)->get();
+        $data['stores']  = Store::join('store_festivals', 'store_festivals.store_id', '=', 'stores.id')
+        ->where('store_festivals.festival_id', $festival->id)
+        ->orderBy('store_festivals.sort', 'ASC')
+        ->get();
+
         $hot_deals = Product::withCount('variants')->where('section_type', 'LIKE', '%"hot_deal":"1"%')->inRandomOrder()->limit(12)->get();
         $exclusives = Product::withCount('variants')->where('section_type', 'LIKE', '%"exclusive":"1"%')->inRandomOrder()->limit(12)->get();
         $data['hot_deals'] = $this->processedProductDataNoPage($hot_deals);
