@@ -118,7 +118,7 @@
             @if (count($product->show_variants) > 0)
                 <div class="options pt-3 variant_data">
                     @foreach ($product->show_variants as $name => $item)
-                        <div class="each-variant-row">
+                        <div class="each-variant-row mb-3">
                             <span class="mr-1">{{$name}}</span>
                             @foreach ($item as $prop => $val)
                                 <button type="button" onclick="changeVariant(this)" data-item="{{ $prop }}" class="btn btn-outline-info btn-sm mr-1">{{$prop}}</button>
