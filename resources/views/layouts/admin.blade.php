@@ -75,6 +75,9 @@
                                 <a href="{{route('admin.stores.index')}}" class="nav-link">Stores</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('admin.festival-stores.index')}}" class="nav-link">Festival Stores</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.categories.index')}}" class="nav-link">Categories</a>
                             </li>
                             <li class="nav-item">

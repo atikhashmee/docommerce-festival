@@ -15,5 +15,16 @@ class StoreFestival extends Model
         'festival_id',
         'store_id',
         'img',
+        'sort',
     ];
+
+    public function festival()
+    {
+        return $this->belongsTo(Festival::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

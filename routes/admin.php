@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
             Route::post('attach-store-data', [App\Http\Controllers\Admin\StoreController::class, 'bulkAttachtoFestival'])->name('attach.store.data');
             Route::get('sync-store-data', [App\Http\Controllers\Admin\StoreController::class, 'syncStoreData'])->name('sync.store.data');
             Route::resource('stores', StoreController::class)->only('index', 'destroy');
+            Route::resource('festival-stores', FestivalStoreController::class)->only('index', 'store');
             Route::resource('categories', CategoryController::class);
             Route::get('products/get-store-products/{store_id}', [App\Http\Controllers\Admin\ProductController::class, 'storeProduct'])->name('product.get.store.products');
             Route::post('products/import', [App\Http\Controllers\Admin\ProductController::class, 'importStore'])->name('product.import.store');
