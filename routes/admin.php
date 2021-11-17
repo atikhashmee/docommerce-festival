@@ -17,6 +17,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::post('orders-status-change', [App\Http\Controllers\Admin\OrderController::class, 'updateOrderChange'])->name('order.update.change');
         Route::post('orders-status-update', [App\Http\Controllers\Admin\OrderController::class, 'updateOrderStatus'])->name('order.update.status');
         Route::get('orders/{order_id}', [App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('order.change.status');
+        Route::post('orders-export-save', [App\Http\Controllers\Admin\OrderController::class, 'exportSave'])->name('order.export.save');
+        Route::get('orders-export', [App\Http\Controllers\Admin\OrderController::class, 'export'])->name('order.export');
         Route::resource('orders', OrderController::class);
         Route::middleware(['configFestival', 'getFestival'])->group(function () {
             Route::post('attach-store-image', [App\Http\Controllers\Admin\StoreController::class, 'attachImage'])->name('attach.store.image');

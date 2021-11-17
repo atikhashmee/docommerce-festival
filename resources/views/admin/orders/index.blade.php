@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-inline justify-content-end">
-                            <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#export"><i class="fa fa-cloud-download" aria-hidden="true"></i>Export</a>
+                            <a href="{{route('admin.order.export')}}" class="btn btn-primary"><i class="fa fa-cloud-download" aria-hidden="true"></i>Export</a>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="daterangepicker" placeholder="Start - End Date" autocomplete="off">
                             </div>

@@ -12,6 +12,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "maatwebsite/excel": "^3.1",
+        "spatie/array-to-xml": "^2.15",
         "intervention/image": "^2.5"
     },
     "require-dev": {
