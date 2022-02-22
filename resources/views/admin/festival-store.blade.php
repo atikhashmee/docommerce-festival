@@ -14,7 +14,7 @@
                         <thead>
                         <tr>
                             <th data-sort="id">
-                                #SL
+                                #SL 
                             </th>
                             <th>Festival</th>
                             <th>Logo</th>
